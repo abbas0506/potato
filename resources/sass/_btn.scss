@@ -1,0 +1,52 @@
+.btn-orange {
+    background-color: rgb($custom-orange, 0.8);
+    color: $custom-light;
+    border-radius: 5px;
+    padding: 0.2rem 0.375rem;
+    &:hover {
+        background-color: $custom-orange;
+        color: white;
+    }
+}
+
+.btn-outline-orange {
+    background-color: transparent;
+    border: 1px solid $custom-orange;
+    color: $custom-orange;
+    border-radius: 5px;
+    padding: 0.2rem 0.375rem;
+    &:hover {
+        background-color: $custom-orange;
+        color: white;
+    }
+}
+
+.btn-rounded-custom-blue {
+    background-color: rgb($custom-blue, 0.8);
+    color: white;
+    border-radius: 50px;
+    &:hover {
+        background-color: $custom-blue;
+        cursor: pointer;
+    }
+}
+
+.btn-rounded-custom-orange {
+    background-color: rgb($custom-orange, 0.8);
+    color: white;
+    border-radius: 50px;
+    &:hover {
+        background-color: $custom-orange;
+        cursor: pointer;
+    }
+}
+
+.rounded-circle-teal {
+    background-color: teal;
+    color: white;
+    border-radius: 50%;
+    &:hover {
+        background-color: rgb(teal, 0.8);
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,102 @@
+.fancyinput {
+    position: relative;
+    label {
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 10px;
+        transition: 0.5s;
+    }
+    input {
+        font-family: inherit;
+        width: 100%;
+        border-bottom: 1px solid rgba($primary, 0.2);
+        font-size: 1.0rem;
+        padding: 10px;
+        outline: none;
+        border: 1px solid rgba($primary, 0.2);
+        border-radius: 0px;
+        box-shadow: none;
+        background-color: transparent;
+        transition: border-color 0.2s;
+        &:not(:placeholder-shown)~label {
+            color: $primary;
+            top: -12px;
+            padding: 0px 2px;
+            left: 10px;
+            border: 0;
+            font-size: 0.8rem;
+            visibility: visible;
+            transition: 0.5s;
+            cursor: text;
+            background-color: white;
+        }
+        &:focus {
+            border-color: #85a897;
+            transition: border-color 0.2s;
+        }
+    }
+    textarea {
+        @extend input;
+        &:not(:placeholder-shown)~label {
+            color: $primary;
+            top: -12px;
+            //border: 0;
+            font-size: 0.8rem;
+            visibility: visible;
+            transition: 0.5s;
+            cursor: text;
+            background-color: white;
+        }
+        &:focus {
+            //outline: 1px solid royalblue;
+            outline: none;
+            border: 1px solid royalblue;
+            box-shadow: none;
+            transition: 0.5s ease;
+        }
+    }
+}
+
+.fancyselect {
+    position: relative;
+    select {
+        font-family: inherit;
+        width: 100%;
+        border: 1px solid rgba($dark, 0.2);
+        outline: 0;
+        font-size: 1.0rem;
+        padding: 10px;
+        border-radius: 0px;
+        background-color: transparent;
+        transition: border-color 0.2s;
+        option {
+            background-color: rgba(white, 0.5);
+            color: $dark;
+        }
+    }
+    label {
+        position: absolute;
+        color: $primary;
+        top: -10px;
+        left: 10px;
+        padding: 0px 2px;
+        font-size: 0.8rem;
+        visibility: visible;
+        background-color: white;
+        transition: 0.5s;
+    }
+}
+
+//rounded input for search
+.input-rounded {
+    border-style: solid;
+    border-width: thin;
+    border-color: silver;
+    border-radius: 50px;
+    width: 200px;
+    padding: 0px 25px 0px 15px;
+    &:focus {
+        outline: 0;
+    }
+}
