@@ -21,7 +21,7 @@
 
          <img src="{{url(asset('images/logo.jpg'))}}" alt="" width=200 height=40>
       </div>
-      <div class="text-right hw-70 mr-3">admin <a href=''><i data-feather='power' class="feather-small ml-2"></i></a></div>
+      <div class="text-right hw-70 mr-3">Welcome {{session('user')->userid}} <a href="{{route('signout')}}"><i data-feather='power' class="feather-small ml-2"></i></a></div>
    </div>
 
    <!-- content page -->

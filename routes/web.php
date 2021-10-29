@@ -23,31 +23,35 @@ use App\Http\Controllers\PrintController;
 Route::get('/', function () {
     return view('signin');
 });
-
 Route::post('signin', [UserController::class, 'signin']);
-Route::resource('home', HomeController::class)->only(['index']);
-Route::resource('registration', RegistrationController::class);
-Route::get("registrationfilter/{group_id}", [RegistrationController::class, 'registrationfilter']);
 
-Route::resource('fee', FeeController::class);
-Route::resource('scrutiny', ScrutinyController::class);
-Route::get('scrutinize/{id}', [ScrutinyController::class, 'scrutinize']);
+Route::group(['middleware' => 'admin'], function () {
 
-Route::post("payfee/{reg_id}", [FeeController::class, 'payfee']);
-Route::get("showcancelfee", [FeeController::class, 'showcancelfee']);
-Route::post("cancelfee/{reg_id}", [FeeController::class, 'cancelfee']);
+    Route::get('signout', [UserController::class, 'signout'])->name('signout');
+    Route::resource('home', HomeController::class)->only(['index']);
+    Route::resource('registration', RegistrationController::class);
+    Route::get("registrationfilter/{group_id}", [RegistrationController::class, 'registrationfilter']);
 
-Route::resource('print', PrintController::class)->only(['index']);
-Route::post("preview", [PrintController::class, 'preview']);
-Route::put("uploadimage/{registration}", [RegistrationController::class, 'uploadimage'])->name('uploadimage');
-Route::view("assignclassrollno", "registrations.assignclassrollno");
-Route::post("assignclassrollno", [RegistrationController::class, 'assignClassRollNo']);
+    Route::resource('fee', FeeController::class);
+    Route::resource('scrutiny', ScrutinyController::class);
+    Route::get('scrutinize/{id}', [ScrutinyController::class, 'scrutinize']);
 
-Route::view("viewAutoEnroll", "registrations.autoEnroll");
-Route::post("postAutoEnroll", [RegistrationController::class, 'postAutoEnroll']);
+    Route::post("payfee/{reg_id}", [FeeController::class, 'payfee']);
+    Route::get("showcancelfee", [FeeController::class, 'showcancelfee']);
+    Route::post("cancelfee/{reg_id}", [FeeController::class, 'cancelfee']);
 
-Route::get("viewAssignSection", [SectionController::class, 'viewAssignSection']);
-Route::post("postAssignSection", [SectionController::class, 'postAssignSection']);
-Route::get("viewDetachSection", [SectionController::class, 'viewDetachSection']);
-Route::post("postDetachSection", [SectionController::class, 'postDetachSection']);
-Route::post("postMoveSection", [SectionController::class, 'postMoveSection']);
+    Route::resource('print', PrintController::class)->only(['index']);
+    Route::post("preview", [PrintController::class, 'preview']);
+    Route::put("uploadimage/{registration}", [RegistrationController::class, 'uploadimage'])->name('uploadimage');
+    Route::view("assignclassrollno", "registrations.assignclassrollno");
+    Route::post("assignclassrollno", [RegistrationController::class, 'assignClassRollNo']);
+
+    Route::view("viewAutoEnroll", "registrations.autoEnroll");
+    Route::post("postAutoEnroll", [RegistrationController::class, 'postAutoEnroll']);
+
+    Route::get("viewAssignSection", [SectionController::class, 'viewAssignSection']);
+    Route::post("postAssignSection", [SectionController::class, 'postAssignSection']);
+    Route::get("viewDetachSection", [SectionController::class, 'viewDetachSection']);
+    Route::post("postDetachSection", [SectionController::class, 'postDetachSection']);
+    Route::post("postMoveSection", [SectionController::class, 'postMoveSection']);
+});
