@@ -6,7 +6,7 @@
 <!-- page title -->
 <div class="flexrow hw-100 row-mid-left justify-content-between txt-m bg-light-grey px-10 py-2 auto-col">
    <div>Fee Collection</div>
-   <div class="txt-s">Who have paid Paid <span class='bage badge-pill badge-success ml-2 p-0 px-2 txt-xs'>{{$registrations->whereNotNull('paidat')->count()}}</span></div>
+   <div class="txt-s">Who Paid <span class='bage badge-pill badge-success ml-2 p-0 px-2 txt-xs'>{{$registrations->whereNotNull('paidat')->count()}}</span></div>
    <div class="txt-s">Unpaid <span class='bage badge-pill badge-danger ml-2 p-0 px-2 txt-xs'>{{$registrations->whereNull('paidat')->count()}}</span></div>
    <div>
       <input type="text" class='input-rounded' placeholder="Search" oninput="search(event)"><i data-feather='search' class="feather-small" style="position:relative; right:24; top:-2px"></i>
