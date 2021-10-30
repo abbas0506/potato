@@ -41,25 +41,25 @@
       </div>
       <div class="flexcol col-center hw-48">
          <div class="fancyinput w-100">
-            <input type="text" name='phone' id='phone' placeholder="Phone" pattern='0[0-9]{3}-[0-9]{7}' oninput="formatAsPhone(event)" required>
-            <label for="Name">Phone</label>
-         </div>
-      </div>
-   </div>
-   <div class="flexrow justify-content-between px-10 mb-4 auto-col ">
-      <div class="flexcol col-center hw-48">
-         <div class="fancyinput w-100">
             <input type="text" name='dob' id='dob' placeholder="Date of Birth" pattern='[0-9]{2}-[0-9]{2}-[0-9]{4}' oninput="formatAsDate(event)" required>
             <label for="Name">Date of Birth (dd-mm-yyyy)</label>
          </div>
       </div>
+   </div>
+
+   <div class="flexrow justify-content-between px-10 mb-4 auto-col ">
       <div class="flexcol col-center hw-48">
          <div class="fancyinput w-100">
             <input type="text" name='bform' id='bform' placeholder="B Form" pattern='[0-9]{5}-[0-9]{7}-[0-9]' oninput='formatAsCnic(event)' required>
             <label for="Name">B Form</label>
          </div>
       </div>
-
+      <div class="flexcol col-center hw-48">
+         <div class="fancyinput w-100">
+            <input type="text" name='phone' id='phone' placeholder="Phone" pattern='0[0-9]{3}-[0-9]{7}' oninput="formatAsPhone(event)" required>
+            <label for="Name">Phone</label>
+         </div>
+      </div>
    </div>
    <div class="flexrow justify-content-between mb-4 px-10 auto-col">
       <div class="flexcol col-center hw-48">
