@@ -16,7 +16,9 @@ class SectionController extends Controller
     public function index()
     {
         //
-
+        $registrations = Registration::all();
+        $sections = Section::all();
+        return view('sections.index', compact('sections', 'registrations'));
     }
 
     /**
@@ -48,7 +50,11 @@ class SectionController extends Controller
      */
     public function show(Section $section)
     {
-        //
+        $id_as_array = array('id' => $section->id);
+
+        //left over section for movement purpose
+        $sections = Section::whereNotIn('id', $id_as_array)->get();
+        return view('sections.show', compact('section', 'sections'));
     }
 
     /**
@@ -84,15 +90,15 @@ class SectionController extends Controller
     {
         //
     }
-    public function viewAssignSection()
+    public function viewAssignSection(Section $section)
     {
-        //assign section to enrolled students only
-        $sections = Section::all();
-        $registrations = Registration::whereNotNull('admno')
+        //assign section to fee payers only
+        $registrations = Registration::whereNotNull('paidat')
             ->whereNull('section_id')
-            ->orderBy('admno')
+            ->orderBy('group_id')
+            ->orderBy('marks', 'desc')
             ->get();
-        return view('sections.assign', compact('registrations', 'sections'));
+        return view('sections.assign', compact('registrations', 'section'));
     }
 
     public function postAssignSection(Request $request)
@@ -146,5 +152,27 @@ class SectionController extends Controller
         $registration->save();
         return redirect()->back()
             ->with('success', "Roll no. " . $registration->classrollno . ' successfully moved to ' . $registration->section->name);
+    }
+
+    public function autoAssignRollNos(Request $request)
+    {
+        $request->validate([
+            'section_id' => 'required',
+        ]);
+
+        //auto assign class roll nos
+        $section = Section::find($request->section_id);
+        $registrations = $section->registrations()
+            ->orderBy('group_id')
+            ->orderBy('marks', 'desc')
+            ->get();
+        $sr = 1;
+        foreach ($registrations as $registration) {
+            $registration->classrollno = $section->id * 100 + $sr;
+            $registration->save();
+            $sr++;
+        }
+        return response()->json(['msg' => "Successful"]);
+        //}
     }
 }

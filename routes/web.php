@@ -39,7 +39,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post("payfee/{reg_id}", [FeeController::class, 'payfee']);
     Route::get("showcancelfee", [FeeController::class, 'showcancelfee']);
     Route::post("cancelfee/{reg_id}", [FeeController::class, 'cancelfee']);
-
+    Route::get("printSection/{id}", [PrintController::class, 'printSection']);
     Route::resource('print', PrintController::class)->only(['index']);
     Route::post("preview", [PrintController::class, 'preview']);
     Route::put("uploadimage/{registration}", [RegistrationController::class, 'uploadimage'])->name('uploadimage');
@@ -49,9 +49,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::view("viewAutoEnroll", "registrations.autoEnroll");
     Route::post("postAutoEnroll", [RegistrationController::class, 'postAutoEnroll']);
 
-    Route::get("viewAssignSection", [SectionController::class, 'viewAssignSection']);
-    Route::post("postAssignSection", [SectionController::class, 'postAssignSection']);
+    Route::resource('sections', SectionController::class);
+    Route::get("viewAssignSection/{section}", [SectionController::class, 'viewAssignSection']);
+    Route::post("postAssignSection", [SectionController::class, 'postAssignSection'])->name('postAssignSection');
     Route::get("viewDetachSection", [SectionController::class, 'viewDetachSection']);
-    Route::post("postDetachSection", [SectionController::class, 'postDetachSection']);
-    Route::post("postMoveSection", [SectionController::class, 'postMoveSection']);
+    Route::post("postDetachSection", [SectionController::class, 'postDetachSection'])->name('postDetachSection');
+    Route::post("postMoveSection", [SectionController::class, 'postMoveSection'])->name('postMoveSection');
+    Route::post("autoAssignRollNos", [SectionController::class, 'autoAssignRollNos'])->name('autoAssignRollNos');
 });

@@ -4,7 +4,7 @@
 @endsection
 @section('page')
 <!-- page title -->
-<div class="flexrow row-mid-left txt-m bg-light-grey vh-10 px-10">Auto Enroll</div>
+<div class="flexrow row-mid-left txt-m text-light bg-teal vh-10 px-10">Auto Enroll</div>
 
 @if ($errors->any())
 <div class="alert alert-danger mx-10 mt-5">

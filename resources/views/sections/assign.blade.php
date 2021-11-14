@@ -4,8 +4,8 @@
 @endsection
 @section('page')
 <!-- page title -->
-<div class="flexrow row-mid-left justify-content-between txt-m bg-light-grey px-10 py-2 auto-col">
-   <div>Students' Pool <span class='bage badge-pill badge-success ml-2 p-0 px-2 txt-s'>{{$registrations->count()}}</span></div>
+<div class="flexrow row-mid-left justify-content-between txt-m bg-teal px-10 py-2 auto-col">
+   <div class="text-light">Students' Pool<span class='bage badge-pill badge-success ml-2 p-0 px-2 txt-s'>{{$registrations->count()}}</span></div>
    <div><input type="text" class='input-rounded' placeholder="Search" oninput="search(event)"><i data-feather='search' class="feather-small" style="position:relative; right:24; top:-2px"></i></div>
 </div>
 
@@ -28,18 +28,12 @@
 @endif
 <!-- page content -->
 <div class="flexrow hw-100 justify-content-between row-mid-left px-10 my-4 auto-col">
+   <div class="txt-l txt-b txt-red">{{$section->name}} <span class='bage badge-pill badge-warning ml-2 p-0 px-2 txt-s'>{{$section->count()}}</span></div>
    <div class="auto-expand hw-60 txt-xs text-justify">
       <i data-feather='help-circle' class="feather-small" style="position:relative; top:-2px"></i>
       Students' pool contains those student who are still waiting for any section. Check single/multiple students from pool and click on assign section button
    </div>
-   <div class="fancyselect auto-expand hw-15">
-      <select name="" id="section_id">
-         @foreach($sections as $section)
-         <option value="{{$section->id}}">{{$section->name}}</option>
-         @endforeach
-      </select>
-      <label for="">Section</label>
-   </div>
+   <input type="hidden" id='section_id' value="{{$section->id}}">
    <div style="position:relative" class="hw-20 auto-expand">
       <button type='button' class="btn btn-success hw-100" onclick="assignSection()">Assign Section</button>
       <div class="flexrow row-center txt-s border rounded-circle box-20 txt-green" id='chkCount' style="position: absolute; right:-10px; top:8px; background-color:orange">0</div>
@@ -48,16 +42,18 @@
 </div>
 
 <div class="flexrow mx-10 px-2 mb-2 txt-b bg-info ">
-   <div class="flexcol col-mid-left hw-10">Roll # </div>
-   <div class="flexcol col-mid-left hw-60">Name </div>
+   <div class="flexcol col-mid-left hw-10">Form # </div>
+   <div class="flexcol col-mid-left hw-50">Name </div>
+   <div class="flexcol col-center hw-10">Marks </div>
    <div class="flexcol col-mid-left hw-20">Group </div>
    <div class="flexcol col-mid-right hw-10"> <input type="checkbox" id='chkAll' onclick="chkAll()"></div>
 </div>
 
 @foreach($registrations as $registration)
 <div class="flexrow mx-10 px-2 my-1 tr">
-   <div class="flexcol col-mid-left hw-10">{{$registration->classrollno}} </div>
-   <div class="flexcol col-mid-left hw-60"> {{$registration->name}} </div>
+   <div class="flexcol col-mid-left hw-10">{{$registration->id}} </div>
+   <div class="flexcol col-mid-left hw-50"> {{$registration->name}} </div>
+   <div class="flexcol col-center hw-10"> {{$registration->marks}} </div>
    <div class="flexcol col-mid-left hw-20">{{$registration->group->name}} </div>
    <div class="flexcol col-mid-right hw-10"> <input type="checkbox" name='chk' value='{{$registration->id}}' onclick="updateChkCount()"></div>
 </div>
@@ -72,6 +68,8 @@ function assignSection() {
    var token = $("meta[name='csrf-token']").attr("content");
 
    var section_id = $('#section_id').val();
+
+
    var ids_array = [];
    var chks = document.getElementsByName('chk');
    chks.forEach((chk) => {
@@ -97,7 +95,7 @@ function assignSection() {
          if (result.value) {
             $.ajax({
                type: 'POST',
-               url: "postAssignSection",
+               url: "{{route('postAssignSection')}}",
                data: {
                   "section_id": section_id,
                   "ids_array": ids_array,
@@ -152,7 +150,7 @@ function search(event) {
       if (!(
             $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
             $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
-            $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
+            $(this).children().eq(3).prop('outerText').toLowerCase().includes(searchtext)
          )) {
          $(this).addClass('hide');
       } else {

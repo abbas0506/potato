@@ -130,7 +130,7 @@ class PrintController extends Controller
                 ->get();
             $registrations = Registration::whereBetween("paidat", [$from, $to])
                 ->where('paidat', '!=', null)
-                ->orderBy('paidat', 'asc')
+                ->orderBy('group_id', 'asc')
                 ->orderBy('marks', 'desc')
                 ->get();
 
@@ -147,7 +147,7 @@ class PrintController extends Controller
                 ->get();
             $registrations = Registration::where('paidat', '!=', null)
                 ->where("paidat", ">=", $from)
-                ->orderBy('paidat', 'asc')
+                ->orderBy('group_id', 'asc')
                 ->orderBy('marks', 'desc')
                 ->get();
 
@@ -161,7 +161,7 @@ class PrintController extends Controller
                 ->get();
             $registrations = Registration::where('paidat', '!=', null)
                 ->where("paidat", "<=", $to)
-                ->orderBy('paidat', 'asc')
+                ->orderBy('group_id', 'asc')
                 ->orderBy('marks', 'desc')
                 ->get();
 
@@ -251,6 +251,19 @@ class PrintController extends Controller
         $sections = Section::all();
 
         $pdf = PDF::loadView('print.studentDetail', compact('sections'));
+        $pdf->output();
+
+        $dom_pdf = $pdf->getDomPDF();
+        $canvas = $dom_pdf->get_canvas();
+        $canvas->page_text(500, 800, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 8, array(0, 0, 0));
+
+        return $pdf->setPaper('a4', 'landscape')->stream();
+    }
+
+    public function printSection($id)
+    {
+        $section = Section::find($id);
+        $pdf = PDF::loadView('print.section', compact('section'));
         $pdf->output();
 
         $dom_pdf = $pdf->getDomPDF();

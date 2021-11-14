@@ -6,6 +6,7 @@ use App\Models\Registration;
 use App\Models\Group;
 use App\Models\Bise;
 use App\Models\Preschool;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -198,16 +199,10 @@ class RegistrationController extends Controller
 
         return redirect()->route('registration.edit', $registration);
     }
-    public function assignClassRollNo()
-    {
-
-        $registrations = Registration::orderBy('classrollno')->get();
-        return view('registrations.showbyclassrollno', compact('registrations'));
-    }
 
     public function postAutoEnroll(Request $request)
     {
-        //auto assign class roll nos. and admission nos. to fee payers only
+        //auto assign admission nos. to fee payers only
         // admission nos. will start from given value
         $request->validate([
             'startvalue' => 'required',
@@ -223,23 +218,8 @@ class RegistrationController extends Controller
             $admno++;
         }
 
-        //assign class roll nos.
-        $groups = Group::all();
-        foreach ($groups as $group) {
-            $registrations = $group->registrations()
-                ->whereNotNull('paidat')
-                ->orderBy('group_id', 'asc')
-                ->orderBy('marks', 'desc')
-                ->get();
-            $sr = 1;
-            foreach ($registrations as $registration) {
-                $registration->classrollno = $group->id * 100 + $sr;
-                $registration->save();
-                $sr++;
-            }
-        }
         //forward all those who have been successfully enrolled
-        $registrations = Registration::whereNotNull('admno')->orderBy('classrollno', 'asc')->get();
+        $registrations = Registration::whereNotNull('admno')->orderBy('admno', 'asc')->get();
         return view('registrations.autoEnrolled', compact('registrations'));
     }
 }

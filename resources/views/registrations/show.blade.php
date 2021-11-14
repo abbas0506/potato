@@ -4,7 +4,7 @@
 @endsection
 @section('page')
 <!-- page title -->
-<div class="flexrow row-mid-left txt-green txt-b txt-m bg-light-grey px-10 py-2">Student Profile - Form No. {{$registration->id}}</div>
+<div class="flexrow row-mid-left txt-green txt-b txt-m bg-teal px-10 py-2">Student Profile - Form No. {{$registration->id}}</div>
 <!-- select an option -->
 <div class="flexrow justify-content-between auto-col px-10 mt-5 mb-5">
    <div class="flexcol col-mid-left">

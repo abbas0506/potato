@@ -13,10 +13,14 @@ class Section extends Model
         'name',
         'fee'
     ];
+    public $timestamps = false;
 
     public function registrations()
     {
         return $this->hasMany(Registration::class, 'section_id');
     }
-    public $timestamps = false;
+    public function count()
+    {
+        return $this->registrations()->count();
+    }
 }

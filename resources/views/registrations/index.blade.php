@@ -52,20 +52,20 @@
    <div class="flexcol col-mid-left hw-30">Name </div>
    <div class="flexcol col-mid-left hw-15">Marks </div>
    <div class="flexcol col-mid-left hw-15">Group </div>
-   <div class="flexcol col-mid-left hw-10">Scrutiny </div>
+   <div class="flexcol col-center hw-10">Scrutiny </div>
    <div class="flexcol col-center hw-10">Fee</div>
 
-   <div class="flexcol col-mid-left hw-10"> <i data-feather='more-horizontal' class="feather-small mx-4"></i></div>
+   <div class="flexcol col-center hw-10"> <i data-feather='more-horizontal' class="feather-small mx-4"></i></div>
 </div>
 
 @foreach($registrations as $registration)
 <div class="flexrow pl-2 mx-5 my-1 tr">
    <div class="flexcol col-mid-left hw-10">{{$registration->id}} </div>
-   <div class="flexcol col-mid-left hw-30"> {{$registration->name}} </div>
+   <div class="flexcol col-mid-left hw-30"><a href="{{route('registration.show',$registration)}}"> {{$registration->name}}</a> </div>
    <div class="flexcol col-mid-left hw-15">{{$registration->marks}} </div>
    <div class="flexcol col-mid-left hw-15">{{$registration->group->name}} </div>
 
-   <div class="flexcol col-mid-left hw-10">
+   <div class="flexcol col-center hw-10">
       @if($registration->deficiencyCode())
       <a href="scrutinize/{{$registration->id}}">
          <span class="txt-red txt-s">{{$registration->deficiencyCode()}}</span>
@@ -86,9 +86,8 @@
       @endif
 
    </div>
-   <div class="flexcol col-mid-left hw-10">
+   <div class="flexcol col-center hw-10">
       <div class="flexrow justify-content-between">
-         <div><a href="{{route('registration.show',$registration)}}"><i data-feather='eye' class="feather-xsmall mx-1"></i></a></div>
          <div><a href="{{route('registration.edit',$registration)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a></div>
          <div>
             <form action="{{route('registration.destroy',$registration)}}" method="POST" id='deleteform{{$registration->id}}'>
