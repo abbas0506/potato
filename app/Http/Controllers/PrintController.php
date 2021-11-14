@@ -125,7 +125,7 @@ class PrintController extends Controller
             $summary = Registration::join('groups', 'group_id', '=', 'groups.id')
                 ->whereBetween("registrations.paidat", [$from, $to])
                 ->where('paidat', '!=', null)
-                ->select('paidat', 'groups.*', DB::raw('count(*) as n'), DB::raw('sum(fee) as fee'))
+                ->select('paidat', 'groups.*', DB::raw('count(*) as n'), DB::raw('sum(fee)-sum(concession) as fee'))
                 ->groupBy('paidat')
                 ->get();
             $registrations = Registration::whereBetween("paidat", [$from, $to])
@@ -142,7 +142,7 @@ class PrintController extends Controller
             $summary = Registration::join('groups', 'group_id', '=', 'groups.id')
                 ->where('paidat', '!=', null)
                 ->where("paidat", ">=", $from)
-                ->select('paidat', 'groups.*', DB::raw('count(*) as n'), DB::raw('sum(fee) as fee'))
+                ->select('paidat', 'groups.*', DB::raw('count(*) as n'), DB::raw('sum(fee)-sum(concession) as fee'))
                 ->groupBy('paidat')
                 ->get();
             $registrations = Registration::where('paidat', '!=', null)
@@ -156,7 +156,7 @@ class PrintController extends Controller
             $summary = Registration::join('groups', 'group_id', '=', 'groups.id')
                 ->where('paidat', '!=', null)
                 ->where("paidat", "<=", $to)
-                ->select('paidat', 'groups.*', DB::raw('count(*) as n'), DB::raw('sum(fee) as fee'))
+                ->select('paidat', 'groups.*', DB::raw('count(*) as n'), DB::raw('sum(fee)-sum(concession) as fee'))
                 ->groupBy('paidat')
                 ->get();
             $registrations = Registration::where('paidat', '!=', null)
@@ -169,7 +169,7 @@ class PrintController extends Controller
         } else {
             $summary = Registration::join('groups', 'group_id', '=', 'groups.id')
                 ->where('paidat', '!=', null)
-                ->select('paidat', 'groups.*', DB::raw('count(*) as n'), DB::raw('sum(fee) as fee'))
+                ->select('paidat', 'groups.*', DB::raw('count(*) as n'), DB::raw('sum(fee)-sum(concession) as fee'))
                 ->groupBy('paidat')
                 ->get();
             $registrations = Registration::where('paidat', '!=', null)

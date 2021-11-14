@@ -100,9 +100,9 @@
             <td class="w-25 txt-b txt-s">Name</td>
             <td class="w-10 txt-b txt-s">Marks</td>
             <td class="w-15 txt-b txt-s">Group</td>
-            <td class="w-15 txt-b txt-s">Phone</td>
             <td class="w-10 txt-b txt-s">Fee</td>
-            <td class="w-15 txt-b txt-s txt-right">Paid at</td>
+            <td class="w-10 txt-b txt-s">Conc.</td>
+            <td class="w-10 txt-b txt-s">Paid</td>
          </tr>
 
       </thead>
@@ -113,9 +113,10 @@
             <td class="txt-s">{{$registration->name}}</td>
             <td class="txt-s">{{$registration->marks}}</td>
             <td class="txt-s">{{$registration->group->name}}</td>
-            <td class="txt-s">{{$registration->phone}}</td>
             <td class="txt-s">{{$registration->group->fee}}</td>
-            <td class="txt-s txt-right">{{$registration->paidat->format('d-m-Y')}}</td>
+            <td class="txt-s">{{$registration->concession}}</td>
+            <td class="txt-s">{{$registration->group->fee -$registration->concession }}</td>
+
          </tr>
          @endforeach
       </tbody>
