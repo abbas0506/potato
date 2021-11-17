@@ -57,6 +57,9 @@ class PrintController extends Controller
             case 5:
                 return $this->previewStudentDetail();
                 break;
+            case 6:
+                return $this->previewSectionByFormNo();
+                break;
         }
     }
 
@@ -264,6 +267,20 @@ class PrintController extends Controller
     {
         $section = Section::find($id);
         $pdf = PDF::loadView('print.section', compact('section'));
+        $pdf->output();
+
+        $dom_pdf = $pdf->getDomPDF();
+        $canvas = $dom_pdf->get_canvas();
+        $canvas->page_text(500, 800, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 8, array(0, 0, 0));
+
+        return $pdf->setPaper('a4', 'landscape')->stream();
+    }
+
+    public function previewSectionByFormNo()
+    {
+        $sections = Section::all();
+        $registrations = Registration::whereNotNull('section_id')->get();
+        $pdf = PDF::loadView('print.sectionByFormNo', compact('registrations', 'sections'));
         $pdf->output();
 
         $dom_pdf = $pdf->getDomPDF();

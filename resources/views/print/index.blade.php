@@ -18,7 +18,7 @@
             <option value='3'>Auto enrollment</option>
             <option value='4'>Section wise enrollment</option>
             <option value='5'>Student Detail</option>
-            <option value='6'>Session summary</option>
+            <option value='6'>Section Labelling</option>
          </select>
          <label for="Name">What to print?</label>
       </div>
