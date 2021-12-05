@@ -98,7 +98,9 @@ class UserController extends Controller
                 session([
                     'user' => $user,
                 ]);
-                return redirect()->route('registration.index');
+                if ($user->userid == 'admin') return redirect('admin');
+                else if ($user->userid == 'user') return redirect('user');
+                else echo "some invalid user";
             } else {
                 return redirect()->back()->with('error', "User not found");
             }

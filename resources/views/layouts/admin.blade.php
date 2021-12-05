@@ -16,11 +16,14 @@
 
 <body>
    <!-- app header -->
-   <div class="flexrow row-mid-left border-bottom py-3 sticky-top">
-      <div class="txt-l txt-b hw-30 ml-4 text-primary">
-         <img src="{{url(asset('images/logo.jpg'))}}" alt="" width=200 height=40>
+   <div class="frow mid-left border-bottom py-3 px-5">
+      <div class="fcol w-80 "><img src="{{url(asset('images/logo.png'))}}" alt="" width=100 height=50></div>
+      <div class="frow w-20 mid-right">
+         <span class="txt-b"> Admin Panel</span>
+         <span class="mx-2">|</span>
+         <a href="{{route('signout')}}">Sign Out</a>
       </div>
-      <div class="text-right hw-70 mr-3">{{session('user')->userid}} | <a href="{{route('signout')}}">Sign Out</a></div>
+
    </div>
 
    @yield('page-header')

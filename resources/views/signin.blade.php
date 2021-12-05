@@ -26,9 +26,9 @@
 </head>
 
 <body style="height:100vh;">
-   <div class="flexrow row-mid-right vh-10 mx-5">Session 2021-23</div>
-   <div class="flexrow row-mid-right vh-40 mx-5">
-      <div class="flexcol hw-25">
+
+   <div class="frow mid-right h-60 mx-5">
+      <div class="fcol hw-25">
 
          <!-- if signin credentials incorrect    -->
          @if(session('error'))
@@ -51,14 +51,12 @@
          </form>
       </div>
    </div>
-   <div class="flexrow h-50 mx-10">
-      <div class="flexcol col-mid-left">
+   <div class="frow h-40 mid-left mx-10">
+      <div class="fcol mid-left">
          <div class="txt-xl mb-2 text-warning">
-            <h1>College Admission System</h1>
+            <h1>Potato System</h1>
          </div>
-         <div class="txt-m text-justify text-success">Student Information System provides an easy way to complete admission
-            process at college level. It provides up to date status of all applications for admission. It maintains
-            group wise summary and detail as well.</div>
+         <div class="txt-m text-justify text-success">An automated system for potato deals. It facilitates purchase and sale deals in different varieties of potato. </div>
       </div>
    </div>
 </body>

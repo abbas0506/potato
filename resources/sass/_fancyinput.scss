@@ -4,15 +4,16 @@
         visibility: hidden;
         position: absolute;
         top: 0;
+        font-size: 0.8rem;
         left: 10px;
         transition: 0.5s;
+        color: $custom-blue;
     }
     input {
         font-family: inherit;
         width: 100%;
-        border-bottom: 1px solid rgba($primary, 0.2);
-        font-size: 1.0rem;
-        padding: 10px;
+        font-size: 1rem;
+        padding: 8px;
         outline: none;
         border: 1px solid rgba($primary, 0.2);
         border-radius: 0px;
@@ -20,7 +21,7 @@
         background-color: transparent;
         transition: border-color 0.2s;
         &:not(:placeholder-shown)~label {
-            color: $primary;
+            // color: rgb(113, 112, 148);
             top: -12px;
             padding: 0px 2px;
             left: 10px;
@@ -32,8 +33,12 @@
             background-color: white;
         }
         &:focus {
-            border-color: #85a897;
+            background-color: rgba($primary, 0.2);
+            border-color: rgba($primary, 0.8);
             transition: border-color 0.2s;
+        }
+        &:focus~label {
+            background-color: transparent;
         }
     }
     textarea {
@@ -49,11 +54,14 @@
             background-color: white;
         }
         &:focus {
-            //outline: 1px solid royalblue;
             outline: none;
             border: 1px solid royalblue;
             box-shadow: none;
             transition: 0.5s ease;
+        }
+        &:not(:focus)~label span {
+            display: none;
+            transition: all 0.5s ease;
         }
     }
 }
@@ -63,21 +71,29 @@
     select {
         font-family: inherit;
         width: 100%;
-        border: 1px solid rgba($dark, 0.2);
+        border: 1px solid rgba($primary, 0.2);
         outline: 0;
-        font-size: 1.0rem;
-        padding: 10px;
+        font-size: 1rem;
+        padding: 8px;
         border-radius: 0px;
         background-color: transparent;
         transition: border-color 0.2s;
+        &:focus {
+            background-color: rgba($primary, 0.3);
+            border-color: rgba($primary, 0.5);
+            transition: border-color 0.2s;
+        }
+        &:focus~label {
+            background-color: transparent;
+        }
         option {
             background-color: rgba(white, 0.5);
-            color: $dark;
+            color: #333;
         }
     }
     label {
         position: absolute;
-        color: $primary;
+        color: $custom-blue;
         top: -10px;
         left: 10px;
         padding: 0px 2px;
@@ -88,15 +104,64 @@
     }
 }
 
-//rounded input for search
-.input-rounded {
-    border-style: solid;
-    border-width: thin;
-    border-color: silver;
-    border-radius: 50px;
-    width: 200px;
-    padding: 0px 25px 0px 15px;
-    &:focus {
+.fancyselect-underline {
+    position: relative;
+    select {
+        font-family: inherit;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid rgba($primary, 0.2);
         outline: 0;
+        font-size: 1.0rem;
+        padding: 5px;
+        border-radius: 0px;
+        background-color: transparent;
+        transition: border-color 0.2s;
+        &:focus {
+            background-color: rgba($primary, 0.3);
+            border-color: rgba($primary, 0.5);
+            transition: border-color 0.2s;
+        }
+        &:focus~label {
+            background-color: transparent;
+        }
+        option {
+            background-color: rgba(white, 0.5);
+            color: #333;
+        }
+    }
+    label {
+        position: absolute;
+        color: $primary;
+        top: -5px;
+        left: 10px;
+        padding: 0px 2px;
+        font-size: 0.8rem;
+        visibility: visible;
+        background-color: white;
+        transition: 0.5s;
+    }
+}
+
+//rounded input for search
+.fancy-search-grow {
+    input {
+        border-style: solid;
+        border-width: thin;
+        border-color: silver;
+        border-radius: 50px;
+        width: 30%;
+        line-height: 1.2rem;
+        background-color: transparent;
+        padding: 5px 15px 5px 15px;
+        &:focus {
+            outline: 0;
+            transition: 1s;
+        }
+        &:not(:placeholder-shown) {
+            outline: 0;
+            width: 40%;
+            transition: 1s;
+        }
     }
 }
