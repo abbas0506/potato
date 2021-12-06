@@ -2,7 +2,7 @@
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
    <div class="txt-l txt-b">Clients</div>
-   <div class="frow"> <a href='admin' class="hover-orange"> Home </a> <span class="mx-2">/</span>
+   <div class="frow"> <a href="{{url('admin')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{route('clients.index')}}" class="hover-orange"> Clients list </a> <span class="mx-2">/</span> Edit
    </div>
 

@@ -21,7 +21,7 @@
       <div class="frow w-20 mid-right">
          <span class="txt-b"> Admin Panel</span>
          <span class="mx-2">|</span>
-         <a href="{{route('signout')}}">Sign Out</a>
+         <a href="{{url('admin/signout')}}">Sign Out</a>
       </div>
 
    </div>

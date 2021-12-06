@@ -3,15 +3,13 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
-
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\PurchaseController;
 
-use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\ScrutinyController;
-use App\Http\Controllers\FeeController;
-use App\Http\Controllers\SectionController;
-use App\Http\Controllers\PrintController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,14 +27,15 @@ Route::get('/', function () {
 Route::post('signin', [UserController::class, 'signin']);
 
 Route::group(['middleware' => 'admin'], function () {
-    Route::view('admin', 'admin.index');
+    Route::get('admin', [UserController::class, 'index'])->name('admin');
     Route::resource('products', ProductController::class);
     Route::resource('clients', ClientController::class);
-    Route::get('signout', [UserController::class, 'signout'])->name('signout');
+    Route::resource('stores', StoreController::class);
+    Route::get('admin/signout', [UserController::class, 'signout']);
 });
 Route::group(['middleware' => 'user'], function () {
     Route::view('user', 'user.index');
-    // Route::resource('products', ProductController::class);
+    Route::resource('purchases', PurchaseController::class);
     // Route::resource('clients', ClientController::class);
-    Route::get('signout', [UserController::class, 'signout'])->name('signout');
+    Route::get('user/signout', [UserController::class, 'signout']);
 });

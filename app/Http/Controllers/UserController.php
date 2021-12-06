@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Product;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +19,14 @@ class UserController extends Controller
     public function index()
     {
         //
+        if (session('user')) {
+            if (session('user')->userid == 'admin') {
+                $products = Product::all();
+                $clients = Client::all();
+                $stores = Store::all();
+                return view('admin.index', compact('products', 'clients', 'stores'));
+            }
+        }
     }
 
     /**
@@ -98,7 +109,7 @@ class UserController extends Controller
                 session([
                     'user' => $user,
                 ]);
-                if ($user->userid == 'admin') return redirect('admin');
+                if ($user->userid == 'admin') return redirect()->route('admin');
                 else if ($user->userid == 'user') return redirect('user');
                 else echo "some invalid user";
             } else {
