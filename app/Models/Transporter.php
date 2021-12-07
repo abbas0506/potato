@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Preschool extends Model
+class Transporter extends Model
 {
     use HasFactory;
     protected $fillable = [
         'name',
+        'phone',
+        'address',
     ];
 
     public $timestamps = false;

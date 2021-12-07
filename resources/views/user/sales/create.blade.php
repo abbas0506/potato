@@ -18,14 +18,10 @@
          <form action="{{route('purchases.store')}}" method='post'>
             @csrf
             <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div>
-            <div class="frow stretched mt-4">
-               <div class="fancyinput w-24">
+            <div class="fcol w-24 mt-4">
+               <div class="fancyinput">
                   <input type="date" name='dateon' placeholder="Enter name" required>
                   <label for="Name">Date (mm-dd-yyyy)</label>
-               </div>
-
-               <div class="fcol centered bg-info border-left border-right border-1 border-primary w-40 py-2 txt-m">
-                  price
                </div>
             </div>
             <div class="frow stretched mt-3">
@@ -80,8 +76,8 @@
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='unitprice' value="0" required>
-                  <label for="Name">Unit Price</label>
+                  <input type="number" name='basicprice' min="0" value="0" required>
+                  <label for="Name">Basic Price</label>
                </div>
                <div class="fancyinput w-48">
                   <input type="number" name='commission' min="0" value="0" required>
@@ -111,6 +107,111 @@
                </div>
             </div>
 
+            <!-- tranportation -->
+
+            <div class="txt-m txt-b txt-blue mt-5 px-4 border-left border-2 border-success">Transportation</div>
+            <div class="frow stretched mt-4">
+               <div class="fancyselect w-48">
+                  <select name="transporter_id" id="">
+                     <option value="">Select an option ...</option>
+                     @foreach($transporters as $transporter)
+                     <option value="{{$transporter->id}}">{{$transporter->name}}</option>
+                     @endforeach
+                  </select>
+                  <label for="Name">Transport Company</label>
+               </div>
+               <div class="fancyinput w-48">
+                  <input type="text" name='vehicle' placeholder="Vehicle No." value="" required>
+                  <label for="Name">Vehicle No.</label>
+               </div>
+
+            </div>
+
+            <!-- Sale -->
+            <div class="txt-m txt-b mt-5 txt-red px-4 border-left border-2 border-success">Sale</div>
+            <div class="frow stretched mt-4">
+               <div class="fancyselect w-100">
+                  <select name="buyer_id" id="">
+                     <option value="">Select an option ...</option>
+                     @foreach($clients as $client)
+                     <option value="{{$client->id}}">{{$client->name}}</option>
+                     @endforeach
+                  </select>
+                  <label for="Name">Client (Buyer)</label>
+               </div>
+            </div>
+            <div class="frow stretched mt-4">
+               <div class="fancyinput w-48">
+                  <div class="frow stretched">
+                     <div class="fancyinput w-48">
+                        <input type="number" name='numofbori' min="0" value="0" required>
+                        <label for="Name">Number of Bori</label>
+                     </div>
+                     <div class="fancyinput w-48">
+                        <input type="number" name='numoftora' min="0" value="0" required>
+                        <label for="Name">Number of Tora</label>
+                     </div>
+                  </div>
+
+               </div>
+               <div class="fancyinput w-48">
+                  <div class="frow stretched">
+                     <div class="fancyinput w-48">
+                        <input type="number" name='numofbori' min="0" value="0" required>
+                        <label for="Name">Gross Weight</label>
+                     </div>
+                     <div class="fancyinput w-48">
+                        <input type="number" name='numoftora' min="0" value="0" required>
+                        <label for="Name">Actual Weight</label>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+            <div class="frow stretched mt-4">
+               <div class="fancyinput w-48">
+                  <input type="number" name='lumsumcomm' value="0" min="0">
+                  <label for="Name">Lumsum Commission</label>
+               </div>
+               <div class="fancyinput w-48">
+                  <input type="number" name='lumsumcomm' value="0" min="0">
+                  <label for="Name">Sales Price</label>
+               </div>
+
+            </div>
+
+            <!-- Storage -->
+            <div class="txt-m txt-b mt-5 txt-red px-4 border-left border-2 border-success">Storage</div>
+            <div class="frow stretched mt-4">
+               <div class="fancyselect w-100">
+                  <select name="store_id" id="">
+                     <option value="">Select an option ...</option>
+                     @foreach($stores as $store)
+                     <option value="{{$store->id}}">{{$store->name}}</option>
+                     @endforeach
+                  </select>
+                  <label for="Name">Cold Store</label>
+               </div>
+            </div>
+            <div class="frow stretched mt-4">
+               <div class="fancyinput w-48">
+                  <input type="number" name='storagecost' value="0" min="0">
+                  <label for="Name">Storage Cost</label>
+               </div>
+               <div class="fancyinput w-48">
+                  <div class="frow stretched">
+                     <div class="fancyinput w-48">
+                        <input type="number" name='numofbori' min="0" value="0" required>
+                        <label for="Name">Number of Bori</label>
+                     </div>
+                     <div class="fancyinput w-48">
+                        <input type="number" name='numoftora' min="0" value="0" required>
+                        <label for="Name">Number of Tora</label>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
             <div class="frow mid-right mt-4">
                <button type="submit" class="btn btn-primary">Submit</button>
             </div>

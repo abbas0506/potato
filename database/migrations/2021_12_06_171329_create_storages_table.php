@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSalesTable extends Migration
+class CreateStoragesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,29 +13,23 @@ class CreateSalesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales', function (Blueprint $table) {
+        Schema::create('storages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('purchase_id');
-            $table->unsignedBigInteger('client_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedInteger('grossweight');
-            $table->unsignedInteger('saleprice');
-            $table->unsignedInteger('commission');
+            $table->unsignedInteger('storagecost');
             $table->unsignedBigInteger('transporter_id');
             $table->string('vehicleno', 20);
             $table->unsignedInteger('carriage');
+            $table->string('note', 200); //room detail etc
 
             $table->foreign('purchase_id')
                 ->references('id')
                 ->on('purchases')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('client_id')
-                ->references('id')
-                ->on('clients')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+
             $table->foreign('transporter_id')
                 ->references('id')
                 ->on('transporters')
@@ -54,6 +48,6 @@ class CreateSalesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('storages');
     }
 }

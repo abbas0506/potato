@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Product;
 use App\Models\Store;
+use App\Models\Transporter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +25,8 @@ class UserController extends Controller
                 $products = Product::all();
                 $clients = Client::all();
                 $stores = Store::all();
-                return view('admin.index', compact('products', 'clients', 'stores'));
+                $transporters = Transporter::all();
+                return view('admin.index', compact('products', 'clients', 'stores', 'transporters'));
             }
         }
     }

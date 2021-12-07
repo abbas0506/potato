@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bise extends Model
+class Waste extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'purchase_id',
+        'numofbori',
+        'numoftora',
+        'note',
     ];
-
-    public $timestamps = false;
 }

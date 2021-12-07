@@ -16,20 +16,19 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('product_id');
-            $table->unsignedInteger('purchase_numofbori');
-            $table->unsignedInteger('purchase_numoftora');
-            $table->unsignedInteger('purchase_grossweight');
-            $table->unsignedInteger('purchase_actualweight');
-            $table->unsignedInteger('purchase_price');
-            $table->unsignedInteger('purchase_commission');
-            $table->unsignedInteger('purchase_bagscost');
-            $table->unsignedInteger('purchase_selectorcost');
-            $table->unsignedInteger('purchase_packingcost');
-            $table->unsignedInteger('purchase_loadingcost');
+            $table->unsignedInteger('numofbori');
+            $table->unsignedInteger('numoftora');
+            $table->unsignedInteger('grossweight');
+            $table->unsignedInteger('unitprice');
+            $table->unsignedInteger('commission');
+            $table->unsignedInteger('bagscost');
+            $table->unsignedInteger('selectorcost');
+            $table->unsignedInteger('packingcost');
+            $table->unsignedInteger('loadingcost');
 
-            $table->foreign('seller_id')
+            $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')
                 ->onUpdate('cascade')
