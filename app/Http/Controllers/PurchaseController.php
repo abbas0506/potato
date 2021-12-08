@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\Store;
 use App\Models\Transporter;
 use Illuminate\Http\Request;
+use Exception;
 
 class PurchaseController extends Controller
 {
@@ -47,6 +48,31 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'client_id' => 'required',
+            'product_id' => 'required',
+            'numofbori' => 'required',
+            'numoftora' => 'required',
+            'grossweight' => 'required',
+            'unitprice' => 'required',
+            'commission' => 'required',
+            'bagscost' => 'required',
+            'selectorcost' => 'required',
+            'packingcost' => 'required',
+            'loadingcost' => 'required',
+
+        ]);
+
+        try {
+
+            $new = Purchase::create($request->all());
+            $new->save();
+            return redirect()->route('purchases.index')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            //return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**
@@ -92,5 +118,14 @@ class PurchaseController extends Controller
     public function destroy(Purchase $purchase)
     {
         //
+    }
+
+    public function sell($id)
+    {
+        $purchase = Purchase::find($id);
+    }
+    public function preserve($id)
+    {
+        echo "store called";
     }
 }
