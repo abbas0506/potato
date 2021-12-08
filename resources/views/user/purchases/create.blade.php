@@ -11,6 +11,27 @@
 <div class="frow centered txt-s txt-grey my-2">{{now()}}</div>
 @endsection
 @section('page-content')
+
+<!-- display record save, del, update message if any -->
+@if ($errors->any())
+<div class="alert alert-danger mt-5">
+   <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+   </ul>
+</div>
+<br />
+@elseif(session('success'))
+<script>
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
+</script>
+@endif
 <!-- purchasing -->
 <div class="frow centered">
    <div class="fcol w-60">
@@ -24,7 +45,7 @@
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
 
-               <div class="fcol centered bg-info border-left border-right border-1 border-primary w-40 py-2 txt-m">
+               <div id='basicprice' class="fcol centered bg-info border-left border-right border-1 border-primary w-70 py-2 txt-m">
                   price
                </div>
             </div>
@@ -56,11 +77,11 @@
                <div class="fcol w-48">
                   <div class="frow stretched">
                      <div class="fancyinput w-48">
-                        <input type="number" name='numofbori' min="0" value="0" required>
+                        <input type="number" name='numofbori' id='numofbori' min="0" value="0" required oninput="calcPrice()">
                         <label for="Name">Number of Bori</label>
                      </div>
                      <div class="fancyinput w-48">
-                        <input type="number" name='numoftora' min="0" value="0" required>
+                        <input type="number" name='numoftora' id='numoftora' min="0" value="0" required oninput="calcPrice()">
                         <label for="Name">Number of Tora</label>
                      </div>
                   </div>
@@ -69,22 +90,22 @@
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='grosswieght' min="0" value="0" required>
+                  <input type="number" name='grossweight' id='grossweight' min="0" value="0" oninput='calcPrice()' required>
                   <label for="Name">Gross Weight</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="number" name='actualweight' min="0" value="0" required>
+                  <input type="number" name='actualweight' id='actualweight' min="0" value="0" disabled class="txt-b txt-red text-center">
                   <label for="Name">Actual Weight</label>
                </div>
             </div>
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='unitprice' value="0" required>
+                  <input type="number" name='unitprice' id='unitprice' value="0" oninput="calcPrice()" required>
                   <label for="Name">Unit Price</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="number" name='commission' min="0" value="0" required>
+                  <input type="number" name='commission' id='commission' min="0" value="0" oninput="calcPrice()" required>
                   <label for="Name">Commission</label>
                </div>
             </div>
@@ -92,21 +113,21 @@
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='bagscost' min="0" value="0" required>
+                  <input type="number" name='bagscost' id='bagscost' min="0" value="0" oninput="calcPrice()" required>
                   <label for="Name">Bags Cost</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="number" name='selectorcost' min="0" value="0" required>
+                  <input type="number" name='selectorcost' id='selectorcost' min="0" value="0" oninput="calcPrice()" required>
                   <label for="Name">Selector Cost</label>
                </div>
             </div>
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='packingcost' min="0" value="0" required>
+                  <input type="number" name='packingcost' id='packingcost' min="0" value="0" oninput="calcPrice()" required>
                   <label for="Name">Packing Cost</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="number" name='loadingcost' min="0" value="0" required>
+                  <input type="number" name='loadingcost' id='loadingcost' min="0" value="0" oninput="calcPrice()" required>
                   <label for="Name">Loading Cost</label>
                </div>
             </div>
@@ -138,22 +159,27 @@ function search(event) {
    });
 }
 
-function delme(formid) {
-   event.preventDefault();
-   Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-   }).then((result) => {
-      if (result.value) {
-         //submit corresponding form
-         $('#del_form' + formid).submit();
-      }
-   });
+function calcPrice() {
+   var actual = 0;
+   var gross = parseInt($('#grossweight').val())
+   var numofbori = parseInt($('#numofbori').val());
+   var numoftora = parseInt($('#numoftora').val());
+   var unitprice = parseInt($('#unitprice').val());
+
+   var commission = parseInt($('#commission').val());
+   var bagscost = parseInt($('#bagscost').val());
+   var selectorcost = parseInt($('#selectorcost').val());
+   var packingcost = parseInt($('#packingcost').val());
+   var loadingcost = parseInt($('#loadingcost').val());
+
+   var additionalcost = commission + bagscost + selectorcost + packingcost + loadingcost;
+
+   if (gross > 0)
+      actual = gross - 2 * numofbori - 1.5 * numoftora;
+
+   $('#actualweight').val(actual);
+   $('#basicprice').html("B.P: " + actual * unitprice + " + Addl: " + additionalcost + " = " + (actual * unitprice + additionalcost));
+
 }
 </script>
 @endsection

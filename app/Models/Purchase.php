@@ -9,7 +9,7 @@ class Purchase extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'seller_id',
+        'client_id',
         'product_id',
         'numofbori',
         'numoftora',
@@ -22,4 +22,13 @@ class Purchase extends Model
         'loadingcost',
 
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

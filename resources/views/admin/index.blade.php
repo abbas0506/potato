@@ -27,7 +27,7 @@
             <div class="txt-l txt-b txt-white">{{$stores->count()}}</div>
             <div class="txt-l my-2"><i data-feather='database' class="feather-larger text-light"></i></i></div>
          </div>
-         <div class="frow centered border-top py-2 text-light">Storage</div>
+         <div class="frow centered border-top py-2 text-light">Cold stores</div>
       </a>
    </div>
    <div class="fcol w-15 ml-5 border bg-teal">
