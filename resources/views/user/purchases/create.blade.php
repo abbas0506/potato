@@ -38,15 +38,17 @@ Swal.fire({
       <div class="w-100 bg-light my-3">
          <form action="{{route('purchases.store')}}" method='post'>
             @csrf
-            <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div>
+            <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
             <div class="frow stretched mt-4">
                <div class="fancyinput w-24">
-                  <input type="date" name='dateon' placeholder="Enter name" required>
+                  <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
 
-               <div id='basicprice' class="fcol centered bg-info border-left border-right border-1 border-primary w-70 py-2 txt-m">
-                  price
+               <div class="frow centered border border-1 border-primary w-50 py-2">
+                  <span class="badge badge-primary badge-sm txt-s">Basic</span> <span id='span_basicprice' class="mx-1">0</span> +
+                  <span class="badge badge-primary badge-sm txt-s ml-1">Addl</span> <span id='span_addlcost' class="mx-1">0</span> =
+                  <span id='span_total' class="txt-m txt-red mx-1">0</span>
                </div>
             </div>
             <div class="frow stretched mt-3">
@@ -145,6 +147,8 @@ Swal.fire({
 
 @section('script')
 <script lang="javascript">
+document.getElementById('dateon').valueAsDate = new Date();
+
 function search(event) {
    var searchtext = event.target.value.toLowerCase();
    var str = 0;
@@ -175,10 +179,13 @@ function calcPrice() {
    var additionalcost = commission + bagscost + selectorcost + packingcost + loadingcost;
 
    if (gross > 0)
-      actual = gross - 2 * numofbori - 1.5 * numoftora;
+      actual = gross - 2 * numofbori - 0.5 * numoftora;
 
    $('#actualweight').val(actual);
-   $('#basicprice').html("B.P: " + actual * unitprice + " + Addl: " + additionalcost + " = " + (actual * unitprice + additionalcost));
+   $('#span_basicprice').html(actual * unitprice);
+   $('#span_addlcost').html(additionalcost);
+   $('#span_total').html(actual * unitprice + additionalcost);
+
 
 }
 </script>

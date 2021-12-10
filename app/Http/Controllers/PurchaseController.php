@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Sale;
 use App\Models\Store;
 use App\Models\Transporter;
 use Illuminate\Http\Request;
@@ -120,12 +121,49 @@ class PurchaseController extends Controller
         //
     }
 
-    public function sell($id)
+    public function get_sell($id)
     {
         $purchase = Purchase::find($id);
+        $clients = Client::all();
+        $transporters = Transporter::all();
+        $stores = Store::all();
+        return view('user.purchases.sell', compact('purchase', 'clients', 'transporters', 'stores'));
+    }
+    public function post_sell(Request $request, $id)
+    {
+        // $purchase = Purchase::find($id);
+        // echo "post called" . $purchase->client->name;
+        $request->validate([
+            'purchase_id' => 'required',
+            'client_id' => 'required',
+            'numofbori' => 'required',
+            'numoftora' => 'required',
+            'grossweight' => 'required',
+            'transporter_id' => 'required',
+            'vehicleno' => 'required',
+            'carriage' => 'required',
+            'commission' => 'required',
+            'saleprice' => 'required',
+            'dateon' => 'required',
+        ]);
+
+        try {
+
+            $new = Sale::create($request->all());
+            $new->save();
+            return redirect()->route('purchases.index')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            //return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
     public function preserve($id)
     {
-        echo "store called";
+        $purchase = Purchase::find($id);
+        $clients = Client::all();
+        $transporters = Transporter::all();
+        $stores = Store::all();
+        return view('user.purchases.sell', compact('purchase', 'clients', 'transporters', 'stores'));
     }
 }

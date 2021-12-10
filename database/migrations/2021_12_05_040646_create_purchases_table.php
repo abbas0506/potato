@@ -27,12 +27,15 @@ class CreatePurchasesTable extends Migration
             $table->unsignedInteger('selectorcost');
             $table->unsignedInteger('packingcost');
             $table->unsignedInteger('loadingcost');
+            $table->unsignedInteger('randomcost');
+            $table->date('dateon');
 
             $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')

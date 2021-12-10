@@ -17,5 +17,8 @@ class Storage extends Model
         'carriage',
         'storagecost',
         'note',
+        'dateon',
     ];
+
+    public $timestamps = false;
 }

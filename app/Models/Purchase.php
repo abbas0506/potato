@@ -20,8 +20,11 @@ class Purchase extends Model
         'selectorcost',
         'packingcost',
         'loadingcost',
-
+        'randomcost',
+        'dateon',
     ];
+
+    public $timestamps = false;
 
     public function client()
     {

@@ -38,8 +38,11 @@ Route::group(['middleware' => 'admin'], function () {
 Route::group(['middleware' => 'user'], function () {
     Route::view('user', 'user.index');
     Route::resource('purchases', PurchaseController::class);
-    Route::get('purchases/sell/{id}', [PurchaseController::class, 'sell']);
+    // Route::resource('sales', SaleController::class);
+
+    Route::get('purchases/sell/{id}', [PurchaseController::class, 'get_sell']);
+    Route::post('purchases/sell/{id}', [PurchaseController::class, 'post_sell']);
     Route::get('purchases/store/{id}', [PurchaseController::class, 'preserve']);
-    // Route::resource('clients', ClientController::class);
+    Route::resource('clients', ClientController::class);
     Route::get('user/signout', [UserController::class, 'signout']);
 });

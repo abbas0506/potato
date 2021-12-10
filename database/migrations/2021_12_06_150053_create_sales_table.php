@@ -19,29 +19,47 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedInteger('grossweight');
-            $table->unsignedInteger('saleprice');
-            $table->unsignedInteger('commission');
+
             $table->unsignedBigInteger('transporter_id');
             $table->string('vehicleno', 20);
+            $table->unsignedInteger('grossweight');
             $table->unsignedInteger('carriage');
+            $table->unsignedInteger('commission');
+            $table->unsignedInteger('saleprice');
+
+            //additional costs in case of sale from store
+            $table->unsignedBigInteger('store_id')->nullable();
+            $table->unsignedInteger('bagscost')->nullable();
+            $table->unsignedInteger('selectorcost')->nullable();
+            $table->unsignedInteger('sortingcost')->nullable();
+            $table->unsignedInteger('packingcost')->nullable();
+            $table->unsignedInteger('loadingcost')->nullable();
+            $table->unsignedInteger('randomcost')->nullable();
+            $table->date('dateon');
 
             $table->foreign('purchase_id')
                 ->references('id')
                 ->on('purchases')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
             $table->foreign('client_id')
                 ->references('id')
                 ->on('clients')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            $table->foreign('store_id')
+                ->references('id')
+                ->on('stores')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->foreign('transporter_id')
                 ->references('id')
                 ->on('transporters')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
 
             $table->timestamps();
         });

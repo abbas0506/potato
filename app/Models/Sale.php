@@ -19,5 +19,16 @@ class Sale extends Model
         'carriage',
         'commission',
         'saleprice',
+        //additional costs in case of sale from store
+        'store_id',
+        'bagscost',
+        'selectorcost',
+        'sortingcost',
+        'packingcost',
+        'loadingcost',
+        'randomcost',
+        'dateon',
+
     ];
+    public $timestamps = false;
 }

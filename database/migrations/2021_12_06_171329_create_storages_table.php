@@ -16,17 +16,25 @@ class CreateStoragesTable extends Migration
         Schema::create('storages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('purchase_id');
+            $table->unsignedBigInteger('store_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
             $table->unsignedInteger('storagecost');
             $table->unsignedBigInteger('transporter_id');
             $table->string('vehicleno', 20);
             $table->unsignedInteger('carriage');
-            $table->string('note', 200); //room detail etc
+            $table->string('note', 200)->nullable(); //room detail etc
+            $table->date('dateon');
 
             $table->foreign('purchase_id')
                 ->references('id')
                 ->on('purchases')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('store_id')
+                ->references('id')
+                ->on('stores')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
