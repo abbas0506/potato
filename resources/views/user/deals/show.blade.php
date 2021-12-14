@@ -2,7 +2,11 @@
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
    <div class="txt-l txt-b">Purchases</div>
-   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span> purchase list</div>
+   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
+      <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
+      {{$deal->id}} <span class="mx-2">/</span> Purchases
+
+   </div>
 
 </div>
 @endsection
@@ -55,7 +59,7 @@ Swal.fire({
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
-         @foreach($purchases as $purchase)
+         @foreach($deal->purchases as $purchase)
          <div class="frow px-2 my-2 stretched tr ">
             <div class="w-10 txt-s">{{$purchase->id}}</div>
             <div class="w-20 txt-s">{{$purchase->client->name}}</div>

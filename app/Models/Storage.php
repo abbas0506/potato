@@ -10,10 +10,11 @@ class Storage extends Model
     use HasFactory;
     protected $fillable = [
         'purchase_id',
-        'numofbori',
-        'numoftora',
+        'store_id',
         'transporter_id',
         'vehicleno',
+        'numofbori',
+        'numoftora',
         'carriage',
         'storagecost',
         'note',

@@ -39,7 +39,7 @@ Swal.fire({
          <form action="{{url('purchases/sell', $purchase)}}" method='post'>
             @csrf
             <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
-            <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">{{$purchase->product->name}}</div>
+            <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">{{$purchase->product->name}} <span class="badge badge-warning rounded ml-4 txt-s"> Stock: {{$purchase->stock()}}</span></div>
             <div class="frow stretched mt-4">
                <div class="fancyinput w-24">
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>

@@ -1,8 +1,8 @@
 @extends('layouts.user')
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">Purchases</div>
-   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span> purchase list</div>
+   <div class="txt-l txt-b">Deals</div>
+   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span> Deals</div>
 
 </div>
 @endsection
@@ -35,7 +35,7 @@ Swal.fire({
          <div class="frow my-4 mid-left fancy-search-grow">
             <input type="text" placeholder="Search" oninput="search(event)"><i data-feather='search' class="feather-small" style="position:relative; right:24;"></i>
             <div class="frow">
-               <a href="{{route('purchases.create')}}">
+               <a href="{{route('deals.create')}}">
                   <div class="frow circular-25 bg-teal text-light centered mr-2 hoverable">+</div>
                </a>
                Create New
@@ -47,33 +47,30 @@ Swal.fire({
             <div class="w-10">ID</div>
             <div class="w-20">Seller Client</div>
             <div class="w-20">Product</div>
-            <div class="w-10">Qty.(B+T)</div>
+            <div class="w-10">Agreed Qty.</div>
             <div class="w-10">Unit Rate</div>
-            <div class="w-10">Sold</div>
-            <div class="w-10">Stored</div>
-            <div class="w-10">Air Stock</div>
+            <div class="w-10">Picked Qty.</div>
+            <div class="w-10">Left Qty.</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
-         @foreach($purchases as $purchase)
+         @foreach($deals as $deal)
          <div class="frow px-2 my-2 stretched tr ">
-            <div class="w-10 txt-s">{{$purchase->id}}</div>
-            <div class="w-20 txt-s">{{$purchase->client->name}}</div>
-            <div class="w-20 txt-s">{{$purchase->product->name}}</div>
-            <div class="w-10 txt-s">{{$purchase->numofbori}} + {{$purchase->numoftora}}</div>
-            <div class="w-10 txt-s">{{$purchase->unitprice}}</div>
-            <div class="w-10 txt-s">{{$purchase->sold()}}</div>
-            <div class="w-10 txt-s">{{$purchase->stored()}}</div>
-            <div class="w-10 txt-s">{{$purchase->stock()}}</div>
+            <div class="w-10 txt-s">{{$deal->id}}</div>
+            <div class="w-20 txt-s">{{$deal->client->name}}</div>
+            <div class="w-20 txt-s">{{$deal->product->name}}</div>
+            <div class="w-10 txt-s">{{$deal->numofbori}} + {{$deal->numoftora}}</div>
+            <div class="w-10 txt-s">{{$deal->unitprice}}</div>
+            <div class="w-10 txt-s">{{$deal->sold()}}</div>
+            <div class="w-10 txt-s">{{$deal->left()}}</div>
             <div class="frow w-10 centered">
-               <a href="{{url('purchases/sell',$purchase)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
-               <a href="{{url('purchases/store',$purchase)}}"><i data-feather='database' class="feather-xsmall mx-1 txt-info"></i></a>
-               <a href="{{route('purchases.edit',$purchase)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
+               <a href="{{route('deals.show',$deal)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
+               <a href="{{route('deals.edit',$deal)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>
-                  <form action="{{route('purchases.destroy',$purchase)}}" method="POST" id='del_form{{$purchase->id}}'>
+                  <form action="{{route('deals.destroy',$deal)}}" method="POST" id='del_form{{$deal->id}}'>
                      @csrf
                      @method('DELETE')
-                     <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$purchase->id}}')"><i data-feather='x' class="feather-xsmall mx-1 txt-red"></i></button>
+                     <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$deal->id}}')"><i data-feather='x' class="feather-xsmall mx-1 txt-red"></i></button>
                   </form>
                </div>
             </div>

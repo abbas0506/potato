@@ -39,6 +39,7 @@ Swal.fire({
          <form action="{{route('purchases.store')}}" method='post'>
             @csrf
             <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
+            <input type="hidden" name='deal_id' value="{{$deal->id}}">
             <div class="frow stretched mt-4">
                <div class="fancyinput w-24">
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
@@ -51,14 +52,12 @@ Swal.fire({
                   <span id='span_total' class="txt-m txt-red mx-1">0</span>
                </div>
             </div>
+
             <div class="frow stretched mt-3">
                <div class="fcol w-100">
                   <div class="fancyselect">
-                     <select name="client_id" id="" required>
-                        <option value="">Select an option ...</option>
-                        @foreach($clients as $client)
-                        <option value="{{$client->id}}">{{$client->name}}</option>
-                        @endforeach
+                     <select>
+                        <option value="{{$deal->client->id}}">{{$deal->client->name}}</option>
                      </select>
                      <label for="Name">Client (Seller)</label>
                   </div>
@@ -67,11 +66,8 @@ Swal.fire({
             <div class="frow stretched mt-3">
                <div class="fcol w-48">
                   <div class="fancyselect">
-                     <select name="product_id" id="">
-                        <option value="">Select an option ...</option>
-                        @foreach($products as $product)
-                        <option value="{{$product->id}}">{{$product->name}}</option>
-                        @endforeach
+                     <select>
+                        <option value="{{$deal->product->id}}">{{$deal->product->name}}</option>
                      </select>
                      <label for="Name">Product</label>
                   </div>

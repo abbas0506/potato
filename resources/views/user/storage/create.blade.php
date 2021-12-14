@@ -1,11 +1,11 @@
 @extends('layouts.user')
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">New Sale</div>
+   <div class="txt-l txt-b">New Storage</div>
    <div class="frow">
       <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{route('purchases.index')}}" class="hover-orange"> Purchases </a> <span class="mx-2">/</span>
-      Sell
+      Store
    </div>
 </div>
 <div class="frow centered txt-s txt-grey my-2">{{now()}}</div>
@@ -36,7 +36,7 @@ Swal.fire({
 <div class="frow centered">
    <div class="fcol w-60">
       <div class="w-100 bg-light my-3">
-         <form action="{{url('purchases/sell', $purchase)}}" method='post'>
+         <form action="{{url('purchases/store', $purchase)}}" method='post'>
             @csrf
             <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
             <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">{{$purchase->product->name}}</div>
@@ -47,22 +47,6 @@ Swal.fire({
                </div>
                <div class="fcol w-72">
                   <div class="fancyselect">
-                     <select name="source_id" id="" onchange="toggle_div_sellfromstorage(event)">
-                        <option value="0">Field</option>
-                        <option value="1">Cold Store</option>
-                     </select>
-                     <label for="Name">Source of Product</label>
-                  </div>
-               </div>
-
-               <!-- <div id='basicprice' class="fcol centered bg-info border-left border-right border-1 border-primary w-70 py-2 txt-m">
-                  price
-               </div> -->
-            </div>
-
-            <div class="hide" id='div_sellfromstorage'>
-               <div class="fcol w-100 mt-3">
-                  <div class="fancyselect">
                      <select name="store_id" id="" required>
                         @foreach($stores as $store)
                         <option value="{{$store->id}}">{{$store->name}}</option>
@@ -71,39 +55,7 @@ Swal.fire({
                      <label for="Name">Cold Store Name</label>
                   </div>
                </div>
-               <div class="frow stretched mt-3">
-                  <div class="fancyinput w-48">
-                     <input type="number" name='bagscost' min="0" value="0" required>
-                     <label for="Name" class="bg-transparent">Bags Cost</label>
-                  </div>
-                  <div class="fancyinput w-48">
-                     <input type="number" name='selectorcost' min="0" value="0">
-                     <label for="Name" class="bg-transparent">Selector Cost</label>
-                  </div>
-               </div>
-               <div class="frow stretched mt-3">
-                  <div class="fancyinput w-48">
-                     <input type="number" name='sortingcost' min="0" value="0" required>
-                     <label for="Name" class="bg-transparent">Sorting Cost</label>
-                  </div>
-                  <div class="fancyinput w-48">
-                     <input type="number" name='packingcost' min="0" value="0">
-                     <label for="Name" class="bg-transparent">Packing Cost</label>
-                  </div>
-               </div>
-               <div class="frow stretched mt-3">
-                  <div class="fancyinput w-48">
-                     <input type="number" name='loadingcost' min="0" value="0" required>
-                     <label for="Name" class="bg-transparent">Loading Cost</label>
-                  </div>
-                  <div class="fancyinput w-48">
-                     <input type="number" name='randomcost' min="0" value="0">
-                     <label for="Name" class="bg-transparent">Random Cost</label>
-                  </div>
-               </div>
-
             </div>
-
             <div class="frow stretched mt-3">
                <div class="fcol w-48">
                   <div class="fancyselect">
@@ -121,20 +73,7 @@ Swal.fire({
                   <label for="Name">Vehicle No</label>
                </div>
             </div>
-
-
             <div class="frow stretched mt-3">
-               <div class="fcol w-48">
-                  <div class="fancyselect">
-                     <select name="client_id" id="" required>
-                        <option value="">Select an option ...</option>
-                        @foreach($clients as $client)
-                        <option value="{{$client->id}}">{{$client->name}}</option>
-                        @endforeach
-                     </select>
-                     <label for="Name">Client (Buyer)</label>
-                  </div>
-               </div>
                <div class="fcol w-48">
                   <div class="frow stretched">
                      <div class="fancyinput w-48">
@@ -147,37 +86,26 @@ Swal.fire({
                      </div>
                   </div>
                </div>
-            </div>
-
-            <div class="frow stretched mt-3">
-               <div class="fancyinput w-48">
-                  <input type="number" name='grossweight' id='grossweight' min="0" value="0" required oninput="calcPrice()">
-                  <label for=" Name">Gross Weight</label>
-               </div>
-               <div class="fancyinput w-48">
-                  <input type="number" name='actualweight' id='actualweight' min="0" value="0" disabled class="txt-b txt-red text-center">
-                  <label for="Name">Actual Weight</label>
-               </div>
-            </div>
-            <div class="frow stretched mt-3">
-               <div class="fancyinput w-48">
-                  <input type="number" name='carriage' id='carriage' value="0" oninput="calcPrice()" required>
-                  <label for="Name">Carriage</label>
-               </div>
-               <div class="fancyinput w-48">
-                  <input type="number" name='commission' id='commission' min="0" value="0" oninput="calcPrice()" required>
-                  <label for="Name">Commission</label>
+               <div class="fcol w-48">
+                  <div class="frow stretched">
+                     <div class="fancyinput w-48">
+                        <input type="number" name='carriage' id='carriage' value="0" oninput="calcPrice()" required>
+                        <label for="Name">Carriage</label>
+                     </div>
+                     <div class="fancyinput w-48">
+                        <input type="number" name='storagecost' min="0" value="0" required>
+                        <label for="Name" class="bg-transparent">Storage Cost</label>
+                     </div>
+                  </div>
                </div>
             </div>
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-100">
-                  <input type="number" name='saleprice' id='saleprice' min="0" value="0" oninput="calcPrice()" required>
-                  <label for="Name">Sale Price (Return)</label>
+                  <input type="text" name='note' id='note'>
+                  <label for="Name">Extra Note (if any)</label>
                </div>
             </div>
-
-
 
             <div class="frow mid-right mt-4">
                <button type="submit" class="btn btn-primary">Submit</button>

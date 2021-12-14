@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deal;
 use App\Models\Client;
 use App\Models\Product;
-use App\Models\Purchase;
 use App\Models\Sale;
 use App\Models\Storage;
 use App\Models\Store;
@@ -12,7 +12,7 @@ use App\Models\Transporter;
 use Illuminate\Http\Request;
 use Exception;
 
-class PurchaseController extends Controller
+class DealController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +22,8 @@ class PurchaseController extends Controller
     public function index()
     {
         //
-        $purchases = Purchase::orderBy('id', 'desc')->get();
-        return view('user.purchases.index', compact('purchases'));
+        $deals = Deal::orderBy('id', 'desc')->get();
+        return view('user.deals.index', compact('deals'));
     }
 
     /**
@@ -34,10 +34,11 @@ class PurchaseController extends Controller
     public function create()
     {
         //
-        $deal = session('deal');
+        $products = Product::all();
+        $clients = Client::all();
         $stores = Store::all();
         $transporters = Transporter::all();
-        return view('user.purchases.create', compact('deal', 'stores', 'transporters'));
+        return view('user.deals.create', compact('products', 'clients', 'stores', 'transporters'));
     }
 
     /**
@@ -50,24 +51,19 @@ class PurchaseController extends Controller
     {
         //
         $request->validate([
-            'deal_id' => 'required',
+            'client_id' => 'required',
+            'product_id' => 'required',
             'numofbori' => 'required',
             'numoftora' => 'required',
-            'grossweight' => 'required',
             'unitprice' => 'required',
             'commission' => 'required',
-            'bagscost' => 'required',
-            'selectorcost' => 'required',
-            'packingcost' => 'required',
-            'loadingcost' => 'required',
-
         ]);
 
         try {
 
-            $new = Purchase::create($request->all());
+            $new = deal::create($request->all());
             $new->save();
-            return redirect()->route('purchases.index')->with('success', 'Successfully created');
+            return redirect()->route('deals.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             echo $e->getMessage();
             //return redirect()->back()->withErrors($e->getMessage());
@@ -78,21 +74,25 @@ class PurchaseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Purchase  $purchase
+     * @param  \App\Models\deal  $deal
      * @return \Illuminate\Http\Response
      */
-    public function show(Purchase $purchase)
+    public function show(deal $deal)
     {
         //
+        session([
+            'deal' => $deal,
+        ]);
+        return view('user.deals.show', compact('deal'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Purchase  $purchase
+     * @param  \App\Models\deal  $deal
      * @return \Illuminate\Http\Response
      */
-    public function edit(Purchase $purchase)
+    public function edit(deal $deal)
     {
         //
     }
@@ -101,10 +101,10 @@ class PurchaseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Purchase  $purchase
+     * @param  \App\Models\deal  $deal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Purchase $purchase)
+    public function update(Request $request, deal $deal)
     {
         //
     }
@@ -112,26 +112,26 @@ class PurchaseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Purchase  $purchase
+     * @param  \App\Models\deal  $deal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Purchase $purchase)
+    public function destroy(deal $deal)
     {
         //
     }
 
     public function get_sell($id)
     {
-        $purchase = Purchase::find($id);
+        $deal = deal::find($id);
         $clients = Client::all();
         $transporters = Transporter::all();
         $stores = Store::all();
-        return view('user.purchases.sell', compact('purchase', 'clients', 'transporters', 'stores'));
+        return view('user.deals.sell', compact('deal', 'clients', 'transporters', 'stores'));
     }
     public function post_sell(Request $request, $id)
     {
         $request->validate([
-            'purchase_id' => 'required',
+            'deal_id' => 'required',
             'client_id' => 'required',
             'numofbori' => 'required',
             'numoftora' => 'required',
@@ -148,7 +148,7 @@ class PurchaseController extends Controller
 
             $new = Sale::create($request->all());
             $new->save();
-            return redirect()->route('purchases.index')->with('success', 'Successfully created');
+            return redirect()->route('deals.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             echo $e->getMessage();
             //return redirect()->back()->withErrors($e->getMessage());
@@ -157,15 +157,15 @@ class PurchaseController extends Controller
     }
     public function viewStorage($id)
     {
-        $purchase = Purchase::find($id);
+        $deal = deal::find($id);
         $transporters = Transporter::all();
         $stores = Store::all();
-        return view('user.storage.create', compact('purchase', 'transporters', 'stores'));
+        return view('user.storage.create', compact('deal', 'transporters', 'stores'));
     }
     public function postStorage(Request $request, $id)
     {
         $request->validate([
-            'purchase_id' => 'required',
+            'deal_id' => 'required',
             'store_id' => 'required',
             'transporter_id' => 'required',
             'vehicleno' => 'required',
@@ -180,7 +180,7 @@ class PurchaseController extends Controller
 
             $new = Storage::create($request->all());
             $new->save();
-            return redirect()->route('purchases.index')->with('success', 'Successfully created');
+            return redirect()->route('deals.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             echo $e->getMessage();
             //return redirect()->back()->withErrors($e->getMessage());
