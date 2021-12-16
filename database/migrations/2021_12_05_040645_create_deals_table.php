@@ -21,7 +21,6 @@ class CreateDealsTable extends Migration
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
             $table->unsignedInteger('unitprice');
-            $table->unsignedInteger('commission');
             $table->date('dateon');
 
             $table->foreign('client_id')

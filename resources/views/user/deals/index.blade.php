@@ -38,15 +38,16 @@ Swal.fire({
                <a href="{{route('deals.create')}}">
                   <div class="frow circular-25 bg-teal text-light centered mr-2 hoverable">+</div>
                </a>
-               Create New
+               New Deal
             </div>
          </div>
 
          <!-- table header row -->
          <div class="frow px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
-            <div class="w-10">ID</div>
+            <div class="w-5">ID</div>
+            <div class="w-10">Date</div>
             <div class="w-20">Seller Client</div>
-            <div class="w-20">Product</div>
+            <div class="w-15">Product</div>
             <div class="w-10">Agreed Qty.</div>
             <div class="w-10">Unit Rate</div>
             <div class="w-10">Picked Qty.</div>
@@ -56,15 +57,15 @@ Swal.fire({
 
          @foreach($deals as $deal)
          <div class="frow px-2 my-2 stretched tr ">
-            <div class="w-10 txt-s">{{$deal->id}}</div>
+            <div class="w-5 txt-s"><a href="{{route('deals.show',$deal)}}" class="txt-blue">{{$deal->id}}</a></div>
+            <div class="w-10 txt-s">{{$deal->dateon}}</div>
             <div class="w-20 txt-s">{{$deal->client->name}}</div>
-            <div class="w-20 txt-s">{{$deal->product->name}}</div>
+            <div class="w-15 txt-s">{{$deal->product->name}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori}} + {{$deal->numoftora}}</div>
             <div class="w-10 txt-s">{{$deal->unitprice}}</div>
-            <div class="w-10 txt-s">{{$deal->sold()}}</div>
+            <div class="w-10 txt-s">{{$deal->picked()}}</div>
             <div class="w-10 txt-s">{{$deal->left()}}</div>
             <div class="frow w-10 centered">
-               <a href="{{route('deals.show',$deal)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
                <a href="{{route('deals.edit',$deal)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>
                   <form action="{{route('deals.destroy',$deal)}}" method="POST" id='del_form{{$deal->id}}'>

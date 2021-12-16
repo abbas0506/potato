@@ -15,7 +15,6 @@ class Deal extends Model
         'numofbori',
         'numoftora',
         'unitprice',
-        'commission',
         'dateon',
     ];
 
@@ -34,6 +33,13 @@ class Deal extends Model
     {
         return $this->hasMany(Purchase::class, 'deal_id');
     }
+
+    public function picked()
+    {
+        $numofbori_picked = $this->purchases->sum('numofbori');
+        $numoftora_picked = $this->purchases->sum('numoftora');
+        return $numofbori_picked . " + " . $numoftora_picked;
+    }
     public function sales()
     {
         //return $this->hasMany(Sale::class, 'purchase_id');
@@ -48,14 +54,11 @@ class Deal extends Model
     }
     public function left()
     {
-        // $numofbori_purchased = $this->numofbori;
-        // $numoftora_purchased = $this->numoftora;
-        // $numofbori_sold = $this->storages()->sum('numofbori');
-        // $numoftora_sold = $this->storages()->sum('numoftora');
-        // $numofbori_stored = $this->sales()->sum('numofbori');
-        // $numoftora_stored = $this->sales()->sum('numoftora');
-        // $numofbori_stock = $numofbori_purchased - $numofbori_sold - $numofbori_stored;
-        // $numoftora_stock = $numoftora_purchased - $numoftora_sold - $numoftora_stored;
-        // return $numofbori_stock . "-" . $numoftora_stock;
+        $numofbori_picked = $this->purchases->sum('numofbori');
+        $numoftora_picked = $this->purchases->sum('numoftora');
+        //agreed - picked
+        $numofbori_left = $this->numofbori - $numofbori_picked;
+        $numoftora_left = $this->numoftora - $numoftora_picked;
+        return $numofbori_left . " + " . $numoftora_left;
     }
 }

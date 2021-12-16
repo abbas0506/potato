@@ -56,7 +56,6 @@ class DealController extends Controller
             'numofbori' => 'required',
             'numoftora' => 'required',
             'unitprice' => 'required',
-            'commission' => 'required',
         ]);
 
         try {
@@ -83,7 +82,7 @@ class DealController extends Controller
         session([
             'deal' => $deal,
         ]);
-        return view('user.deals.show', compact('deal'));
+        return view('user.purchases.index', compact('deal'));
     }
 
     /**
@@ -118,6 +117,13 @@ class DealController extends Controller
     public function destroy(deal $deal)
     {
         //
+        try {
+            $deal->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     public function get_sell($id)

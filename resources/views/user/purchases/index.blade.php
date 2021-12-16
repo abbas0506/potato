@@ -1,9 +1,12 @@
 @extends('layouts.user')
+
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">Purchases</div>
-   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span> purchase list</div>
-
+   <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
+   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
+      <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
+      Purchases
+   </div>
 </div>
 @endsection
 @section('page-content')
@@ -32,35 +35,46 @@ Swal.fire({
    <div class="fcol w-80">
       <!-- page content -->
       <div class="bg-custom-light p-4">
+         <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
+            <div class="frow px-4 stretched">
+               <div>
+                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+               </div>
+               <div class="frow spaced txt-s mid-right">
+                  <span class="txt-orange txt-b">Purchase</span> <span class="mx-2">|</span>
+                  <a href="http://" class="hover-orange">Sale</a> <span class="mx-2">|</span>
+                  <a href="http://" class="hover-orange">Storage</a> <span class="mx-2">|</span>
+                  <a href="http://" class="hover-orange">Payments</a>
+               </div>
+            </div>
+         </div>
          <div class="frow my-4 mid-left fancy-search-grow">
             <input type="text" placeholder="Search" oninput="search(event)"><i data-feather='search' class="feather-small" style="position:relative; right:24;"></i>
             <div class="frow">
                <a href="{{route('purchases.create')}}">
                   <div class="frow circular-25 bg-teal text-light centered mr-2 hoverable">+</div>
                </a>
-               Create New
+               New Purchase
             </div>
          </div>
 
          <!-- table header row -->
          <div class="frow px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
-            <div class="w-10">ID</div>
-            <div class="w-20">Seller Client</div>
-            <div class="w-20">Product</div>
-            <div class="w-10">Qty.(B+T)</div>
+            <div class="w-10">Purchase ID</div>
+            <div class="w-20">Date</div>
+            <div class="w-20">Purcahsed Qty.</div>
             <div class="w-10">Unit Rate</div>
-            <div class="w-10">Sold</div>
-            <div class="w-10">Stored</div>
-            <div class="w-10">Air Stock</div>
+            <div class="w-10">Sold Qty.</div>
+            <div class="w-10">Stored Qty.</div>
+            <div class="w-10">Float Qty.</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
-         @foreach($purchases as $purchase)
+         @foreach($deal->purchases as $purchase)
          <div class="frow px-2 my-2 stretched tr ">
-            <div class="w-10 txt-s">{{$purchase->id}}</div>
-            <div class="w-20 txt-s">{{$purchase->client->name}}</div>
-            <div class="w-20 txt-s">{{$purchase->product->name}}</div>
-            <div class="w-10 txt-s">{{$purchase->numofbori}} + {{$purchase->numoftora}}</div>
+            <div class="w-10 txt-s"><a href="{{route('purchases.show', $purchase)}}">{{$purchase->id}}</a></div>
+            <div class="w-20 txt-s">{{$purchase->dateon}}</div>
+            <div class="w-20 txt-s">{{$purchase->numofbori}} + {{$purchase->numoftora}}</div>
             <div class="w-10 txt-s">{{$purchase->unitprice}}</div>
             <div class="w-10 txt-s">{{$purchase->sold()}}</div>
             <div class="w-10 txt-s">{{$purchase->stored()}}</div>

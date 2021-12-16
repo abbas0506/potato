@@ -1,14 +1,12 @@
 @extends('layouts.user')
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">New Purchase</div>
-   <div class="frow">
-      <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{route('purchases.index')}}" class="hover-orange"> Purchases </a> <span class="mx-2">/</span>
-      New
+   <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
+   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
+      <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
+      <a href="{{route('purchases.index')}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span> New
    </div>
 </div>
-<div class="frow centered txt-s txt-grey my-2">{{now()}}</div>
 @endsection
 @section('page-content')
 
@@ -34,8 +32,19 @@ Swal.fire({
 @endif
 <!-- purchasing -->
 <div class="frow centered">
-   <div class="fcol w-60">
+   <div class="fcol w-70">
       <div class="w-100 bg-light my-3">
+         <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
+            <div class="frow px-4 stretched">
+               <div>
+                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+               </div>
+               <div class="frow spaced txt-s mid-right">
+                  <span class="txt-b">New Purchase</span>
+               </div>
+            </div>
+         </div>
+
          <form action="{{route('purchases.store')}}" method='post'>
             @csrf
             <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
@@ -52,26 +61,7 @@ Swal.fire({
                   <span id='span_total' class="txt-m txt-red mx-1">0</span>
                </div>
             </div>
-
             <div class="frow stretched mt-3">
-               <div class="fcol w-100">
-                  <div class="fancyselect">
-                     <select>
-                        <option value="{{$deal->client->id}}">{{$deal->client->name}}</option>
-                     </select>
-                     <label for="Name">Client (Seller)</label>
-                  </div>
-               </div>
-            </div>
-            <div class="frow stretched mt-3">
-               <div class="fcol w-48">
-                  <div class="fancyselect">
-                     <select>
-                        <option value="{{$deal->product->id}}">{{$deal->product->name}}</option>
-                     </select>
-                     <label for="Name">Product</label>
-                  </div>
-               </div>
                <div class="fcol w-48">
                   <div class="frow stretched">
                      <div class="fancyinput w-48">
@@ -84,16 +74,17 @@ Swal.fire({
                      </div>
                   </div>
                </div>
-            </div>
-
-            <div class="frow stretched mt-3">
-               <div class="fancyinput w-48">
-                  <input type="number" name='grossweight' id='grossweight' min="0" value="0" oninput='calcPrice()' required>
-                  <label for="Name">Gross Weight</label>
-               </div>
-               <div class="fancyinput w-48">
-                  <input type="number" name='actualweight' id='actualweight' min="0" value="0" disabled class="txt-b txt-red text-center">
-                  <label for="Name">Actual Weight</label>
+               <div class="fcol w-48">
+                  <div class="frow stretched">
+                     <div class="fancyinput w-48">
+                        <input type="number" name='grossweight' id='grossweight' min="0" value="0" oninput='calcPrice()' required>
+                        <label for="Name">Gross Weight</label>
+                     </div>
+                     <div class="fancyinput w-48">
+                        <input type="number" name='actualweight' id='actualweight' min="0" value="0" disabled class="txt-b txt-red text-center">
+                        <label for="Name">Actual Weight</label>
+                     </div>
+                  </div>
                </div>
             </div>
 

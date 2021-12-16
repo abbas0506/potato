@@ -7,8 +7,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\TransporterController;
 use App\Http\Controllers\DealController;
+use App\Http\Controllers\StorageController;
 
 
 
@@ -40,12 +42,13 @@ Route::group(['middleware' => 'user'], function () {
     Route::view('user', 'user.index');
     Route::resource('purchases', PurchaseController::class);
     Route::resource('deals', DealController::class);
-    // Route::resource('sales', SaleController::class);
+    Route::resource('sales', SaleController::class);
+    Route::resource('storage', StorageController::class);
 
-    Route::get('purchases/sell/{id}', [PurchaseController::class, 'get_sell']);
-    Route::post('purchases/sell/{id}', [PurchaseController::class, 'post_sell']);
-    Route::get('purchases/store/{id}', [PurchaseController::class, 'viewStorage']);
-    Route::post('purchases/store/{id}', [PurchaseController::class, 'postStorage']);
+    Route::get('purchases/sell/{id}', [PurchaseController::class, 'sales_create']);
+    //Route::post('purchases/sell/{id}', [PurchaseController::class, 'sales_post']);
+    Route::get('purchases/store/{id}', [PurchaseController::class, 'storage_create']);
+
 
     Route::get('user/signout', [UserController::class, 'signout']);
 });

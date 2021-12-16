@@ -22,8 +22,8 @@ class PurchaseController extends Controller
     public function index()
     {
         //
-        $purchases = Purchase::orderBy('id', 'desc')->get();
-        return view('user.purchases.index', compact('purchases'));
+        $deal = session('deal');
+        return view('user.purchases.index', compact('deal'));
     }
 
     /**
@@ -67,7 +67,7 @@ class PurchaseController extends Controller
 
             $new = Purchase::create($request->all());
             $new->save();
-            return redirect()->route('purchases.index')->with('success', 'Successfully created');
+            return redirect()->route('deals.show', session('deal'))->with('success', 'Successfully created');
         } catch (Exception $e) {
             echo $e->getMessage();
             //return redirect()->back()->withErrors($e->getMessage());
@@ -84,6 +84,8 @@ class PurchaseController extends Controller
     public function show(Purchase $purchase)
     {
         //
+        $deal = $purchase->deal;
+        return view('user.purchases.show', compact('deal', 'purchase'));
     }
 
     /**
@@ -118,73 +120,30 @@ class PurchaseController extends Controller
     public function destroy(Purchase $purchase)
     {
         //
+        try {
+            $purchase->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
-    public function get_sell($id)
+    public function sales_create($id)
     {
         $purchase = Purchase::find($id);
+        $deal = $purchase->deal;
         $clients = Client::all();
         $transporters = Transporter::all();
         $stores = Store::all();
-        return view('user.purchases.sell', compact('purchase', 'clients', 'transporters', 'stores'));
+        return view('user.sales.create', compact('deal', 'purchase', 'clients', 'transporters', 'stores'));
     }
-    public function post_sell(Request $request, $id)
-    {
-        $request->validate([
-            'purchase_id' => 'required',
-            'client_id' => 'required',
-            'numofbori' => 'required',
-            'numoftora' => 'required',
-            'grossweight' => 'required',
-            'transporter_id' => 'required',
-            'vehicleno' => 'required',
-            'carriage' => 'required',
-            'commission' => 'required',
-            'saleprice' => 'required',
-            'dateon' => 'required',
-        ]);
-
-        try {
-
-            $new = Sale::create($request->all());
-            $new->save();
-            return redirect()->route('purchases.index')->with('success', 'Successfully created');
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            //return redirect()->back()->withErrors($e->getMessage());
-            // something went wrong
-        }
-    }
-    public function viewStorage($id)
+    public function storage_create($id)
     {
         $purchase = Purchase::find($id);
+        $deal = $purchase->deal;
         $transporters = Transporter::all();
         $stores = Store::all();
-        return view('user.storage.create', compact('purchase', 'transporters', 'stores'));
-    }
-    public function postStorage(Request $request, $id)
-    {
-        $request->validate([
-            'purchase_id' => 'required',
-            'store_id' => 'required',
-            'transporter_id' => 'required',
-            'vehicleno' => 'required',
-            'numofbori' => 'required',
-            'numoftora' => 'required',
-            'carriage' => 'required',
-            'storagecost' => 'required',
-            'dateon' => 'required',
-        ]);
-
-        try {
-
-            $new = Storage::create($request->all());
-            $new->save();
-            return redirect()->route('purchases.index')->with('success', 'Successfully created');
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            //return redirect()->back()->withErrors($e->getMessage());
-            // something went wrong
-        }
+        return view('user.storage.create', compact('deal', 'purchase', 'transporters', 'stores'));
     }
 }

@@ -34,7 +34,7 @@ Swal.fire({
 @endif
 <!-- purchasing -->
 <div class="frow centered">
-   <div class="fcol w-60">
+   <div class="fcol w-70">
       <div class="w-100 bg-light my-3">
          <form action="{{route('deals.store')}}" method='post'>
             @csrf
@@ -88,10 +88,6 @@ Swal.fire({
                <div class="fancyinput w-48">
                   <input type="number" name='unitprice' id='unitprice' value="0" oninput="calcPrice()" required>
                   <label for="Name">Unit Price</label>
-               </div>
-               <div class="fancyinput w-48">
-                  <input type="number" name='commission' id='commission' min="0" value="0" oninput="calcPrice()" required>
-                  <label for="Name">Commission</label>
                </div>
             </div>
 

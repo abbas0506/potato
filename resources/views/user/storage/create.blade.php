@@ -1,14 +1,12 @@
 @extends('layouts.user')
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">New Storage</div>
-   <div class="frow">
-      <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{route('purchases.index')}}" class="hover-orange"> Purchases </a> <span class="mx-2">/</span>
-      Store
+   <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
+   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
+      <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
+      <a href="{{route('purchases.index')}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span> Storage
    </div>
 </div>
-<div class="frow centered txt-s txt-grey my-2">{{now()}}</div>
 @endsection
 @section('page-content')
 
@@ -36,10 +34,20 @@ Swal.fire({
 <div class="frow centered">
    <div class="fcol w-60">
       <div class="w-100 bg-light my-3">
-         <form action="{{url('purchases/store', $purchase)}}" method='post'>
+         <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
+            <div class="frow px-4 stretched">
+               <div>
+                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+               </div>
+               <div class="frow spaced txt-s mid-right">
+                  <span class="txt-b">New Storage</span>
+               </div>
+            </div>
+         </div>
+
+         <form action="{{route('storage.store')}}" method='post'>
             @csrf
             <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
-            <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">{{$purchase->product->name}}</div>
             <div class="frow stretched mt-4">
                <div class="fancyinput w-24">
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
