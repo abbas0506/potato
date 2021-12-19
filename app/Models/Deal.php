@@ -34,16 +34,54 @@ class Deal extends Model
         return $this->hasMany(Purchase::class, 'deal_id');
     }
 
-    public function picked()
-    {
-        $numofbori_picked = $this->purchases->sum('numofbori');
-        $numoftora_picked = $this->purchases->sum('numoftora');
-        return $numofbori_picked . " + " . $numoftora_picked;
-    }
     public function sales()
     {
         //return $this->hasMany(Sale::class, 'purchase_id');
     }
+
+    public function numofbori_picked()
+    {
+        return $this->purchases()->sum('numofbori');
+    }
+    public function numoftora_picked()
+    {
+        return $this->purchases()->sum('numoftora');
+    }
+    public function numofbori_stored()
+    {
+        return $this->purchases->sum(function ($purchase) {
+            return $purchase->storages->sum('numofbori');
+        });
+    }
+    public function numoftora_stored()
+    {
+        return $this->purchases->sum(function ($purchase) {
+            return $purchase->storages->sum('numoftora');
+        });
+    }
+    public function numofbori_sold()
+    {
+        return $this->purchases->sum(function ($purchase) {
+            return $purchase->sales->sum('numofbori');
+        });
+    }
+    public function numoftora_sold()
+    {
+        return $this->purchases->sum(function ($purchase) {
+            return $purchase->sales->sum('numoftora');
+        });
+    }
+
+    public function numofbori_left()
+    {
+        return $this->numofbori - $this->purchases()->sum('numofbori');
+    }
+    public function numoftora_left()
+    {
+        return $this->numoftora - $this->purchases()->sum('numoftora');
+    }
+
+
     public function stored()
     {
         //return $this->storages()->sum('numofbori') . "-" . $this->storages()->sum('numoftora');
@@ -51,14 +89,5 @@ class Deal extends Model
     public function sold()
     {
         // return $this->sales()->sum('numofbori') . "-" . $this->sales()->sum('numoftora');
-    }
-    public function left()
-    {
-        $numofbori_picked = $this->purchases->sum('numofbori');
-        $numoftora_picked = $this->purchases->sum('numoftora');
-        //agreed - picked
-        $numofbori_left = $this->numofbori - $numofbori_picked;
-        $numoftora_left = $this->numoftora - $numoftora_picked;
-        return $numofbori_left . " + " . $numoftora_left;
     }
 }

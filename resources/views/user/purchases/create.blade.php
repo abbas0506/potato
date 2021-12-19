@@ -40,7 +40,7 @@ Swal.fire({
                   {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
                </div>
                <div class="frow spaced txt-s mid-right">
-                  <span class="txt-b">New Purchase</span>
+                  <span class="txt-b">New Pick</span>
                </div>
             </div>
          </div>
@@ -50,12 +50,12 @@ Swal.fire({
             <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
             <input type="hidden" name='deal_id' value="{{$deal->id}}">
             <div class="frow stretched mt-4">
-               <div class="fancyinput w-24">
+               <div class="fancyinput w-48">
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
 
-               <div class="frow centered border border-1 border-primary w-50 py-2">
+               <div class="frow centered border border-1 border-primary w-48 py-2">
                   <span class="badge badge-primary badge-sm txt-s">Basic</span> <span id='span_basicprice' class="mx-1">0</span> +
                   <span class="badge badge-primary badge-sm txt-s ml-1">Addl</span> <span id='span_addlcost' class="mx-1">0</span> =
                   <span id='span_total' class="txt-m txt-red mx-1">0</span>
@@ -90,7 +90,7 @@ Swal.fire({
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='unitprice' id='unitprice' value="0" oninput="calcPrice()" required>
+                  <input type="number" name='unitprice' id='unitprice' value="{{$deal->unitprice}}" oninput="calcPrice()" required>
                   <label for="Name">Unit Price</label>
                </div>
                <div class="fancyinput w-48">

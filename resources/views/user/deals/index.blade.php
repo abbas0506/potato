@@ -51,7 +51,9 @@ Swal.fire({
             <div class="w-10">Agreed Qty.</div>
             <div class="w-10">Unit Rate</div>
             <div class="w-10">Picked Qty.</div>
-            <div class="w-10">Left Qty.</div>
+            <div class="w-10">Sold Qty.</div>
+            <div class="w-10">Stored Qty.</div>
+            <div class="w-10">Field Qty.</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
@@ -63,8 +65,10 @@ Swal.fire({
             <div class="w-15 txt-s">{{$deal->product->name}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori}} + {{$deal->numoftora}}</div>
             <div class="w-10 txt-s">{{$deal->unitprice}}</div>
-            <div class="w-10 txt-s">{{$deal->picked()}}</div>
-            <div class="w-10 txt-s">{{$deal->left()}}</div>
+            <div class="w-10 txt-s">{{$deal->numofbori_picked()}} + {{$deal->numoftora_picked()}}</div>
+            <div class="w-10 txt-s">{{$deal->numofbori_sold()}} + {{$deal->numoftora_sold()}}</div>
+            <div class="w-10 txt-s">{{$deal->numofbori_stored()}} + {{$deal->numoftora_stored()}}</div>
+            <div class="w-10 txt-s">{{$deal->numofbori_left()}} + {{$deal->numoftora_left()}}</div>
             <div class="frow w-10 centered">
                <a href="{{route('deals.edit',$deal)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>
@@ -92,7 +96,9 @@ function search(event) {
    var str = 0;
    $('.tr').each(function() {
       if (!(
-            $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
+            $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext) ||
+            $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext) ||
+            $(this).children().eq(2).prop('outerText').toLowerCase().includes(searchtext)
          )) {
          $(this).addClass('hide');
       } else {

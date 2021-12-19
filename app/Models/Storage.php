@@ -11,12 +11,12 @@ class Storage extends Model
     protected $fillable = [
         'purchase_id',
         'store_id',
-        'transporter_id',
-        'vehicleno',
         'numofbori',
         'numoftora',
-        'carriage',
-        'storagecost',
+        'carriageperbori',
+        'carriagepertora',
+        'storagecostperbori',
+        'storagecostpertora',
         'note',
         'dateon',
     ];

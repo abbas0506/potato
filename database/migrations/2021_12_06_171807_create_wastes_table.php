@@ -15,8 +15,8 @@ class CreateWastesTable extends Migration
     {
         Schema::create('wastes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('purchase_id');
             $table->unsignedBigInteger('store_id');
+            $table->unsignedBigInteger('purchase_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
             $table->string('note', 200);

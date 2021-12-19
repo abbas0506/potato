@@ -5,7 +5,7 @@
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      Purchases
+      Picks
    </div>
 </div>
 @endsection
@@ -54,7 +54,7 @@ Swal.fire({
                <a href="{{route('purchases.create')}}">
                   <div class="frow circular-25 bg-teal text-light centered mr-2 hoverable">+</div>
                </a>
-               New Purchase
+               New Pick
             </div>
          </div>
 
@@ -62,7 +62,7 @@ Swal.fire({
          <div class="frow px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
             <div class="w-10">Purchase ID</div>
             <div class="w-20">Date</div>
-            <div class="w-20">Purcahsed Qty.</div>
+            <div class="w-20">Picked Qty.</div>
             <div class="w-10">Unit Rate</div>
             <div class="w-10">Sold Qty.</div>
             <div class="w-10">Stored Qty.</div>

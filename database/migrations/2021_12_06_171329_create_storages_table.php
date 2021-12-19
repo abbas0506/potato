@@ -19,10 +19,10 @@ class CreateStoragesTable extends Migration
             $table->unsignedBigInteger('store_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedInteger('storagecost');
-            $table->unsignedBigInteger('transporter_id');
-            $table->string('vehicleno', 20);
-            $table->unsignedInteger('carriage');
+            $table->unsignedInteger('storagecostperbori');
+            $table->unsignedInteger('storagecostpertora');
+            $table->unsignedInteger('carriageperbori');
+            $table->unsignedInteger('carriagepertora');
             $table->string('note', 200)->nullable(); //room detail etc
             $table->date('dateon');
 
@@ -37,13 +37,6 @@ class CreateStoragesTable extends Migration
                 ->on('stores')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
-            $table->foreign('transporter_id')
-                ->references('id')
-                ->on('transporters')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
 
             $table->timestamps();
         });

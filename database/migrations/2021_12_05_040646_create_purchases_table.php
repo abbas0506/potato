@@ -16,15 +16,23 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('deal_id');
+            $table->unsignedBigInteger('transporter_id');
+            $table->string('vehicleno', 20);
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
             $table->unsignedInteger('grossweight');
-            $table->unsignedInteger('unitprice');
-            $table->unsignedInteger('commission');
-            $table->unsignedInteger('bagscost');
+            $table->unsignedInteger('purchasepriceperkg');
+            $table->unsignedInteger('commissionperbori');
+            $table->unsignedInteger('commissionpertora');
+            //additional costs on product collection
             $table->unsignedInteger('selectorcost');
-            $table->unsignedInteger('packingcost');
-            $table->unsignedInteger('loadingcost');
+            $table->unsignedInteger('sortingcost');
+            $table->unsignedInteger('materialcostperbori');
+            $table->unsignedInteger('materialcostpertora');
+            $table->unsignedInteger('packingcostperbori');
+            $table->unsignedInteger('packingcostpertora');
+            $table->unsignedInteger('loadingcostperbori');
+            $table->unsignedInteger('loadingcostpertora');
             $table->unsignedInteger('randomcost');
             $table->date('dateon');
 
@@ -33,6 +41,13 @@ class CreatePurchasesTable extends Migration
                 ->on('deals')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            $table->foreign('transporter_id')
+                ->references('id')
+                ->on('transporters')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
 
             $table->timestamps();
         });
