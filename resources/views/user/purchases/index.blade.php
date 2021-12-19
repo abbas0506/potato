@@ -66,7 +66,7 @@ Swal.fire({
             <div class="w-10">Unit Rate</div>
             <div class="w-10">Sold Qty.</div>
             <div class="w-10">Stored Qty.</div>
-            <div class="w-10">Float Qty.</div>
+            <div class="w-10">Field Qty.</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
@@ -76,11 +76,11 @@ Swal.fire({
             <div class="w-20 txt-s">{{$purchase->dateon}}</div>
             <div class="w-20 txt-s">{{$purchase->numofbori}} + {{$purchase->numoftora}}</div>
             <div class="w-10 txt-s">{{$purchase->unitprice}}</div>
-            <div class="w-10 txt-s">{{$purchase->sold()}}</div>
-            <div class="w-10 txt-s">{{$purchase->stored()}}</div>
-            <div class="w-10 txt-s">{{$purchase->stock()}}</div>
+            <div class="w-10 txt-s">{{$purchase->numofbori_sold()}} + {{$purchase->numoftora_sold()}}</div>
+            <div class="w-10 txt-s">{{$purchase->numofbori_stored()}} + {{$purchase->numoftora_stored()}}</div>
+            <div class="w-10 txt-s">{{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}}</div>
             <div class="frow w-10 centered">
-               <a href="{{url('purchases/sell',$purchase)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
+               <a href="{{url('sell/fromfield',$purchase)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
                <a href="{{url('purchases/store',$purchase)}}"><i data-feather='database' class="feather-xsmall mx-1 txt-info"></i></a>
                <a href="{{route('purchases.edit',$purchase)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>

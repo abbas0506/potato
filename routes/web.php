@@ -45,7 +45,9 @@ Route::group(['middleware' => 'user'], function () {
     Route::resource('sales', SaleController::class);
     Route::resource('storage', StorageController::class);
 
-    Route::get('purchases/sell/{id}', [PurchaseController::class, 'sales_create']);
+    Route::get('sell/fromfield/{id}', [PurchaseController::class, 'sellfromfield_create']);
+    Route::get('sell/fromstore/{id}', [PurchaseController::class, 'sellfromstore_create']);
+
     //Route::post('purchases/sell/{id}', [PurchaseController::class, 'sales_post']);
     Route::get('purchases/store/{id}', [PurchaseController::class, 'storage_create']);
 

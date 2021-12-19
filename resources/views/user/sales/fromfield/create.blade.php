@@ -4,7 +4,7 @@
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('purchases.index')}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span>New Sale
+      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span>New Sale
    </div>
 </div>
 @endsection
@@ -48,71 +48,19 @@ Swal.fire({
          <form action="{{route('sales.store')}}" method='post'>
             @csrf
             <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
-            <div class="frow txt-m txt-b txt-red my-3 centered"><span class="badge badge-warning rounded txt-s"> Stock: {{$purchase->stock()}}</span></div>
-            <div class="frow stretched mt-3">
-               <div class="fancyinput w-24">
+            <div class="frow mid-left my-4">
+               <div class="txt-b txt-red mr-4">Where to sell from???</div>
+               <div class="rounded-pill bg-warning px-2 mx-2">Field: {{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}} </div>
+               <a href="{{url('sell/fromstore',$purchase)}}">
+                  <div class="rounded-pill bg-light-grey px-2">Store: {{$purchase->numofbori_stored()}} + {{$purchase->numoftora_stored()}} </div>
+               </a>
+            </div>
+            <div class="frow w-100 mt-3">
+               <div class="fancyinput">
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
-               <div class="fcol w-72">
-                  <div class="fancyselect">
-                     <select name="source_id" id="" onchange="toggle_div_sellfromstorage(event)">
-                        <option value="0">Field</option>
-                        <option value="1">Cold Store</option>
-                     </select>
-                     <label for="Name">Source of Product</label>
-                  </div>
-               </div>
-
-               <!-- <div id='basicprice' class="fcol centered bg-info border-left border-right border-1 border-primary w-70 py-2 txt-m">
-                  price
-               </div> -->
             </div>
-
-            <div class="hide" id='div_sellfromstorage'>
-               <div class="fcol w-100 mt-3">
-                  <div class="fancyselect">
-                     <select name="store_id" id="" required>
-                        @foreach($stores as $store)
-                        <option value="{{$store->id}}">{{$store->name}}</option>
-                        @endforeach
-                     </select>
-                     <label for="Name">Cold Store Name</label>
-                  </div>
-               </div>
-               <div class="frow stretched mt-3">
-                  <div class="fancyinput w-48">
-                     <input type="number" name='bagscost' min="0" value="0" required>
-                     <label for="Name" class="bg-transparent">Bags Cost</label>
-                  </div>
-                  <div class="fancyinput w-48">
-                     <input type="number" name='selectorcost' min="0" value="0">
-                     <label for="Name" class="bg-transparent">Selector Cost</label>
-                  </div>
-               </div>
-               <div class="frow stretched mt-3">
-                  <div class="fancyinput w-48">
-                     <input type="number" name='sortingcost' min="0" value="0" required>
-                     <label for="Name" class="bg-transparent">Sorting Cost</label>
-                  </div>
-                  <div class="fancyinput w-48">
-                     <input type="number" name='packingcost' min="0" value="0">
-                     <label for="Name" class="bg-transparent">Packing Cost</label>
-                  </div>
-               </div>
-               <div class="frow stretched mt-3">
-                  <div class="fancyinput w-48">
-                     <input type="number" name='loadingcost' min="0" value="0" required>
-                     <label for="Name" class="bg-transparent">Loading Cost</label>
-                  </div>
-                  <div class="fancyinput w-48">
-                     <input type="number" name='randomcost' min="0" value="0">
-                     <label for="Name" class="bg-transparent">Random Cost</label>
-                  </div>
-               </div>
-
-            </div>
-
             <div class="frow stretched mt-3">
                <div class="fcol w-48">
                   <div class="fancyselect">
@@ -130,8 +78,6 @@ Swal.fire({
                   <label for="Name">Vehicle No</label>
                </div>
             </div>
-
-
             <div class="frow stretched mt-3">
                <div class="fcol w-48">
                   <div class="fancyselect">
@@ -147,11 +93,11 @@ Swal.fire({
                <div class="fcol w-48">
                   <div class="frow stretched">
                      <div class="fancyinput w-48">
-                        <input type="number" name='numofbori' id='numofbori' min="0" value="0" required oninput="calcPrice()">
+                        <input type="number" name='numofbori' id='numofbori' min="0" max='{{$purchase->numofbori_left()}}' value="0" required oninput="calcActualWeight()">
                         <label for="Name">Number of Bori</label>
                      </div>
                      <div class="fancyinput w-48">
-                        <input type="number" name='numoftora' id='numoftora' min="0" value="0" required oninput="calcPrice()">
+                        <input type="number" name='numoftora' id='numoftora' min="0" max='{{$purchase->numoftora_left()}}' value="0" required oninput="calcActualWeight()">
                         <label for="Name">Number of Tora</label>
                      </div>
                   </div>
@@ -160,7 +106,7 @@ Swal.fire({
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='grossweight' id='grossweight' min="0" value="0" required oninput="calcPrice()">
+                  <input type="number" name='grossweight' id='grossweight' min="0" value="0" required oninput="calcActualWeight()">
                   <label for=" Name">Gross Weight</label>
                </div>
                <div class="fancyinput w-48">
@@ -170,28 +116,25 @@ Swal.fire({
             </div>
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='carriage' id='carriage' value="0" oninput="calcPrice()" required>
+                  <input type="number" name='carriage' id='carriage' value="0" oninput="calcActualWeight()" required>
                   <label for="Name">Carriage</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="number" name='commission' id='commission' min="0" value="0" oninput="calcPrice()" required>
+                  <input type="number" name='commission' id='commission' min="0" value="0" oninput="calcActualWeight()" required>
                   <label for="Name">Commission</label>
                </div>
             </div>
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-100">
-                  <input type="number" name='saleprice' id='saleprice' min="0" value="0" oninput="calcPrice()" required>
+                  <input type="number" name='saleprice' id='saleprice' min="0" value="0" oninput="calcActualWeight()" required>
                   <label for="Name">Sale Price (Return)</label>
                </div>
             </div>
 
-
-
             <div class="frow mid-right mt-4">
                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-
          </form>
       </div>
    </div>
@@ -203,49 +146,15 @@ Swal.fire({
 <script lang="javascript">
 document.getElementById('dateon').valueAsDate = new Date();
 
-function search(event) {
-   var searchtext = event.target.value.toLowerCase();
-   var str = 0;
-   $('.tr').each(function() {
-      if (!(
-            $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
-         )) {
-         $(this).addClass('hide');
-      } else {
-         $(this).removeClass('hide');
-      }
-   });
-}
-
-function calcPrice() {
+function calcActualWeight() {
    var actual = 0;
    var gross = parseInt($('#grossweight').val())
    var numofbori = parseInt($('#numofbori').val());
    var numoftora = parseInt($('#numoftora').val());
-   // var unitprice = parseInt($('#unitprice').val());
-
-   // var commission = parseInt($('#commission').val());
-   // var bagscost = parseInt($('#bagscost').val());
-   // var selectorcost = parseInt($('#selectorcost').val());
-   // var packingcost = parseInt($('#packingcost').val());
-   // var loadingcost = parseInt($('#loadingcost').val());
-
-   // var additionalcost = commission + bagscost + selectorcost + packingcost + loadingcost;
-
    if (gross > 0)
       actual = gross - 2 * numofbori - 1.5 * numoftora;
 
    $('#actualweight').val(actual);
-   // $('#basicprice').html("B.P: " + actual * unitprice + " + Addl: " + additionalcost + " = " + (actual * unitprice + additionalcost));
-
-}
-
-function toggle_div_sellfromstorage(event) {
-   // alert();
-   if (event.target.value == 0)
-      $('#div_sellfromstorage').addClass('hide');
-   else
-      $('#div_sellfromstorage').removeClass('hide');
 }
 </script>
 @endsection

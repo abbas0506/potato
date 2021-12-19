@@ -10,6 +10,7 @@ class Waste extends Model
     use HasFactory;
     protected $fillable = [
         'purchase_id',
+        'store_id',
         'numofbori',
         'numoftora',
         'note',

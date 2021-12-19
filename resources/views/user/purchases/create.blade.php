@@ -4,7 +4,7 @@
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('purchases.index')}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span> New
+      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span> New
    </div>
 </div>
 @endsection

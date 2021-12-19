@@ -22,8 +22,8 @@ class PurchaseController extends Controller
     public function index()
     {
         //
-        $deal = session('deal');
-        return view('user.purchases.index', compact('deal'));
+        // $deal = session('deal');
+        // return view('user.purchases.index', compact('deal'));
     }
 
     /**
@@ -129,14 +129,25 @@ class PurchaseController extends Controller
         }
     }
 
-    public function sales_create($id)
+    public function sellfromfield_create($id)
     {
         $purchase = Purchase::find($id);
         $deal = $purchase->deal;
         $clients = Client::all();
         $transporters = Transporter::all();
-        $stores = Store::all();
-        return view('user.sales.create', compact('deal', 'purchase', 'clients', 'transporters', 'stores'));
+        $stores = $purchase->stores();
+
+        return view('user.sales.fromfield.create', compact('deal', 'purchase', 'clients', 'transporters', 'stores'));
+    }
+    public function sellfromstore_create($id)
+    {
+        $purchase = Purchase::find($id);
+        $deal = $purchase->deal;
+        $clients = Client::all();
+        $transporters = Transporter::all();
+        $stores = $purchase->stores();
+
+        return view('user.sales.fromstore.create', compact('deal', 'purchase', 'clients', 'transporters', 'stores'));
     }
     public function storage_create($id)
     {

@@ -55,7 +55,7 @@ class SaleController extends Controller
 
             $new = Sale::create($request->all());
             $new->save();
-            return redirect()->route('purchases.index')->with('success', 'Successfully created');
+            return redirect()->route('deals.show', session('deal'))->with('success', 'Successfully created');
         } catch (Exception $e) {
             echo $e->getMessage();
             //return redirect()->back()->withErrors($e->getMessage());

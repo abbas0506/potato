@@ -31,4 +31,9 @@ class Sale extends Model
 
     ];
     public $timestamps = false;
+
+    public function buyer()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
+    }
 }

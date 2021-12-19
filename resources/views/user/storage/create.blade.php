@@ -4,7 +4,7 @@
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('purchases.index')}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span> Storage
+      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span> Storage
    </div>
 </div>
 @endsection
@@ -44,7 +44,7 @@ Swal.fire({
                </div>
             </div>
          </div>
-
+         <div class="frow txt-m txt-b txt-red my-3"><span class="badge badge-warning rounded txt-s"> Field Qty : {{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}} </span></div>
          <form action="{{route('storage.store')}}" method='post'>
             @csrf
             <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
@@ -77,7 +77,7 @@ Swal.fire({
                   </div>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='vehicleno'>
+                  <input type="text" name='vehicleno' required>
                   <label for="Name">Vehicle No</label>
                </div>
             </div>
@@ -85,11 +85,11 @@ Swal.fire({
                <div class="fcol w-48">
                   <div class="frow stretched">
                      <div class="fancyinput w-48">
-                        <input type="number" name='numofbori' id='numofbori' min="0" value="0" required oninput="calcPrice()">
+                        <input type="number" name='numofbori' id='numofbori' min="0" max='{{$purchase->numofbori_left()}}' value="0" required oninput="calcPrice()">
                         <label for="Name">Number of Bori</label>
                      </div>
                      <div class="fancyinput w-48">
-                        <input type="number" name='numoftora' id='numoftora' min="0" value="0" required oninput="calcPrice()">
+                        <input type="number" name='numoftora' id='numoftora' min="0" max='{{$purchase->numoftora_left()}}' value="0" required oninput="calcPrice()">
                         <label for="Name">Number of Tora</label>
                      </div>
                   </div>
