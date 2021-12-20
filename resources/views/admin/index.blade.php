@@ -39,6 +39,15 @@
          <div class="frow centered border-top py-2 text-light">Transporters</div>
       </a>
    </div>
+   <div class="fcol w-15 ml-5 border bg-teal">
+      <a href="{{route('configs.index')}}">
+         <div class="fcol centered p-4">
+            <div class="txt-l txt-b txt-white">-</div>
+            <div class="txt-l my-2"><i data-feather='settings' class="feather-larger text-light"></i></i></div>
+         </div>
+         <div class="frow centered border-top py-2 text-light">Default</div>
+      </a>
+   </div>
 
 </div>
 @endsection

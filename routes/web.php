@@ -9,6 +9,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\TransporterController;
+use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DealController;
 use App\Http\Controllers\StorageController;
 
@@ -36,6 +37,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('clients', ClientController::class);
     Route::resource('stores', StoreController::class);
     Route::resource('transporters', TransporterController::class);
+    Route::resource('configs', ConfigController::class);
     Route::get('admin/signout', [UserController::class, 'signout']);
 });
 Route::group(['middleware' => 'user'], function () {
