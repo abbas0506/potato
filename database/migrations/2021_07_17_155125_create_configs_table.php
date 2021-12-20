@@ -15,12 +15,12 @@ class CreateConfigsTable extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedFloat('weightreductionperbori');
-            $table->unsignedFloat('weightreductionpertora');
+            $table->unsignedFloat('reductionperbori');
+            $table->unsignedFloat('reductionpertora');
             $table->unsignedFloat('commissionperbori');
             $table->unsignedFloat('commissionpertora');
-            $table->unsignedFloat('materialcostperbori');
-            $table->unsignedFloat('materialcostpertora');
+            $table->unsignedFloat('bagpriceperbori');
+            $table->unsignedFloat('bagpricepertora');
             $table->unsignedFloat('packingcostperbori');
             $table->unsignedFloat('packingcostpertora');
             $table->unsignedFloat('loadingcostperbori');

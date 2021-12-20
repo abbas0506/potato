@@ -74,12 +74,12 @@ class ConfigController extends Controller
     {
         //
         $request->validate([
-            'weightreductionperbori' => 'required',
-            'weightreductionpertora' => 'required',
+            'reductionperbori' => 'required',
+            'reductionpertora' => 'required',
             'commissionperbori' => 'required',
             'commissionpertora' => 'required',
-            'materialcostperbori' => 'required',
-            'materialcostpertora' => 'required',
+            'bagpriceperbori' => 'required',
+            'bagpricepertora' => 'required',
             'packingcostperbori' => 'required',
             'packingcostpertora' => 'required',
             'loadingcostperbori' => 'required',

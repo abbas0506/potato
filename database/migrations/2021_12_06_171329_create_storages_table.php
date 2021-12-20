@@ -19,10 +19,10 @@ class CreateStoragesTable extends Migration
             $table->unsignedBigInteger('store_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedInteger('storagecostperbori');
-            $table->unsignedInteger('storagecostpertora');
-            $table->unsignedInteger('carriageperbori');
-            $table->unsignedInteger('carriagepertora');
+            $table->unsignedFloat('storagecostperbori');
+            $table->unsignedFloat('storagecostpertora');
+            $table->unsignedFloat('carriageperbori');
+            $table->unsignedFloat('carriagepertora');
             $table->string('note', 200)->nullable(); //room detail etc
             $table->date('dateon');
 

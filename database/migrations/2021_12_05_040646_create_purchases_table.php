@@ -20,20 +20,22 @@ class CreatePurchasesTable extends Migration
             $table->string('vehicleno', 20);
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedInteger('grossweight');
-            $table->unsignedInteger('purchasepriceperkg');
-            $table->unsignedInteger('commissionperbori');
-            $table->unsignedInteger('commissionpertora');
+            $table->unsignedFloat('grossweight');
+            $table->unsignedFloat('priceperkg');
+            $table->unsignedFloat('reductionperbori');
+            $table->unsignedFloat('reductionpertora');
+            $table->unsignedFloat('commissionperbori');
+            $table->unsignedFloat('commissionpertora');
             //additional costs on product collection
-            $table->unsignedInteger('selectorcost');
-            $table->unsignedInteger('sortingcost');
-            $table->unsignedInteger('materialcostperbori');
-            $table->unsignedInteger('materialcostpertora');
-            $table->unsignedInteger('packingcostperbori');
-            $table->unsignedInteger('packingcostpertora');
-            $table->unsignedInteger('loadingcostperbori');
-            $table->unsignedInteger('loadingcostpertora');
-            $table->unsignedInteger('randomcost');
+            $table->unsignedFloat('selectorcost');
+            $table->unsignedFloat('sortingcost');
+            $table->unsignedFloat('bagpriceperbori');
+            $table->unsignedFloat('bagpricepertora');
+            $table->unsignedFloat('packingcostperbori');
+            $table->unsignedFloat('packingcostpertora');
+            $table->unsignedFloat('loadingcostperbori');
+            $table->unsignedFloat('loadingcostpertora');
+            $table->unsignedFloat('randomcost');
             $table->date('dateon');
 
             $table->foreign('deal_id')

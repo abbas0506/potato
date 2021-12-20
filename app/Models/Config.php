@@ -9,12 +9,12 @@ class Config extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'weightreductionperbori',
-        'weightreductionpertora',
+        'reductionperbori',
+        'reductionpertora',
         'commissionperbori',
         'commissionpertora',
-        'materialcostperbori',
-        'materialcostpertora',
+        'bagpriceperbori',
+        'bagpricepertora',
         'packingcostperbori',
         'packingcostpertora',
         'loadingcostperbori',

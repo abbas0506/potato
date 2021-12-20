@@ -32,19 +32,18 @@ Swal.fire({
 @endif
 <!-- purchasing -->
 <div class="frow centered">
-   <div class="fcol w-70">
-      <div class="w-100 bg-light my-3">
-         <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
-            <div class="frow px-4 stretched">
-               <div>
-                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
-               </div>
-               <div class="frow spaced txt-s mid-right">
-                  <span class="txt-b">New Pick</span>
-               </div>
+   <div class="fcol w-80">
+      <div class="border-1 border-left border-success py-2 my-3 text-primary txt-m" style="background-color: #eee;">
+         <div class="frow px-4 stretched">
+            <div>
+               {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+            </div>
+            <div class="frow spaced txt-s mid-right">
+               <span class="txt-b">New Pick</span>
             </div>
          </div>
-
+      </div>
+      <div class="w-70 bg-light">
          <form action="{{route('purchases.store')}}" method='post'>
             @csrf
             <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
@@ -127,6 +126,10 @@ Swal.fire({
 
          </form>
       </div>
+      <div class="w-24 bg-info">
+         hello
+      </div>
+
    </div>
 </div>
 

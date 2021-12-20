@@ -54,7 +54,7 @@ class PurchaseController extends Controller
             'numofbori' => 'required',
             'numoftora' => 'required',
             'grossweight' => 'required',
-            'unitprice' => 'required',
+            'priceperkg' => 'required',
             'commission' => 'required',
             'bagscost' => 'required',
             'selectorcost' => 'required',

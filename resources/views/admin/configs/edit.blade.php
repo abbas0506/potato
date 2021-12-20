@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 
@@ -41,22 +41,22 @@ Swal.fire({
             <div class="frow centered mb-4 txt-s txt-red">** All entries will be considered in Rs.</div>
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="text" name='weightreductionperbori' placeholder="reduction per bori" value="{{$config->weightreductionperbori}}" required>
+                  <input type="text" name='reductionperbori' placeholder="reduction per bori" value="{{$config->reductionperbori}}" required>
                   <label for="Name">Weight Reduction / Bori</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='weightreductionpertora' placeholder="reduction per tora" value="{{$config->weightreductionpertora}}" required>
+                  <input type="text" name='reductionpertora' placeholder="reduction per tora" value="{{$config->reductionpertora}}" required>
                   <label for="Name">Weight Reduction / Tora</label>
                </div>
             </div>
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="text" name='materialcostperbori' placeholder="material cost per bori" value="{{$config->materialcostperbori}}" required>
+                  <input type="text" name='bagpriceperbori' placeholder="material cost per bori" value="{{$config->bagpriceperbori}}" required>
                   <label for="Name">Material Cost / Bori</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='materialcostpertora' placeholder="material cost per tora" value="{{$config->materialcostpertora}}" required>
+                  <input type="text" name='bagpricepertora' placeholder="material cost per tora" value="{{$config->bagpricepertora}}" required>
                   <label for="Name">Material Cost / Tora</label>
                </div>
             </div>

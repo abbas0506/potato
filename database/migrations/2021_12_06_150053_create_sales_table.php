@@ -19,24 +19,24 @@ class CreateSalesTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedInteger('grossweight');
-            $table->unsignedInteger('carriageperbori');
-            $table->unsignedInteger('carriagepertora');
-            $table->unsignedInteger('commissionperbori');
-            $table->unsignedInteger('commissionpertora');
-            $table->unsignedInteger('saleprice');
+            $table->unsignedFloat('grossweight');
+            $table->unsignedFloat('carriageperbori');
+            $table->unsignedFloat('carriagepertora');
+            $table->unsignedFloat('commissionperbori');
+            $table->unsignedFloat('commissionpertora');
+            $table->unsignedFloat('saleprice');
 
             //additional costs in case of sale from store
             $table->unsignedBigInteger('store_id')->nullable();
-            $table->unsignedInteger('selectorcost')->nullable();
-            $table->unsignedInteger('sortingcost')->nullable();
-            $table->unsignedInteger('materialcostperbori');
-            $table->unsignedInteger('materialcostpertora');
-            $table->unsignedInteger('packingcostperbori')->nullable();
-            $table->unsignedInteger('packingcostpertora')->nullable();
-            $table->unsignedInteger('loadingcostperbori')->nullable();
-            $table->unsignedInteger('loadingcostpertora')->nullable();
-            $table->unsignedInteger('randomcost')->nullable();
+            $table->unsignedFloat('selectorcost')->nullable();
+            $table->unsignedFloat('sortingcost')->nullable();
+            $table->unsignedFloat('bagpriceperbori');
+            $table->unsignedFloat('bagpricepertora');
+            $table->unsignedFloat('packingcostperbori')->nullable();
+            $table->unsignedFloat('packingcostpertora')->nullable();
+            $table->unsignedFloat('loadingcostperbori')->nullable();
+            $table->unsignedFloat('loadingcostpertora')->nullable();
+            $table->unsignedFloat('randomcost')->nullable();
             $table->date('dateon');
 
             $table->foreign('purchase_id')
