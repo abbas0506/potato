@@ -35,7 +35,8 @@ class CreatePurchasesTable extends Migration
             $table->unsignedFloat('packingcostpertora');
             $table->unsignedFloat('loadingcostperbori');
             $table->unsignedFloat('loadingcostpertora');
-            $table->unsignedFloat('randomcost');
+            $table->unsignedInteger('randomcost');
+            $table->string('randomnote')->nullable();
             $table->date('dateon');
 
             $table->foreign('deal_id')

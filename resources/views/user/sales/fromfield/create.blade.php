@@ -67,14 +67,18 @@ Swal.fire({
                      <select name="transporter_id" id="" required>
                         <option value="">Select an option ...</option>
                         @foreach($transporters as $transporter)
-                        <option value="{{$transporter->id}}">{{$transporter->name}}</option>
+                        @if($transporter->id==$purchase->transporter_id)
+                        <option value="{{$transporter->id}}" selected>{{$transporter->name}}</option>
+                        @else
+                        <option value="{{$transporter->id}}" selected>{{$transporter->name}}</option>
+                        @endif
                         @endforeach
                      </select>
                      <label for="Name">Transport Company</label>
                   </div>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='vehicleno'>
+                  <input type="text" name='vehicleno' value="{{$purchase->vehicleno}}">
                   <label for="Name">Vehicle No</label>
                </div>
             </div>
@@ -93,11 +97,11 @@ Swal.fire({
                <div class="fcol w-48">
                   <div class="frow stretched">
                      <div class="fancyinput w-48">
-                        <input type="number" name='numofbori' id='numofbori' min="0" max='{{$purchase->numofbori_left()}}' value="0" required oninput="calcActualWeight()">
+                        <input type="number" name='numofbori' id='numofbori' min="0" max='{{$purchase->numofbori_left()}}' value="{{$purchase->numofbori_left()}}" required oninput="calcActualWeight()">
                         <label for="Name">Number of Bori</label>
                      </div>
                      <div class="fancyinput w-48">
-                        <input type="number" name='numoftora' id='numoftora' min="0" max='{{$purchase->numoftora_left()}}' value="0" required oninput="calcActualWeight()">
+                        <input type="number" name='numoftora' id='numoftora' min="0" max='{{$purchase->numoftora_left()}}' value="{{$purchase->numoftora_left()}}" required oninput="calcActualWeight()">
                         <label for="Name">Number of Tora</label>
                      </div>
                   </div>
@@ -114,6 +118,8 @@ Swal.fire({
                   <label for="Name">Actual Weight</label>
                </div>
             </div>
+
+            <!-- to be removed -->
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
                   <input type="number" name='carriage' id='carriage' value="0" oninput="calcActualWeight()" required>
@@ -128,7 +134,7 @@ Swal.fire({
             <div class="frow stretched mt-3">
                <div class="fancyinput w-100">
                   <input type="number" name='saleprice' id='saleprice' min="0" value="0" oninput="calcActualWeight()" required>
-                  <label for="Name">Sale Price (Return)</label>
+                  <label for="Name">Final Sale Price (Returned)</label>
                </div>
             </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Config;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sale;
@@ -35,9 +36,9 @@ class PurchaseController extends Controller
     {
         //
         $deal = session('deal');
-        $stores = Store::all();
         $transporters = Transporter::all();
-        return view('user.purchases.create', compact('deal', 'stores', 'transporters'));
+        $config = Config::find(1);
+        return view('user.purchases.create', compact('deal', 'transporters', 'config'));
     }
 
     /**
@@ -51,16 +52,25 @@ class PurchaseController extends Controller
         //
         $request->validate([
             'deal_id' => 'required',
+            'transporter_id' => 'required',
+            'vehicleno' => 'required',
             'numofbori' => 'required',
             'numoftora' => 'required',
             'grossweight' => 'required',
             'priceperkg' => 'required',
-            'commission' => 'required',
-            'bagscost' => 'required',
+            'reductionperbori' => 'required',
+            'reductionpertora' => 'required',
             'selectorcost' => 'required',
-            'packingcost' => 'required',
-            'loadingcost' => 'required',
-
+            'sortingcost' => 'required',
+            'bagpriceperbori' => 'required',
+            'bagpricepertora' => 'required',
+            'packingcostperbori' => 'required',
+            'packingcostpertora' => 'required',
+            'loadingcostperbori' => 'required',
+            'loadingcostpertora' => 'required',
+            'commissionperbori' => 'required',
+            'commissionpertora' => 'required',
+            'randomcost' => 'required',
         ]);
 
         try {

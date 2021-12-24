@@ -53,6 +53,12 @@ class Purchase extends Model
         $store_ids = $this->storages->unique()->pluck('store_id')->toArray();
         return Store::whereIn('id', $store_ids)->get();
     }
+    public function actual()
+    {
+        $gross = $this->grossweight;
+        $actual = $this->grossweight - $this->numofbori * $this->reductionperbori - $this->numoftora * $this->reductionpertora;
+        return $actual;
+    }
 
     public function numofbori_stored()
     {

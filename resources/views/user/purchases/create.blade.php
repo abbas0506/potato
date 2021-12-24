@@ -36,100 +36,192 @@ Swal.fire({
       <div class="border-1 border-left border-success py-2 my-3 text-primary txt-m" style="background-color: #eee;">
          <div class="frow px-4 stretched">
             <div>
-               {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+               {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
             </div>
             <div class="frow spaced txt-s mid-right">
                <span class="txt-b">New Pick</span>
             </div>
          </div>
       </div>
-      <div class="w-70 bg-light">
-         <form action="{{route('purchases.store')}}" method='post'>
+      <form action="{{route('purchases.store')}}" method='post'>
+         <div class="frow stretched mb-3">
+
             @csrf
-            <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
-            <input type="hidden" name='deal_id' value="{{$deal->id}}">
-            <div class="frow stretched mt-4">
-               <div class="fancyinput w-48">
-                  <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
-                  <label for="Name">Date (mm-dd-yyyy)</label>
+            <div class="w-70 bg-light">
+               <input type="hidden" name='deal_id' value="{{$deal->id}}">
+               <div class="frow stretched mt-3">
+                  <div class="fancyinput w-24">
+                     <input type="date" name='dateon' id='dateon' required>
+                     <label for="Name">Date (mm-dd-yyyy)</label>
+                  </div>
+
                </div>
 
-               <div class="frow centered border border-1 border-primary w-48 py-2">
-                  <span class="badge badge-primary badge-sm txt-s">Basic</span> <span id='span_basicprice' class="mx-1">0</span> +
-                  <span class="badge badge-primary badge-sm txt-s ml-1">Addl</span> <span id='span_addlcost' class="mx-1">0</span> =
-                  <span id='span_total' class="txt-m txt-red mx-1">0</span>
-               </div>
-            </div>
-            <div class="frow stretched mt-3">
-               <div class="fcol w-48">
-                  <div class="frow stretched">
-                     <div class="fancyinput w-48">
-                        <input type="number" name='numofbori' id='numofbori' min="0" value="0" required oninput="calcPrice()">
-                        <label for="Name">Number of Bori</label>
-                     </div>
-                     <div class="fancyinput w-48">
-                        <input type="number" name='numoftora' id='numoftora' min="0" value="0" required oninput="calcPrice()">
-                        <label for="Name">Number of Tora</label>
-                     </div>
+               <div class="frow stretched mt-3">
+                  <div class="fancyselect w-40 py-1">
+                     <select name="transporter_id" id="" required>
+                        <option value="">Select an option ...</option>
+                        @foreach($transporters as $transporter)
+                        <option value="{{$transporter->id}}">{{$transporter->name}}</option>
+                        @endforeach
+                     </select>
+                     <label for="Name">Transport Company</label>
+                  </div>
+                  <div class="fancyinput w-20">
+                     <input type="text" class='text-center' name='vehicleno' id='vehicleno' placeholder="LPT 2314" value='-' required>
+                     <label for="Name">Vehicle No.</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='grossweight' id='grossweight' value="0" oninput='calcPrice()' required>
+                     <label for="Name">Gross (kg)</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='priceperkg' id='priceperkg' value="{{$deal->unitprice}}" oninput="calcPrice()" required>
+                     <label for="Name">@ kg (Rs)</label>
                   </div>
                </div>
-               <div class="fcol w-48">
-                  <div class="frow stretched">
-                     <div class="fancyinput w-48">
-                        <input type="number" name='grossweight' id='grossweight' min="0" value="0" oninput='calcPrice()' required>
-                        <label for="Name">Gross Weight</label>
-                     </div>
-                     <div class="fancyinput w-48">
-                        <input type="number" name='actualweight' id='actualweight' min="0" value="0" disabled class="txt-b txt-red text-center">
-                        <label for="Name">Actual Weight</label>
-                     </div>
+               <div class="frow stretched mt-5">
+                  <div class="fancyinput w-20">
+                     <input type="number" class='text-center' name='numofbori' id='numofbori' value="0" required oninput="calcPrice()">
+                     <label for="Name">Number of Bori</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='reductionperbori' id='reductionperbori' value="{{$config->reductionperbori}}" oninput="calcPrice()" required>
+                     <label for="Name">@ reduction</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='bagpriceperbori' id='bagpriceperbori' value="{{$config->bagpriceperbori}}" oninput="calcPrice()" required>
+                     <label for="Name">@ bag price</label>
+                  </div>
+
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='packingcostperbori' id='packingcostperbori' value="{{$config->packingcostperbori}}" oninput="calcPrice()" required>
+                     <label for="Name">@ packing</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='loadingcostperbori' id='loadingcostperbori' value="{{$config->loadingcostperbori}}" oninput="calcPrice()" required>
+                     <label for="Name">@ loading</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='commissionperbori' id='commissionperbori' value="{{$config->commissionperbori}}" oninput="calcPrice()" required>
+                     <label for="Name">@ commission</label>
                   </div>
                </div>
+
+
+               <div class="frow stretched mt-3">
+
+                  <div class="fancyinput w-20">
+                     <input type="number" class='text-center' name='numoftora' id='numoftora' value="0" required oninput="calcPrice()">
+                     <label for="Name">Number of Tora</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='reductionpertora' id='reductionpertora' value="{{$config->reductionpertora}}" oninput="calcPrice()" required>
+                     <label for="Name">@ reduction</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='bagpricepertora' id='bagpricepertora' value="{{$config->bagpricepertora}}" oninput="calcPrice()" required>
+                     <label for="Name">@ bag price</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='packingcostpertora' id='packingcostpertora' value="{{$config->packingcostpertora}}" oninput="calcPrice()" required>
+                     <label for="Name">@ packing</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='loadingcostpertora' id='loadingcostpertora' value="{{$config->loadingcostpertora}}" oninput="calcPrice()" required>
+                     <label for="Name">@ loading</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' class='text-center' name='commissionpertora' id='commissionpertora' value="{{$config->commissionpertora}}" oninput="calcPrice()" required>
+                     <label for="Name">@ commision</label>
+                  </div>
+
+               </div>
+
+               <div class="frow stretched mt-5">
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='selectorcost' id='selectorcost' value="0" oninput="calcPrice()" required>
+                     <label for="Name">Selector</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="text" class='text-center' name='sortingcost' id='sortingcost' value="0" oninput="calcPrice()" required>
+                     <label for="Name">Sorting</label>
+                  </div>
+                  <div class="fancyinput w-15">
+                     <input type="number" class='text-center' name='randomcost' id='randomcost' min='0' value="0" oninput="calcPrice()" required>
+                     <label for="Name">Random</label>
+                  </div>
+                  <div class="fancyinput w-50">
+                     <input type="text" class='text-center' name='randomnote' id='randomnote' value="">
+                     <label for="Name">Random Note</label>
+                  </div>
+               </div>
+
+
             </div>
 
-            <div class="frow stretched mt-3">
-               <div class="fancyinput w-48">
-                  <input type="number" name='unitprice' id='unitprice' value="{{$deal->unitprice}}" oninput="calcPrice()" required>
-                  <label for="Name">Unit Price</label>
+            <div class="fcol w-24 mt-3 stretched">
+               <div class="border p-2">
+                  <div class="frow stretched">
+                     <div class="w-48 txt-s txt-b">Gross Weight</div>
+                     <div class="w-48 txt-s text-right" id='lbl_grossweight'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-s txt-b">Reduction</div>
+                     <div class="w-48 txt-s text-right" id='lbl_reduction'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-s txt-b">Actual Weight</div>
+                     <div class="w-48 txt-s text-right" id='lbl_actualweight'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-s txt-b">Basic Price</div>
+                     <div class="w-48 txt-s text-right" id='lbl_basicprice'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-s txt-b">Addl. Cost</div>
+                     <div class="w-48 txt-s text-right" id='lbl_addlcost'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-xs">Selector</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_selectorcost'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-xs">Sorting</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_sortingcost'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-xs">Bags</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_bagscost'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-xs">Packing</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_packingcost'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-xs">Loading</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_loadingcost'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-xs">Commission</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_commission'>0</div>
+                  </div>
+                  <div class="frow stretched">
+                     <div class="w-48 txt-xs">Random</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_randomcost'>0</div>
+                  </div>
+                  <div class="frow stretched txt-red">
+                     <div class="w-48 txt-s txt-b">Total</div>
+                     <div class="w-48 txt-s text-right" id='lbl_total'>0</div>
+                  </div>
                </div>
-               <div class="fancyinput w-48">
-                  <input type="number" name='commission' id='commission' min="0" value="0" oninput="calcPrice()" required>
-                  <label for="Name">Commission</label>
+               <div class="frow mt-4">
+                  <button type="submit" class="btn btn-primary w-100">Submit</button>
                </div>
             </div>
 
-
-            <div class="frow stretched mt-3">
-               <div class="fancyinput w-48">
-                  <input type="number" name='bagscost' id='bagscost' min="0" value="0" oninput="calcPrice()" required>
-                  <label for="Name">Bags Cost</label>
-               </div>
-               <div class="fancyinput w-48">
-                  <input type="number" name='selectorcost' id='selectorcost' min="0" value="0" oninput="calcPrice()" required>
-                  <label for="Name">Selector Cost</label>
-               </div>
-            </div>
-            <div class="frow stretched mt-3">
-               <div class="fancyinput w-48">
-                  <input type="number" name='packingcost' id='packingcost' min="0" value="0" oninput="calcPrice()" required>
-                  <label for="Name">Packing Cost</label>
-               </div>
-               <div class="fancyinput w-48">
-                  <input type="number" name='loadingcost' id='loadingcost' min="0" value="0" oninput="calcPrice()" required>
-                  <label for="Name">Loading Cost</label>
-               </div>
-            </div>
-
-            <div class="frow mid-right mt-4">
-               <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-
-         </form>
-      </div>
-      <div class="w-24 bg-info">
-         hello
-      </div>
-
+         </div>
+      </form>
    </div>
 </div>
 
@@ -155,26 +247,49 @@ function search(event) {
 
 function calcPrice() {
    var actual = 0;
-   var gross = parseInt($('#grossweight').val())
+
+   var gross = parseFloat($('#grossweight').val())
+
    var numofbori = parseInt($('#numofbori').val());
    var numoftora = parseInt($('#numoftora').val());
-   var unitprice = parseInt($('#unitprice').val());
+   var priceperkg = parseFloat($('#priceperkg').val());
+   var reductionperbori = parseFloat($('#reductionperbori').val());
+   var reductionpertora = parseFloat($('#reductionpertora').val());
 
-   var commission = parseInt($('#commission').val());
-   var bagscost = parseInt($('#bagscost').val());
+   var bagpriceperbori = parseFloat($('#bagpriceperbori').val());
+   var bagpricepertora = parseFloat($('#bagpricepertora').val());
    var selectorcost = parseInt($('#selectorcost').val());
-   var packingcost = parseInt($('#packingcost').val());
-   var loadingcost = parseInt($('#loadingcost').val());
+   var sortingcost = parseInt($('#sortingcost').val());
+   var packingcostperbori = parseFloat($('#packingcostperbori').val());
+   var packingcostpertora = parseFloat($('#packingcostpertora').val());
+   var loadingcostperbori = parseFloat($('#loadingcostperbori').val());
+   var loadingcostpertora = parseFloat($('#loadingcostpertora').val());
+   var commissionperbori = parseFloat($('#commissionperbori').val());
+   var commissionpertora = parseFloat($('#commissionpertora').val());
+   var randomcost = parseInt($('#randomcost').val());
 
-   var additionalcost = commission + bagscost + selectorcost + packingcost + loadingcost;
-
+   var additionalcost = selectorcost + sortingcost + numofbori * (bagpriceperbori + packingcostperbori + loadingcostperbori + commissionperbori) + numoftora * (bagpricepertora + packingcostpertora + loadingcostpertora + commissionpertora) + randomcost;
+   //alert('rb:' + reductionperbori + "rt" + reductionpertora)
    if (gross > 0)
-      actual = gross - 2 * numofbori - 0.5 * numoftora;
+      actual = gross - reductionperbori * numofbori - reductionpertora * numoftora;
 
-   $('#actualweight').val(actual);
-   $('#span_basicprice').html(actual * unitprice);
-   $('#span_addlcost').html(additionalcost);
-   $('#span_total').html(actual * unitprice + additionalcost);
+   $('#lbl_grossweight').html(gross);
+   $('#lbl_reduction').html(reductionperbori * numofbori + reductionpertora * numoftora);
+   $('#lbl_actualweight').html(actual);
+   $('#lbl_basicprice').html(actual * priceperkg);
+   $('#lbl_addlcost').html(additionalcost);
+   //additional detail
+   $('#lbl_selectorcost').html(selectorcost);
+   $('#lbl_sortingcost').html(sortingcost);
+   $('#lbl_bagscost').html(bagpriceperbori * numofbori + bagpricepertora * numoftora);
+   $('#lbl_packingcost').html(packingcostperbori * numofbori + packingcostpertora * numoftora);
+   $('#lbl_loadingcost').html(loadingcostperbori * numofbori + loadingcostpertora * numoftora);
+   $('#lbl_commission').html(commissionperbori * numofbori + commissionpertora * numoftora);
+   $('#lbl_randomcost').html(randomcost);
+
+
+
+   $('#lbl_total').html(actual * priceperkg + additionalcost);
 
 
 }
