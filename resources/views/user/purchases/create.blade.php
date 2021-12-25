@@ -4,7 +4,7 @@
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span> New
+      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Picks </a> <span class="mx-2">/</span> New
    </div>
 </div>
 @endsection
@@ -72,7 +72,7 @@ Swal.fire({
                      <label for="Name">Vehicle No.</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='grossweight' id='grossweight' value="0" oninput='calcPrice()' required>
+                     <input type="number" class='text-center' name='grossweight' id='grossweight' value="0" oninput='calcPrice()' required>
                      <label for="Name">Gross (kg)</label>
                   </div>
                   <div class="fancyinput w-15">
@@ -140,11 +140,11 @@ Swal.fire({
 
                <div class="frow stretched mt-5">
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='selectorcost' id='selectorcost' value="0" oninput="calcPrice()" required>
+                     <input type="number" class='text-center' name='selectorcost' id='selectorcost' value="0" oninput="calcPrice()" required>
                      <label for="Name">Selector</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='sortingcost' id='sortingcost' value="0" oninput="calcPrice()" required>
+                     <input type="number" class='text-center' name='sortingcost' id='sortingcost' value="0" oninput="calcPrice()" required>
                      <label for="Name">Sorting</label>
                   </div>
                   <div class="fancyinput w-15">

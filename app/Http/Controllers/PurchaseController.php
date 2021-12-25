@@ -51,6 +51,7 @@ class PurchaseController extends Controller
     {
         //
         $request->validate([
+            'dateon' => 'required',
             'deal_id' => 'required',
             'transporter_id' => 'required',
             'vehicleno' => 'required',
@@ -107,6 +108,9 @@ class PurchaseController extends Controller
     public function edit(Purchase $purchase)
     {
         //
+        $deal = session('deal');
+        $transporters = Transporter::all();
+        return view('user.purchases.edit', compact('deal', 'transporters', 'purchase'));
     }
 
     /**
@@ -119,6 +123,38 @@ class PurchaseController extends Controller
     public function update(Request $request, Purchase $purchase)
     {
         //
+        $request->validate([
+            'deal_id' => 'required',
+            'transporter_id' => 'required',
+            'vehicleno' => 'required',
+            'numofbori' => 'required',
+            'numoftora' => 'required',
+            'grossweight' => 'required',
+            'priceperkg' => 'required',
+            'reductionperbori' => 'required',
+            'reductionpertora' => 'required',
+            'selectorcost' => 'required',
+            'sortingcost' => 'required',
+            'bagpriceperbori' => 'required',
+            'bagpricepertora' => 'required',
+            'packingcostperbori' => 'required',
+            'packingcostpertora' => 'required',
+            'loadingcostperbori' => 'required',
+            'loadingcostpertora' => 'required',
+            'commissionperbori' => 'required',
+            'commissionpertora' => 'required',
+            'randomcost' => 'required',
+        ]);
+
+        try {
+
+            $purchase->update($request->all());
+            return redirect()->route('deals.show', session('deal'))->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            //return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**
@@ -156,8 +192,9 @@ class PurchaseController extends Controller
         $clients = Client::all();
         $transporters = Transporter::all();
         $stores = $purchase->stores();
+        $config = Config::find(1);
 
-        return view('user.sales.fromstore.create', compact('deal', 'purchase', 'clients', 'transporters', 'stores'));
+        return view('user.sales.fromstore.create', compact('deal', 'purchase', 'clients', 'transporters', 'stores', 'config'));
     }
     public function storage_create($id)
     {

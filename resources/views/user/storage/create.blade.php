@@ -4,7 +4,7 @@
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Purchases </a> <span class="mx-2">/</span> Storage
+      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Picks </a> <span class="mx-2">/</span> Storage
    </div>
 </div>
 @endsection
@@ -44,72 +44,66 @@ Swal.fire({
                </div>
             </div>
          </div>
-         <div class="frow txt-m txt-b txt-red my-3"><span class="badge badge-warning rounded txt-s"> Field Qty : {{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}} </span></div>
+
          <form action="{{route('storage.store')}}" method='post'>
             @csrf
             <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
-            <div class="frow stretched mt-4">
+            <div class="frow mt-4">
                <div class="fancyinput w-24">
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
-               <div class="fcol w-72">
-                  <div class="fancyselect">
-                     <select name="store_id" id="" required>
-                        @foreach($stores as $store)
-                        <option value="{{$store->id}}">{{$store->name}}</option>
-                        @endforeach
-                     </select>
-                     <label for="Name">Cold Store Name</label>
-                  </div>
-               </div>
+               <div class="txt-m txt-b txt-red ml-3"><span class="badge badge-warning rounded txt-s"> Field Qty : {{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}} </span></div>
             </div>
-            <div class="frow stretched mt-3">
-               <div class="fcol w-48">
+            <div class="frow stretched mt-4">
+               <div class="fcol w-30">
                   <div class="fancyselect">
                      <select name="transporter_id" id="" required>
                         <option value="">Select an option ...</option>
                         @foreach($transporters as $transporter)
-                        <option value="{{$transporter->id}}">{{$transporter->name}}</option>
+                        @if($transporter->id==$purchase->transporter_id)
+                        <option value="{{$transporter->id}}" selected>{{$transporter->name}}</option>
+                        @else
+                        <option value="{{$transporter->id}}" selected>{{$transporter->name}}</option>
+                        @endif
                         @endforeach
                      </select>
                      <label for="Name">Transport Company</label>
                   </div>
                </div>
-               <div class="fancyinput w-48">
-                  <input type="text" name='vehicleno' required>
+               <div class="fancyinput w-15">
+                  <input type="text" class="text-center" name='vehicleno' value="{{$purchase->vehicleno}}" required>
                   <label for="Name">Vehicle No</label>
                </div>
-            </div>
-            <div class="frow stretched mt-3">
-               <div class="fcol w-48">
-                  <div class="frow stretched">
-                     <div class="fancyinput w-48">
-                        <input type="number" name='numofbori' id='numofbori' min="0" max='{{$purchase->numofbori_left()}}' value="0" required oninput="calcPrice()">
-                        <label for="Name">Number of Bori</label>
-                     </div>
-                     <div class="fancyinput w-48">
-                        <input type="number" name='numoftora' id='numoftora' min="0" max='{{$purchase->numoftora_left()}}' value="0" required oninput="calcPrice()">
-                        <label for="Name">Number of Tora</label>
-                     </div>
-                  </div>
+
+               <div class="fancyinput w-15">
+                  <input type="number" class="text-center" name='numofbori' id='numofbori' min="0" max='{{$purchase->numofbori_left()}}' value="0" required oninput="calcPrice()">
+                  <label for="Name">Number of Bori</label>
                </div>
-               <div class="fcol w-48">
-                  <div class="frow stretched">
-                     <div class="fancyinput w-48">
-                        <input type="number" name='carriage' id='carriage' value="0" oninput="calcPrice()" required>
-                        <label for="Name">Carriage</label>
-                     </div>
-                     <div class="fancyinput w-48">
-                        <input type="number" name='storagecost' min="0" value="0" required>
-                        <label for="Name" class="bg-transparent">Storage Cost</label>
-                     </div>
-                  </div>
+               <div class="fancyinput w-15">
+                  <input type="number" class="text-center" name='numoftora' id='numoftora' min="0" max='{{$purchase->numoftora_left()}}' value="0" required oninput="calcPrice()">
+                  <label for="Name">Number of Tora</label>
+               </div>
+               <div class="fancyinput w-15">
+                  <input type="number" class="text-center" name='carriage' id='carriage' value="0" oninput="calcPrice()" required>
+                  <label for="Name">Carriage</label>
                </div>
             </div>
 
             <div class="frow stretched mt-3">
-               <div class="fancyinput w-100">
+               <div class="fancyselect w-48">
+                  <select name="store_id" id="" required>
+                     @foreach($stores as $store)
+                     <option value="{{$store->id}}">{{$store->name}}</option>
+                     @endforeach
+                  </select>
+                  <label for="Name">Cold Store Name</label>
+               </div>
+               <div class="fancyinput w-15">
+                  <input type="number" class="text-center" name='storagecost' min="0" value="0" required>
+                  <label for="Name" class="bg-transparent">Storage Cost</label>
+               </div>
+               <div class="fancyinput w-32">
                   <input type="text" name='note' id='note'>
                   <label for="Name">Extra Note (if any)</label>
                </div>

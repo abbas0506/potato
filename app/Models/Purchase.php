@@ -30,6 +30,7 @@ class Purchase extends Model
         'loadingcostperbori',
         'loadingcostpertora',
         'randomcost',
+        'randomnote',
         'dateon',
     ];
 
@@ -60,6 +61,21 @@ class Purchase extends Model
         return $actual;
     }
 
+    public function basicprice()
+    {
+        return $this->actual() * $this->priceperkg;
+    }
+    public function addlcost()
+    {
+        $addlcost = $this->selectorcost + $this->sortingcost + $this->numofbori * ($this->bagpriceperbori + $this->packingcostperbori + $this->loadingcostperbori + $this->commissionperbori) + $this->numoftora * ($this->bagpricepertora + $this->packingcostpertora + $this->loadingcostpertora + $this->commissionpertora) + $this->randomcost;
+        return $addlcost;
+    }
+
+    public function finalcostperkg()
+    {
+        $totalcost = $this->basicprice() + $this->addlcost();
+        return $totalcost / $this->actual();
+    }
     public function numofbori_stored()
     {
         return $this->storages()->sum('numofbori');
