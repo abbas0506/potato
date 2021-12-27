@@ -16,16 +16,16 @@ class ConfigSeeder extends Seeder
     {
         //
         Config::create([
-            'reductionperbori' => 2,
-            'reductionpertora' => 0.5,
-            'commissionperbori' => 20,
-            'commissionpertora' => 10,
-            'bagpriceperbori' => 10,
-            'bagpricepertora' => 10,
-            'packingcostperbori' => 10,
-            'packingcostpertora' => 10,
-            'loadingcostperbori' => 10,
-            'loadingcostpertora' => 10,
+            'reduction0' => 2,
+            'reduction1' => 0.5,
+            'commission0' => 20,
+            'commission1' => 10,
+            'bagprice0' => 10,
+            'bagprice1' => 10,
+            'packing0' => 10,
+            'packing1' => 10,
+            'loading0' => 10,
+            'loading1' => 10,
         ]);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfigsTable extends Migration
+class CreateCostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,27 @@ class CreateConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('configs', function (Blueprint $table) {
+        Schema::create('costs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedFloat('reduction0');
-            $table->unsignedFloat('reduction1');
             $table->unsignedFloat('commission0');
             $table->unsignedFloat('commission1');
+            $table->unsignedInteger('selector');
+            $table->unsignedInteger('sorting');
+
             $table->unsignedFloat('bagprice0');
             $table->unsignedFloat('bagprice1');
             $table->unsignedFloat('packing0');
             $table->unsignedFloat('packing1');
-            $table->unsignedFloat('loading0');
-            $table->unsignedFloat('loading1');
+            $table->unsignedInteger('loading0');
+            $table->unsignedInteger('loading1');
+            $table->unsignedInteger('carriage0');
+            $table->unsignedInteger('carriage1');
+            $table->unsignedInteger('storage0')->nullable();
+            $table->unsignedInteger('storage1')->nullable();
+
+            $table->unsignedInteger('sadqa');
+            $table->unsignedInteger('random');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +45,6 @@ class CreateConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configs');
+        Schema::dropIfExists('costs');
     }
 }

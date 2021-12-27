@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <!-- purchasing -->
@@ -76,34 +76,34 @@ Swal.fire({
                      <label for="Name">Gross (kg)</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='priceperkg' id='priceperkg' value="{{$deal->unitprice}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='priceperkg' id='priceperkg' value="{{$deal->priceperkg}}" oninput="calcPrice()" required>
                      <label for="Name">@ kg (Rs)</label>
                   </div>
                </div>
                <div class="frow stretched mt-5">
                   <div class="fancyinput w-20">
-                     <input type="number" class='text-center' name='numofbori' id='numofbori' value="0" required oninput="calcPrice()">
+                     <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$deal->numofbori_left()}}" required oninput="calcPrice()">
                      <label for="Name">Number of Bori</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='reductionperbori' id='reductionperbori' value="{{$config->reductionperbori}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='reduction0' id='reduction0' value="{{$config->reduction0}}" oninput="calcPrice()" required>
                      <label for="Name">@ reduction</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='bagpriceperbori' id='bagpriceperbori' value="{{$config->bagpriceperbori}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='bagprice0' id='bagprice0' value="{{$config->bagprice0}}" oninput="calcPrice()" required>
                      <label for="Name">@ bag price</label>
                   </div>
 
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='packingcostperbori' id='packingcostperbori' value="{{$config->packingcostperbori}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='packing0' id='packing0' value="{{$config->packing0}}" oninput="calcPrice()" required>
                      <label for="Name">@ packing</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='loadingcostperbori' id='loadingcostperbori' value="{{$config->loadingcostperbori}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='loading0' id='loading0' value="{{$config->loading0}}" oninput="calcPrice()" required>
                      <label for="Name">@ loading</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='commissionperbori' id='commissionperbori' value="{{$config->commissionperbori}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='commission0' id='commission0' value="{{$config->commission0}}" oninput="calcPrice()" required>
                      <label for="Name">@ commission</label>
                   </div>
                </div>
@@ -112,27 +112,27 @@ Swal.fire({
                <div class="frow stretched mt-3">
 
                   <div class="fancyinput w-20">
-                     <input type="number" class='text-center' name='numoftora' id='numoftora' value="0" required oninput="calcPrice()">
+                     <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$deal->numoftora_left()}}" required oninput="calcPrice()">
                      <label for="Name">Number of Tora</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='reductionpertora' id='reductionpertora' value="{{$config->reductionpertora}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='reduction1' id='reduction1' value="{{$config->reduction1}}" oninput="calcPrice()" required>
                      <label for="Name">@ reduction</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='bagpricepertora' id='bagpricepertora' value="{{$config->bagpricepertora}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='bagprice1' id='bagprice1' value="{{$config->bagprice1}}" oninput="calcPrice()" required>
                      <label for="Name">@ bag price</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='packingcostpertora' id='packingcostpertora' value="{{$config->packingcostpertora}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='packing1' id='packing1' value="{{$config->packing1}}" oninput="calcPrice()" required>
                      <label for="Name">@ packing</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' name='loadingcostpertora' id='loadingcostpertora' value="{{$config->loadingcostpertora}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' name='loading1' id='loading1' value="{{$config->loading1}}" oninput="calcPrice()" required>
                      <label for="Name">@ loading</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="text" class='text-center' class='text-center' name='commissionpertora' id='commissionpertora' value="{{$config->commissionpertora}}" oninput="calcPrice()" required>
+                     <input type="text" class='text-center' class='text-center' name='commission1' id='commission1' value="{{$config->commission1}}" oninput="calcPrice()" required>
                      <label for="Name">@ commision</label>
                   </div>
 
@@ -140,24 +140,22 @@ Swal.fire({
 
                <div class="frow stretched mt-5">
                   <div class="fancyinput w-15">
-                     <input type="number" class='text-center' name='selectorcost' id='selectorcost' value="0" oninput="calcPrice()" required>
+                     <input type="number" class='text-center' name='selector' id='selector' value="0" oninput="calcPrice()" required>
                      <label for="Name">Selector</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="number" class='text-center' name='sortingcost' id='sortingcost' value="0" oninput="calcPrice()" required>
+                     <input type="number" class='text-center' name='sorting' id='sorting' value="0" oninput="calcPrice()" required>
                      <label for="Name">Sorting</label>
                   </div>
                   <div class="fancyinput w-15">
-                     <input type="number" class='text-center' name='randomcost' id='randomcost' min='0' value="0" oninput="calcPrice()" required>
+                     <input type="number" class='text-center' name='random' id='random' min='0' value="0" oninput="calcPrice()" required>
                      <label for="Name">Random</label>
                   </div>
                   <div class="fancyinput w-50">
-                     <input type="text" class='text-center' name='randomnote' id='randomnote' value="">
+                     <input type="text" class='text-center' name='note' id='note' value="">
                      <label for="Name">Random Note</label>
                   </div>
                </div>
-
-
             </div>
 
             <div class="fcol w-24 mt-3 stretched">
@@ -184,11 +182,11 @@ Swal.fire({
                   </div>
                   <div class="frow stretched">
                      <div class="w-48 txt-xs">Selector</div>
-                     <div class="w-48 txt-xs text-right" id='lbl_selectorcost'>0</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_selector'>0</div>
                   </div>
                   <div class="frow stretched">
                      <div class="w-48 txt-xs">Sorting</div>
-                     <div class="w-48 txt-xs text-right" id='lbl_sortingcost'>0</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_sorting'>0</div>
                   </div>
                   <div class="frow stretched">
                      <div class="w-48 txt-xs">Bags</div>
@@ -208,7 +206,7 @@ Swal.fire({
                   </div>
                   <div class="frow stretched">
                      <div class="w-48 txt-xs">Random</div>
-                     <div class="w-48 txt-xs text-right" id='lbl_randomcost'>0</div>
+                     <div class="w-48 txt-xs text-right" id='lbl_random'>0</div>
                   </div>
                   <div class="frow stretched txt-red">
                      <div class="w-48 txt-s txt-b">Total</div>
@@ -229,69 +227,65 @@ Swal.fire({
 
 @section('script')
 <script lang="javascript">
-document.getElementById('dateon').valueAsDate = new Date();
+   document.getElementById('dateon').valueAsDate = new Date();
 
-function search(event) {
-   var searchtext = event.target.value.toLowerCase();
-   var str = 0;
-   $('.tr').each(function() {
-      if (!(
-            $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
-         )) {
-         $(this).addClass('hide');
-      } else {
-         $(this).removeClass('hide');
-      }
-   });
-}
+   function search(event) {
+      var searchtext = event.target.value.toLowerCase();
+      var str = 0;
+      $('.tr').each(function() {
+         if (!(
+               $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
+            )) {
+            $(this).addClass('hide');
+         } else {
+            $(this).removeClass('hide');
+         }
+      });
+   }
 
-function calcPrice() {
-   var actual = 0;
+   function calcPrice() {
+      var actual = 0;
 
-   var gross = parseFloat($('#grossweight').val())
+      var gross = parseFloat($('#grossweight').val())
 
-   var numofbori = parseInt($('#numofbori').val());
-   var numoftora = parseInt($('#numoftora').val());
-   var priceperkg = parseFloat($('#priceperkg').val());
-   var reductionperbori = parseFloat($('#reductionperbori').val());
-   var reductionpertora = parseFloat($('#reductionpertora').val());
+      var numofbori = parseInt($('#numofbori').val());
+      var numoftora = parseInt($('#numoftora').val());
+      var priceperkg = parseFloat($('#priceperkg').val());
+      var reduction0 = parseFloat($('#reduction0').val());
+      var reduction1 = parseFloat($('#reduction1').val());
 
-   var bagpriceperbori = parseFloat($('#bagpriceperbori').val());
-   var bagpricepertora = parseFloat($('#bagpricepertora').val());
-   var selectorcost = parseInt($('#selectorcost').val());
-   var sortingcost = parseInt($('#sortingcost').val());
-   var packingcostperbori = parseFloat($('#packingcostperbori').val());
-   var packingcostpertora = parseFloat($('#packingcostpertora').val());
-   var loadingcostperbori = parseFloat($('#loadingcostperbori').val());
-   var loadingcostpertora = parseFloat($('#loadingcostpertora').val());
-   var commissionperbori = parseFloat($('#commissionperbori').val());
-   var commissionpertora = parseFloat($('#commissionpertora').val());
-   var randomcost = parseInt($('#randomcost').val());
+      var bagprice0 = parseFloat($('#bagprice0').val());
+      var bagprice1 = parseFloat($('#bagprice1').val());
+      var selector = parseInt($('#selector').val());
+      var sorting = parseInt($('#sorting').val());
+      var packing0 = parseFloat($('#packing0').val());
+      var packing1 = parseFloat($('#packing1').val());
+      var loading0 = parseFloat($('#loading0').val());
+      var loading1 = parseFloat($('#loading1').val());
+      var commission0 = parseFloat($('#commission0').val());
+      var commission1 = parseFloat($('#commission1').val());
+      var random = parseInt($('#random').val());
+      var additionalcost = selector + sorting + numofbori * (bagprice0 + packing0 + loading0 + commission0) + numoftora * (bagprice1 + packing1 + loading1 + commission1) + random;
+      //alert('rb:' + reduction0 + "rt" + reduction1)
+      if (gross > 0)
+         actual = gross - reduction0 * numofbori - reduction1 * numoftora;
 
-   var additionalcost = selectorcost + sortingcost + numofbori * (bagpriceperbori + packingcostperbori + loadingcostperbori + commissionperbori) + numoftora * (bagpricepertora + packingcostpertora + loadingcostpertora + commissionpertora) + randomcost;
-   //alert('rb:' + reductionperbori + "rt" + reductionpertora)
-   if (gross > 0)
-      actual = gross - reductionperbori * numofbori - reductionpertora * numoftora;
+      $('#lbl_grossweight').html(gross);
+      $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
+      $('#lbl_actualweight').html(actual);
+      $('#lbl_basicprice').html(actual * priceperkg);
+      $('#lbl_addlcost').html(additionalcost);
+      //additional detail
+      $('#lbl_selector').html(selector);
+      $('#lbl_sorting').html(sorting);
+      $('#lbl_bagscost').html(bagprice0 * numofbori + bagprice1 * numoftora);
+      $('#lbl_packingcost').html(packing0 * numofbori + packing1 * numoftora);
+      $('#lbl_loadingcost').html(loading0 * numofbori + loading1 * numoftora);
+      $('#lbl_commission').html(commission0 * numofbori + commission1 * numoftora);
+      $('#lbl_random').html(random);
 
-   $('#lbl_grossweight').html(gross);
-   $('#lbl_reduction').html(reductionperbori * numofbori + reductionpertora * numoftora);
-   $('#lbl_actualweight').html(actual);
-   $('#lbl_basicprice').html(actual * priceperkg);
-   $('#lbl_addlcost').html(additionalcost);
-   //additional detail
-   $('#lbl_selectorcost').html(selectorcost);
-   $('#lbl_sortingcost').html(sortingcost);
-   $('#lbl_bagscost').html(bagpriceperbori * numofbori + bagpricepertora * numoftora);
-   $('#lbl_packingcost').html(packingcostperbori * numofbori + packingcostpertora * numoftora);
-   $('#lbl_loadingcost').html(loadingcostperbori * numofbori + loadingcostpertora * numoftora);
-   $('#lbl_commission').html(commissionperbori * numofbori + commissionpertora * numoftora);
-   $('#lbl_randomcost').html(randomcost);
+      $('#lbl_total').html(actual * priceperkg + additionalcost);
 
-
-
-   $('#lbl_total').html(actual * priceperkg + additionalcost);
-
-
-}
+   }
 </script>
 @endsection

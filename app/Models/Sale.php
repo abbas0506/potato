@@ -10,24 +10,15 @@ class Sale extends Model
     use HasFactory;
     protected $fillable = [
         'purchase_id',
-        'client_id',
+        'buyer_id',
         'numofbori',
         'numoftora',
         'grossweight',
-        'carriage',
-        'commission',
+        'reduction0',
+        'reduction1',
         'saleprice',
-        //additional costs in case of sale from store
+        'cost_id',
         'store_id',
-        'selectorcost',
-        'sortingcost',
-        'bagpriceperbori',
-        'bagpricepertora',
-        'packingcostperbori',
-        'packingcostpertora',
-        'loadingcostperbori',
-        'loadingcostpertora',
-        'randomcost',
         'dateon',
 
     ];
@@ -35,6 +26,6 @@ class Sale extends Model
 
     public function buyer()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(buyer::class, 'buyer_id');
     }
 }

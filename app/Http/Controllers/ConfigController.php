@@ -74,16 +74,16 @@ class ConfigController extends Controller
     {
         //
         $request->validate([
-            'reductionperbori' => 'required',
-            'reductionpertora' => 'required',
-            'commissionperbori' => 'required',
-            'commissionpertora' => 'required',
-            'bagpriceperbori' => 'required',
-            'bagpricepertora' => 'required',
-            'packingcostperbori' => 'required',
-            'packingcostpertora' => 'required',
-            'loadingcostperbori' => 'required',
-            'loadingcostpertora' => 'required',
+            'reduction0' => 'required',
+            'reduction1' => 'required',
+            'commission0' => 'required',
+            'commission1' => 'required',
+            'bagprice0' => 'required',
+            'bagprice1' => 'required',
+            'packing0' => 'required',
+            'packing1' => 'required',
+            'loading0' => 'required',
+            'loading1' => 'required',
         ]);
 
         try {

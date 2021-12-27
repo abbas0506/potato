@@ -49,11 +49,11 @@ Swal.fire({
             <div class="w-20">Seller Client</div>
             <div class="w-15">Product</div>
             <div class="w-10">Agreed Qty.</div>
-            <div class="w-10">Unit Rate</div>
+            <div class="w-10">@ kg</div>
             <div class="w-10">Picked Qty.</div>
             <div class="w-10">Sold Qty.</div>
             <div class="w-10">Stored Qty.</div>
-            <div class="w-10">Field Qty.</div>
+            <div class="w-10">Left Qty.</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
@@ -64,7 +64,7 @@ Swal.fire({
             <div class="w-20 txt-s">{{$deal->client->name}}</div>
             <div class="w-15 txt-s">{{$deal->product->name}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori}} + {{$deal->numoftora}}</div>
-            <div class="w-10 txt-s">{{$deal->unitprice}}</div>
+            <div class="w-10 txt-s">{{$deal->priceperkg}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori_picked()}} + {{$deal->numoftora_picked()}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori_sold()}} + {{$deal->numoftora_sold()}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori_stored()}} + {{$deal->numoftora_stored()}}</div>

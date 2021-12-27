@@ -22,22 +22,9 @@ class CreatePurchasesTable extends Migration
             $table->unsignedInteger('numoftora');
             $table->unsignedFloat('grossweight');
             $table->unsignedFloat('priceperkg');
-            $table->unsignedFloat('reductionperbori');
-            $table->unsignedFloat('reductionpertora');
-            $table->unsignedFloat('commissionperbori');
-            $table->unsignedFloat('commissionpertora');
-            //additional costs on product collection
-            $table->unsignedFloat('selectorcost');
-            $table->unsignedFloat('sortingcost');
-            $table->unsignedFloat('bagpriceperbori');
-            $table->unsignedFloat('bagpricepertora');
-            $table->unsignedFloat('packingcostperbori');
-            $table->unsignedFloat('packingcostpertora');
-            $table->unsignedFloat('loadingcostperbori');
-            $table->unsignedFloat('loadingcostpertora');
-            $table->unsignedInteger('randomcost');
-            $table->string('randomnote')->nullable();
-            $table->date('dateon');
+            $table->unsignedFloat('reduction0');
+            $table->unsignedFloat('reduction1');
+            $table->unsignedBigInteger('cost_id');
 
             $table->foreign('deal_id')
                 ->references('id')
@@ -48,6 +35,12 @@ class CreatePurchasesTable extends Migration
             $table->foreign('transporter_id')
                 ->references('id')
                 ->on('transporters')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('cost_id')
+                ->references('id')
+                ->on('costs')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 

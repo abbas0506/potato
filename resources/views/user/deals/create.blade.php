@@ -59,38 +59,30 @@ Swal.fire({
                </div>
             </div>
             <div class="frow stretched mt-3">
-               <div class="fcol w-48">
-                  <div class="fancyselect">
-                     <select name="product_id" id="">
-                        <option value="">Select an option ...</option>
-                        @foreach($products as $product)
-                        <option value="{{$product->id}}">{{$product->name}}</option>
-                        @endforeach
-                     </select>
-                     <label for="Name">Product</label>
-                  </div>
-               </div>
-               <div class="fcol w-48">
-                  <div class="frow stretched">
-                     <div class="fancyinput w-48">
-                        <input type="number" name='numofbori' id='numofbori' min="0" value="0" required oninput="calcPrice()">
-                        <label for="Name">Number of Bori</label>
-                     </div>
-                     <div class="fancyinput w-48">
-                        <input type="number" name='numoftora' id='numoftora' min="0" value="0" required oninput="calcPrice()">
-                        <label for="Name">Number of Tora</label>
-                     </div>
-                  </div>
-               </div>
-            </div>
 
-            <div class="frow stretched mt-3">
-               <div class="fancyinput w-48">
-                  <input type="number" name='unitprice' id='unitprice' value="0" oninput="calcPrice()" required>
-                  <label for="Name">Unit Price</label>
+               <div class="fancyselect w-50">
+                  <select name="product_id" id="">
+                     <option value="">Select an option ...</option>
+                     @foreach($products as $product)
+                     <option value="{{$product->id}}">{{$product->name}}</option>
+                     @endforeach
+                  </select>
+                  <label for="Name">Product</label>
                </div>
-            </div>
+               <div class="fancyinput w-15">
+                  <input type="number" class="text-center" name='numofbori' id='numofbori' min="0" value="0" required oninput="calcPrice()">
+                  <label for="Name">Number of Bori</label>
+               </div>
+               <div class="fancyinput w-15">
+                  <input type="number" class="text-center" name='numoftora' id='numoftora' min="0" value="0" required oninput="calcPrice()">
+                  <label for="Name">Number of Tora</label>
+               </div>
+               <div class="fancyinput w-15">
+                  <input type="text" class="text-center" name='priceperkg' id='priceperkg' value="0" oninput="calcPrice()" required>
+                  <label for="Name">@ kg</label>
+               </div>
 
+            </div>
 
             <div class="frow mid-right mt-4">
                <button type="submit" class="btn btn-primary">Submit</button>

@@ -16,21 +16,9 @@ class Purchase extends Model
         'vehicleno',
         'grossweight',
         'priceperkg',
-        'reductionperbori',
-        'reductionpertora',
-        'commissionperbori',
-        'commissionpertora',
-        //additional costs
-        'selectorcost',
-        'sortingcost',
-        'bagpriceperbori',
-        'bagpricepertora',
-        'packingcostperbori',
-        'packingcostpertora',
-        'loadingcostperbori',
-        'loadingcostpertora',
-        'randomcost',
-        'randomnote',
+        'reduction0',
+        'reduction1',
+        'cost_id',
         'dateon',
     ];
 
@@ -49,6 +37,17 @@ class Purchase extends Model
     {
         return $this->hasMany(Sale::class, 'purchase_id');
     }
+
+    public function sales_field()
+    {
+        return $this->hasMany(Sale::class, 'purchase_id')->whereNull('store_id');
+    }
+
+    public function sales_storage()
+    {
+        return $this->hasMany(Sale::class, 'purchase_id')->whereNotNull('store_id');
+    }
+
     public function stores()
     {
         $store_ids = $this->storages->unique()->pluck('store_id')->toArray();
@@ -57,7 +56,7 @@ class Purchase extends Model
     public function actual()
     {
         $gross = $this->grossweight;
-        $actual = $this->grossweight - $this->numofbori * $this->reductionperbori - $this->numoftora * $this->reductionpertora;
+        $actual = $this->grossweight - $this->numofbori * $this->reduction0 - $this->numoftora * $this->reduction1;
         return $actual;
     }
 
@@ -67,7 +66,7 @@ class Purchase extends Model
     }
     public function addlcost()
     {
-        $addlcost = $this->selectorcost + $this->sortingcost + $this->numofbori * ($this->bagpriceperbori + $this->packingcostperbori + $this->loadingcostperbori + $this->commissionperbori) + $this->numoftora * ($this->bagpricepertora + $this->packingcostpertora + $this->loadingcostpertora + $this->commissionpertora) + $this->randomcost;
+        $addlcost = $this->selector + $this->sorting + $this->numofbori * ($this->bagprice0 + $this->packing0 + $this->loading0 + $this->commission0) + $this->numoftora * ($this->bagprice1 + $this->packing1 + $this->loading1 + $this->commission1) + $this->random + $this->sadqa;
         return $addlcost;
     }
 
@@ -78,11 +77,16 @@ class Purchase extends Model
     }
     public function numofbori_stored()
     {
-        return $this->storages()->sum('numofbori');
+        $numofbori_stored = $this->storages()->sum('numofbori');
+        $numofbori_soldfromstorage = $this->sales_storage()->sum('numofbori');
+        return $numofbori_stored - $numofbori_soldfromstorage;
     }
+
     public function numoftora_stored()
     {
-        return $this->storages()->sum('numoftora');
+        $numoftora_stored = $this->storages()->sum('numoftora');
+        $numoftora_soldfromstorage = $this->sales_storage()->sum('numoftora');
+        return $numoftora_stored - $numoftora_soldfromstorage;
     }
 
     public function numofbori_sold()

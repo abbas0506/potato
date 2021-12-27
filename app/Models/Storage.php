@@ -13,11 +13,7 @@ class Storage extends Model
         'store_id',
         'numofbori',
         'numoftora',
-        'carriageperbori',
-        'carriagepertora',
-        'storagecostperbori',
-        'storagecostpertora',
-        'note',
+        'cost_id',
         'dateon',
     ];
 

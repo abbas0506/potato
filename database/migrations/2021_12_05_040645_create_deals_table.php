@@ -16,16 +16,16 @@ class CreateDealsTable extends Migration
         Schema::create('deals', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedFloat('unitprice');
+            $table->unsignedFloat('priceperkg');
             $table->date('dateon');
 
-            $table->foreign('client_id')
+            $table->foreign('seller_id')
                 ->references('id')
-                ->on('clients')
+                ->on('sellers')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 

@@ -38,23 +38,26 @@ Swal.fire({
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
                </div>
-               <div class="frow spaced txt-s mid-right">
-                  <span class="txt-orange txt-b">Purchase</span> <span class="mx-2">|</span>
-                  <a href="http://" class="hover-orange">Sale</a> <span class="mx-2">|</span>
-                  <a href="http://" class="hover-orange">Storage</a> <span class="mx-2">|</span>
-                  <a href="http://" class="hover-orange">Payments</a>
-               </div>
+               <div class="frow txt-s mid-right"> Pick Detail</div>
             </div>
          </div>
          <div class="frow my-4 mid-left fancy-search-grow">
             <input type="text" placeholder="Search" oninput="search(event)"><i data-feather='search' class="feather-small" style="position:relative; right:24;"></i>
-            <div class="frow">
-               <a href="{{route('purchases.create')}}">
-                  <div class="frow circular-25 bg-teal text-light centered mr-2 hoverable">+</div>
-               </a>
-               New Pick
+            <div class="frow w-75 stretched">
+               <div class="frow">
+                  <a href="{{route('purchases.create')}}">
+                     <div class="frow circular-25 bg-teal text-light centered mr-2 hoverable">+</div>
+                  </a>
+                  New Pick
+               </div>
+
+               <div class="frow">
+                  <div class="rounded-pill bg-light-grey px-2 mx-2"><i data-feather='truck' class="feather-xsmall mb-1 mr-2"></i>{{$deal->numofbori_picked()}} + {{$deal->numoftora_picked()}} </div>
+                  <div class="rounded-pill bg-warning px-2 mx-2"><i data-feather='map-pin' class="feather-xsmall mb-1 mr-2"></i> {{$deal->numofbori_left()}} + {{$deal->numoftora_left()}} </div>
+
+               </div>
             </div>
          </div>
 
@@ -69,7 +72,7 @@ Swal.fire({
             <div class="w-10">@ kg</div>
             <div class="w-10">Sold</div>
             <div class="w-10">Stored</div>
-            <div class="w-10">Field Qty.</div>
+            <div class="w-10">Invalid</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 

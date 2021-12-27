@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Config extends Model
+class Cost extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'reduction0',
-        'reduction1',
+        'selector',
+        'sorting',
         'commission0',
         'commission1',
         'bagprice0',
@@ -19,6 +19,13 @@ class Config extends Model
         'packing1',
         'loading0',
         'loading1',
+        'carriage0',
+        'carriage1',
+        'storage0',
+        'storage1',
+        'sadqa',
+        'random',
+        'note',
     ];
 
     public $timestamps = false;

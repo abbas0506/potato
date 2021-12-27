@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <!-- purchasing -->
@@ -37,7 +37,7 @@ Swal.fire({
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
                </div>
                <div class="frow spaced txt-s mid-right">
                   <span class="txt-b">New Sale [ Store ]</span>
@@ -78,13 +78,13 @@ Swal.fire({
                   <label for="Name" class="bg-transparent">Bags Cost</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="number" name='selectorcost' min="0" value="0">
+                  <input type="number" name='selector' min="0" value="0">
                   <label for="Name" class="bg-transparent">Selector Cost</label>
                </div>
             </div>
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="number" name='sortingcost' min="0" value="0" required>
+                  <input type="number" name='sorting' min="0" value="0" required>
                   <label for="Name" class="bg-transparent">Sorting Cost</label>
                </div>
                <div class="fancyinput w-48">
@@ -98,7 +98,7 @@ Swal.fire({
                   <label for="Name" class="bg-transparent">Loading Cost</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="number" name='randomcost' min="0" value="0">
+                  <input type="number" name='random' min="0" value="0">
                   <label for="Name" class="bg-transparent">Random Cost</label>
                </div>
             </div>
@@ -188,19 +188,19 @@ Swal.fire({
 
 @section('script')
 <script lang="javascript">
-document.getElementById('dateon').valueAsDate = new Date();
+   document.getElementById('dateon').valueAsDate = new Date();
 
-function calcActualWeight() {
-   var actual = 0;
-   var gross = parseInt($('#grossweight').val())
-   var numofbori = parseInt($('#numofbori').val());
-   var numoftora = parseInt($('#numoftora').val());
-   if (gross > 0)
-      actual = gross - 2 * numofbori - 1.5 * numoftora;
+   function calcActualWeight() {
+      var actual = 0;
+      var gross = parseInt($('#grossweight').val())
+      var numofbori = parseInt($('#numofbori').val());
+      var numoftora = parseInt($('#numoftora').val());
+      if (gross > 0)
+         actual = gross - 2 * numofbori - 1.5 * numoftora;
 
-   $('#actualweight').val(actual);
-   // $('#basicprice').html("B.P: " + actual * unitprice + " + Addl: " + additionalcost + " = " + (actual * unitprice + additionalcost));
+      $('#actualweight').val(actual);
+      // $('#basicprice').html("B.P: " + actual * priceperkg + " + Addl: " + additionalcost + " = " + (actual * priceperkg + additionalcost));
 
-}
+   }
 </script>
 @endsection

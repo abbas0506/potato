@@ -16,27 +16,14 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('purchase_id');
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('buyer_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
             $table->unsignedFloat('grossweight');
-            $table->unsignedFloat('carriageperbori');
-            $table->unsignedFloat('carriagepertora');
-            $table->unsignedFloat('commissionperbori');
-            $table->unsignedFloat('commissionpertora');
             $table->unsignedFloat('saleprice');
-
-            //additional costs in case of sale from store
             $table->unsignedBigInteger('store_id')->nullable();
-            $table->unsignedFloat('selectorcost')->nullable();
-            $table->unsignedFloat('sortingcost')->nullable();
-            $table->unsignedFloat('bagpriceperbori');
-            $table->unsignedFloat('bagpricepertora');
-            $table->unsignedFloat('packingcostperbori')->nullable();
-            $table->unsignedFloat('packingcostpertora')->nullable();
-            $table->unsignedFloat('loadingcostperbori')->nullable();
-            $table->unsignedFloat('loadingcostpertora')->nullable();
-            $table->unsignedFloat('randomcost')->nullable();
+            $table->unsignedBigInteger('cost_id');
+
             $table->date('dateon');
 
             $table->foreign('purchase_id')
@@ -45,9 +32,9 @@ class CreateSalesTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreign('client_id')
+            $table->foreign('buyer_id')
                 ->references('id')
-                ->on('clients')
+                ->on('buyers')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
@@ -56,6 +43,13 @@ class CreateSalesTable extends Migration
                 ->on('stores')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            $table->foreign('cost_id')
+                ->references('id')
+                ->on('costs')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
 
             $table->timestamps();
         });

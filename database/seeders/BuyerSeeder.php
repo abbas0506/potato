@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Client;
+use App\Models\Buyer;
 use Illuminate\Database\Seeder;
 
-class ClientSeeder extends Seeder
+class BuyerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,13 +15,13 @@ class ClientSeeder extends Seeder
     public function run()
     {
         //
-        Client::create([
+        Buyer::create([
             'name' => 'Ali Raza Traders',
             'phone' => '0343-4437491',
             'address' => 'Daula Mustaqeem Depalpur',
         ]);
 
-        Client::create([
+        Buyer::create([
             'name' => 'Rana Shehzad Traders',
             'phone' => '0343-4437491',
             'address' => 'Shehzad Traders Depalpur',

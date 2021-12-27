@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <!-- purchasing -->
@@ -37,7 +37,7 @@ Swal.fire({
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
                </div>
                <div class="frow spaced txt-s mid-right">
                   <span class="txt-b">New Sale [ Field ]</span>
@@ -50,8 +50,8 @@ Swal.fire({
             <div class="frow centered stretched mt-4">
                <div class="w-70">
                   <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
-                  <input type="hidden" id="_reductionperbori" value="{{$purchase->reductionperbori}}">
-                  <input type="hidden" id="_reductionpertora" value="{{$purchase->reductionpertora}}">
+                  <input type="hidden" id="_reduction0" value="{{$purchase->reduction0}}">
+                  <input type="hidden" id="_reduction1" value="{{$purchase->reduction1}}">
                   <div class="frow mid-left">
                      <div class="fancyinput">
                         <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
@@ -59,9 +59,9 @@ Swal.fire({
                      </div>
                      <div class="frow ml-5">
                         <div class="txt-b txt-red mr-4">Where to sell from???</div>
-                        <div class="rounded-pill bg-warning px-2 mx-2">Field: {{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}} </div>
+                        <div class="rounded-pill bg-warning px-2 mx-2"><i data-feather='map-pin' class="feather-xsmall mb-1 mr-2"></i> {{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}} </div>
                         <a href="{{url('sell/fromstore',$purchase)}}">
-                           <div class="rounded-pill bg-light-grey px-2">Store: {{$purchase->numofbori_stored()}} + {{$purchase->numoftora_stored()}} </div>
+                           <div class="rounded-pill bg-light-grey px-2"><i data-feather='database' class="feather-xsmall mb-1 mr-2"></i> {{$purchase->numofbori_stored()}} + {{$purchase->numoftora_stored()}} </div>
                         </a>
                      </div>
                   </div>
@@ -170,33 +170,33 @@ Swal.fire({
 
 @section('script')
 <script lang="javascript">
-document.getElementById('dateon').valueAsDate = new Date();
+   document.getElementById('dateon').valueAsDate = new Date();
 
-function calcProfit() {
-   var actual = 0;
-   var gross = parseInt($('#grossweight').val())
-   var numofbori = parseInt($('#numofbori').val());
-   var numoftora = parseInt($('#numoftora').val());
-   var reductionperbori = parseFloat($('#_reductionperbori').val());
-   var reductionpertora = parseFloat($('#_reductionpertora').val());
-   var actualcostperkg = parseFloat($('#lbl_actualcostperkg').html());
+   function calcProfit() {
+      var actual = 0;
+      var gross = parseInt($('#grossweight').val())
+      var numofbori = parseInt($('#numofbori').val());
+      var numoftora = parseInt($('#numoftora').val());
+      var reduction0 = parseFloat($('#_reduction0').val());
+      var reduction1 = parseFloat($('#_reduction1').val());
+      var actualcostperkg = parseFloat($('#lbl_actualcostperkg').html());
 
-   // alert(purchaseprice)
-   var saleprice = parseInt($('#saleprice').val());
+      // alert(purchaseprice)
+      var saleprice = parseInt($('#saleprice').val());
 
 
-   if (gross > 0)
-      actual = gross - reductionperbori * numofbori - reductionpertora * numoftora;
+      if (gross > 0)
+         actual = gross - reduction0 * numofbori - reduction1 * numoftora;
 
-   costprice = actual * actualcostperkg;
-   var profit = saleprice - costprice;
+      costprice = actual * actualcostperkg;
+      var profit = saleprice - costprice;
 
-   $('#lbl_grossweight').html(gross);
-   $('#lbl_reduction').html(reductionperbori * numofbori + reductionpertora * numoftora);
-   $('#lbl_actualweight').html(actual);
-   $('#lbl_basicprice').html(costprice);
-   $('#lbl_saleprice').html(saleprice);
-   $('#lbl_profit').html(profit);
-}
+      $('#lbl_grossweight').html(gross);
+      $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
+      $('#lbl_actualweight').html(actual);
+      $('#lbl_basicprice').html(costprice);
+      $('#lbl_saleprice').html(saleprice);
+      $('#lbl_profit').html(profit);
+   }
 </script>
 @endsection

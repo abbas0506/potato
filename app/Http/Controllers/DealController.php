@@ -55,7 +55,7 @@ class DealController extends Controller
             'product_id' => 'required',
             'numofbori' => 'required',
             'numoftora' => 'required',
-            'unitprice' => 'required',
+            'priceperkg' => 'required',
         ]);
 
         try {
@@ -94,6 +94,9 @@ class DealController extends Controller
     public function edit(deal $deal)
     {
         //
+        $clients = Client::all();
+        $products = Product::all();
+        return view('user.deals.edit', compact('deal', 'clients', 'products'));
     }
 
     /**
@@ -106,6 +109,22 @@ class DealController extends Controller
     public function update(Request $request, deal $deal)
     {
         //
+        $request->validate([
+            'client_id' => 'required',
+            'product_id' => 'required',
+            'numofbori' => 'required',
+            'numoftora' => 'required',
+            'priceperkg' => 'required',
+        ]);
+
+        try {
+
+            $deal->update($request->all());
+            return redirect()->route('deals.index')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->route('deals.index')->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**

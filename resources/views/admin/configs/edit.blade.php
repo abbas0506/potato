@@ -41,52 +41,52 @@
             <div class="frow centered mb-4 txt-s txt-red">** All entries will be considered in Rs.</div>
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="text" name='reductionperbori' placeholder="reduction per bori" value="{{$config->reductionperbori}}" required>
+                  <input type="text" name='reduction0' placeholder="reduction per bori" value="{{$config->reduction0}}" required>
                   <label for="Name">Weight Reduction / Bori</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='reductionpertora' placeholder="reduction per tora" value="{{$config->reductionpertora}}" required>
+                  <input type="text" name='reduction1' placeholder="reduction per tora" value="{{$config->reduction1}}" required>
                   <label for="Name">Weight Reduction / Tora</label>
                </div>
             </div>
 
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="text" name='bagpriceperbori' placeholder="material cost per bori" value="{{$config->bagpriceperbori}}" required>
+                  <input type="text" name='bagprice0' placeholder="material cost per bori" value="{{$config->bagprice0}}" required>
                   <label for="Name">Material Cost / Bori</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='bagpricepertora' placeholder="material cost per tora" value="{{$config->bagpricepertora}}" required>
+                  <input type="text" name='bagprice1' placeholder="material cost per tora" value="{{$config->bagprice1}}" required>
                   <label for="Name">Material Cost / Tora</label>
                </div>
             </div>
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="text" name='commissionperbori' placeholder="Commission / Bori" value="{{$config->commissionperbori}}" required>
+                  <input type="text" name='commission0' placeholder="Commission / Bori" value="{{$config->commission0}}" required>
                   <label for="Name">Commission / Bori</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='commissionpertora' placeholder="Commission / Tora" value="{{$config->commissionpertora}}" required>
+                  <input type="text" name='commission1' placeholder="Commission / Tora" value="{{$config->commission1}}" required>
                   <label for="Name">Commission / Tora</label>
                </div>
             </div>
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="text" name='packingcostperbori' placeholder="Packing Cost / Bori" value="{{$config->packingcostperbori}}" required>
+                  <input type="text" name='packing0' placeholder="Packing Cost / Bori" value="{{$config->packing0}}" required>
                   <label for="Name">Packing Cost / Bori</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='packingcostpertora' placeholder="Commission / Tora" value="{{$config->packingcostpertora}}" required>
+                  <input type="text" name='packing1' placeholder="Commission / Tora" value="{{$config->packing1}}" required>
                   <label for="Name">Packing Cost / Tora</label>
                </div>
             </div>
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
-                  <input type="text" name='loadingcostperbori' placeholder="Loading Cost / Bori" value="{{$config->loadingcostperbori}}" required>
+                  <input type="text" name='loading0' placeholder="Loading Cost / Bori" value="{{$config->loading0}}" required>
                   <label for="Name">Loading Cost / Bori</label>
                </div>
                <div class="fancyinput w-48">
-                  <input type="text" name='loadingcostpertora' placeholder="Loading Cost / Tora" value="{{$config->loadingcostpertora}}" required>
+                  <input type="text" name='loading1' placeholder="Loading Cost / Tora" value="{{$config->loading1}}" required>
                   <label for="Name">Loading Cost / Tora</label>
                </div>
             </div>

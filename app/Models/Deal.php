@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Deal extends Model
 {
     use HasFactory;
-    use HasFactory;
     protected $fillable = [
         'client_id',
         'product_id',
         'numofbori',
         'numoftora',
-        'unitprice',
+        'priceperkg',
         'dateon',
     ];
 

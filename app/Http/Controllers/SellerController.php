@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use Exception;
 
-class ClientController extends Controller
+class sellerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class ClientController extends Controller
     public function index()
     {
         //
-        $clients = Client::orderBy('id', 'desc')->get();
-        return view('admin.clients.index', compact('clients'));
+        $sellers = Seller::orderBy('id', 'desc')->get();
+        return view('admin.sellers.index', compact('sellers'));
     }
 
     /**
@@ -47,7 +47,7 @@ class ClientController extends Controller
 
         try {
 
-            $new = Client::create($request->all());
+            $new = Seller::create($request->all());
             $new->save();
             return redirect()->back()->with('success', 'Successfully created');
         } catch (Exception $e) {
@@ -59,10 +59,10 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\client  $client
+     * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Http\Response
      */
-    public function show(client $client)
+    public function show(Seller $seller)
     {
         //
     }
@@ -70,23 +70,23 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\client  $client
+     * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Http\Response
      */
-    public function edit(client $client)
+    public function edit(Seller $seller)
     {
         //
-        return view('admin.clients.edit', compact('client'));
+        return view('admin.sellers.edit', compact('seller'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\client  $client
+     * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, client $client)
+    public function update(Request $request, seller $seller)
     {
         //
         $request->validate([
@@ -95,10 +95,10 @@ class ClientController extends Controller
 
         try {
 
-            $client->update($request->all());
-            return redirect()->route('clients.index')->with('success', 'Successfully created');
+            $seller->update($request->all());
+            return redirect()->route('sellers.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
-            return redirect()->route('clients.index')->withErrors($e->getMessage());
+            return redirect()->route('sellers.index')->withErrors($e->getMessage());
             // something went wrong
         }
     }
@@ -106,14 +106,14 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\client  $client
+     * @param  \App\Models\Seller  $seller
      * @return \Illuminate\Http\Response
      */
-    public function destroy(client $client)
+    public function destroy(Seller $seller)
     {
         //
         try {
-            $client->delete();
+            $seller->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());

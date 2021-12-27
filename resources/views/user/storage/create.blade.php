@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <!-- purchasing -->
@@ -37,7 +37,7 @@ Swal.fire({
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->unitprice}} dated {{$deal->dateon}}</span>
+                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
                </div>
                <div class="frow spaced txt-s mid-right">
                   <span class="txt-b">New Storage</span>
@@ -122,51 +122,51 @@ Swal.fire({
 
 @section('script')
 <script lang="javascript">
-document.getElementById('dateon').valueAsDate = new Date();
+   document.getElementById('dateon').valueAsDate = new Date();
 
-function search(event) {
-   var searchtext = event.target.value.toLowerCase();
-   var str = 0;
-   $('.tr').each(function() {
-      if (!(
-            $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
-         )) {
-         $(this).addClass('hide');
-      } else {
-         $(this).removeClass('hide');
-      }
-   });
-}
+   function search(event) {
+      var searchtext = event.target.value.toLowerCase();
+      var str = 0;
+      $('.tr').each(function() {
+         if (!(
+               $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
+            )) {
+            $(this).addClass('hide');
+         } else {
+            $(this).removeClass('hide');
+         }
+      });
+   }
 
-function calcPrice() {
-   var actual = 0;
-   var gross = parseInt($('#grossweight').val())
-   var numofbori = parseInt($('#numofbori').val());
-   var numoftora = parseInt($('#numoftora').val());
-   // var unitprice = parseInt($('#unitprice').val());
+   function calcPrice() {
+      var actual = 0;
+      var gross = parseInt($('#grossweight').val())
+      var numofbori = parseInt($('#numofbori').val());
+      var numoftora = parseInt($('#numoftora').val());
+      // var priceperkg = parseInt($('#priceperkg').val());
 
-   // var commission = parseInt($('#commission').val());
-   // var bagscost = parseInt($('#bagscost').val());
-   // var selectorcost = parseInt($('#selectorcost').val());
-   // var packingcost = parseInt($('#packingcost').val());
-   // var loadingcost = parseInt($('#loadingcost').val());
+      // var commission = parseInt($('#commission').val());
+      // var bagscost = parseInt($('#bagscost').val());
+      // var selector = parseInt($('#selector').val());
+      // var packingcost = parseInt($('#packingcost').val());
+      // var loadingcost = parseInt($('#loadingcost').val());
 
-   // var additionalcost = commission + bagscost + selectorcost + packingcost + loadingcost;
+      // var additionalcost = commission + bagscost + selector + packingcost + loadingcost;
 
-   if (gross > 0)
-      actual = gross - 2 * numofbori - 1.5 * numoftora;
+      if (gross > 0)
+         actual = gross - 2 * numofbori - 1.5 * numoftora;
 
-   $('#actualweight').val(actual);
-   // $('#basicprice').html("B.P: " + actual * unitprice + " + Addl: " + additionalcost + " = " + (actual * unitprice + additionalcost));
+      $('#actualweight').val(actual);
+      // $('#basicprice').html("B.P: " + actual * priceperkg + " + Addl: " + additionalcost + " = " + (actual * priceperkg + additionalcost));
 
-}
+   }
 
-function toggle_div_sellfromstorage(event) {
-   // alert();
-   if (event.target.value == 0)
-      $('#div_sellfromstorage').addClass('hide');
-   else
-      $('#div_sellfromstorage').removeClass('hide');
-}
+   function toggle_div_sellfromstorage(event) {
+      // alert();
+      if (event.target.value == 0)
+         $('#div_sellfromstorage').addClass('hide');
+      else
+         $('#div_sellfromstorage').removeClass('hide');
+   }
 </script>
 @endsection
