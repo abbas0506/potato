@@ -16,8 +16,6 @@ class Purchase extends Model
         'vehicleno',
         'grossweight',
         'priceperkg',
-        'reduction0',
-        'reduction1',
         'cost_id',
         'dateon',
     ];
@@ -27,6 +25,10 @@ class Purchase extends Model
     public function deal()
     {
         return $this->belongsTo(Deal::class, 'deal_id');
+    }
+    public function transporter()
+    {
+        return $this->belongsTo(Transporter::class, 'transporter_id');
     }
 
     public function storages()
@@ -56,7 +58,7 @@ class Purchase extends Model
     public function actual()
     {
         $gross = $this->grossweight;
-        $actual = $this->grossweight - $this->numofbori * $this->reduction0 - $this->numoftora * $this->reduction1;
+        $actual = $this->grossweight - $this->numofbori * $this->deal->reduction0 - $this->numoftora * $this->deal->reduction1;
         return $actual;
     }
 

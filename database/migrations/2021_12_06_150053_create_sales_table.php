@@ -17,12 +17,15 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('purchase_id');
             $table->unsignedBigInteger('buyer_id');
+            $table->unsignedBigInteger('store_id')->nullable();
+            $table->unsignedBigInteger('cost_id');
+
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
             $table->unsignedFloat('grossweight');
+            $table->unsignedFloat('reduction0');
+            $table->unsignedFloat('reduction1');
             $table->unsignedFloat('saleprice');
-            $table->unsignedBigInteger('store_id')->nullable();
-            $table->unsignedBigInteger('cost_id');
 
             $table->date('dateon');
 

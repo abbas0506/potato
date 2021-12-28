@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buyer;
 use App\Models\Client;
 use App\Models\Config;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sale;
+use App\Models\Seller;
 use App\Models\Storage;
 use App\Models\Store;
 use App\Models\Transporter;
@@ -51,7 +53,6 @@ class PurchaseController extends Controller
     {
         //
         $request->validate([
-            'dateon' => 'required',
             'deal_id' => 'required',
             'transporter_id' => 'required',
             'vehicleno' => 'required',
@@ -59,19 +60,8 @@ class PurchaseController extends Controller
             'numoftora' => 'required',
             'grossweight' => 'required',
             'priceperkg' => 'required',
-            'reduction0' => 'required',
-            'reduction1' => 'required',
-            'selector' => 'required',
-            'sorting' => 'required',
-            'bagprice0' => 'required',
-            'bagprice1' => 'required',
-            'packing0' => 'required',
-            'packing1' => 'required',
-            'loading0' => 'required',
-            'loading1' => 'required',
-            'commission0' => 'required',
-            'commission1' => 'required',
-            'random' => 'required',
+            'dateon' => 'required',
+
         ]);
 
         try {
@@ -131,19 +121,7 @@ class PurchaseController extends Controller
             'numoftora' => 'required',
             'grossweight' => 'required',
             'priceperkg' => 'required',
-            'reduction0' => 'required',
-            'reduction1' => 'required',
-            'selector' => 'required',
-            'sorting' => 'required',
-            'bagprice0' => 'required',
-            'bagprice1' => 'required',
-            'packing0' => 'required',
-            'packing1' => 'required',
-            'loading0' => 'required',
-            'loading1' => 'required',
-            'commission0' => 'required',
-            'commission1' => 'required',
-            'random' => 'required',
+
         ]);
 
         try {
@@ -179,22 +157,21 @@ class PurchaseController extends Controller
     {
         $purchase = Purchase::find($id);
         $deal = $purchase->deal;
-        $clients = Client::all();
+        $buyers = Buyer::all();
         $transporters = Transporter::all();
-        $stores = $purchase->stores();
-
-        return view('user.sales.fromfield.create', compact('deal', 'purchase', 'clients', 'transporters', 'stores'));
+        $config = Config::find(1);
+        return view('user.sales.fromfield.create', compact('deal', 'purchase', 'buyers', 'config'));
     }
     public function sellfromstore_create($id)
     {
         $purchase = Purchase::find($id);
         $deal = $purchase->deal;
-        $clients = Client::all();
+        $buyers = Buyer::all();
         $transporters = Transporter::all();
         $stores = $purchase->stores();
         $config = Config::find(1);
 
-        return view('user.sales.fromstore.create', compact('deal', 'purchase', 'clients', 'transporters', 'stores', 'config'));
+        return view('user.sales.fromstore.create', compact('deal', 'purchase', 'buyers', 'transporters', 'stores', 'config'));
     }
     public function storage_create($id)
     {
@@ -202,6 +179,7 @@ class PurchaseController extends Controller
         $deal = $purchase->deal;
         $transporters = Transporter::all();
         $stores = Store::all();
-        return view('user.storage.create', compact('deal', 'purchase', 'transporters', 'stores'));
+        $config = Config::find(1);
+        return view('user.storage.create', compact('deal', 'purchase', 'stores', 'config'));
     }
 }

@@ -22,9 +22,7 @@ class CreatePurchasesTable extends Migration
             $table->unsignedInteger('numoftora');
             $table->unsignedFloat('grossweight');
             $table->unsignedFloat('priceperkg');
-            $table->unsignedFloat('reduction0');
-            $table->unsignedFloat('reduction1');
-            $table->unsignedBigInteger('cost_id');
+            $table->date('dateon');
 
             $table->foreign('deal_id')
                 ->references('id')
@@ -37,13 +35,6 @@ class CreatePurchasesTable extends Migration
                 ->on('transporters')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
-            $table->foreign('cost_id')
-                ->references('id')
-                ->on('costs')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
 
             $table->timestamps();
         });

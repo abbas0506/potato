@@ -9,19 +9,21 @@ class Deal extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'client_id',
+        'seller_id',
         'product_id',
         'numofbori',
         'numoftora',
+        'reduction0',
+        'reduction1',
         'priceperkg',
         'dateon',
     ];
 
     public $timestamps = false;
 
-    public function client()
+    public function seller()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(seller::class, 'seller_id');
     }
     public function product()
     {

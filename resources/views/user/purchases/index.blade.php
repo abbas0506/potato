@@ -38,7 +38,7 @@ Swal.fire({
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
+                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
                </div>
                <div class="frow txt-s mid-right"> Pick Detail</div>
             </div>
@@ -66,13 +66,14 @@ Swal.fire({
             <div class="w-5">ID</div>
             <div class="w-10">Date</div>
             <div class="w-10">Vehicle</div>
-            <div class="w-10">Picked Qty.</div>
+            <div class="w-10">Picked</div>
             <div class="w-10">Gross</div>
             <div class="w-10">Actual</div>
             <div class="w-10">@ kg</div>
+            <div class="w-10">Amount</div>
             <div class="w-10">Sold</div>
             <div class="w-10">Stored</div>
-            <div class="w-10">Invalid</div>
+            <div class="w-10">Pending</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
@@ -85,6 +86,7 @@ Swal.fire({
             <div class="w-10 txt-s">{{$purchase->grossweight}}</div>
             <div class="w-10 txt-s">{{$purchase->actual()}}</div>
             <div class="w-10 txt-s">{{$purchase->priceperkg}}</div>
+            <div class="w-10 txt-s">{{$purchase->basicprice()}}</div>
             <div class="w-10 txt-s">{{$purchase->numofbori_sold()}} + {{$purchase->numoftora_sold()}}</div>
             <div class="w-10 txt-s">{{$purchase->numofbori_stored()}} + {{$purchase->numoftora_stored()}}</div>
             <div class="w-10 txt-s">{{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}}</div>

@@ -36,6 +36,28 @@ class CostController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'deal_id' => 'required',
+            'transporter_id' => 'required',
+            'vehicleno' => 'required',
+            'numofbori' => 'required',
+            'numoftora' => 'required',
+            'grossweight' => 'required',
+            'priceperkg' => 'required',
+            'reduction0' => 'required',
+            'reduction1' => 'required',
+            'selector' => 'required',
+            'sorting' => 'required',
+            'bagprice0' => 'required',
+            'bagprice1' => 'required',
+            'packing0' => 'required',
+            'packing1' => 'required',
+            'loading0' => 'required',
+            'loading1' => 'required',
+            'commission0' => 'required',
+            'commission1' => 'required',
+            'random' => 'required',
+        ]);
     }
 
     /**

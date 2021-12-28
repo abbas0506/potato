@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-   Swal.fire({
-      icon: 'success',
-      title: "Successful",
-      showConfirmButton: false,
-      timer: 1500
-   });
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
 </script>
 @endif
 <!-- purchasing -->
@@ -37,7 +37,7 @@
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->client->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
+                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
                </div>
                <div class="frow spaced txt-s mid-right">
                   <span class="txt-b">New Sale [ Field ]</span>
@@ -48,7 +48,7 @@
          <form action="{{route('sales.store')}}" method='post'>
             @csrf
             <div class="frow centered stretched mt-4">
-               <div class="w-70">
+               <div class="w-72">
                   <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
                   <input type="hidden" id="_reduction0" value="{{$purchase->reduction0}}">
                   <input type="hidden" id="_reduction1" value="{{$purchase->reduction1}}">
@@ -65,58 +65,113 @@
                         </a>
                      </div>
                   </div>
-                  <div class="frow stretched mt-3">
-                     <div class="fancyselect w-32">
-                        <select name="transporter_id" id="" required>
-                           <option value="">Select an option ...</option>
-                           @foreach($transporters as $transporter)
-                           @if($transporter->id==$purchase->transporter_id)
-                           <option value="{{$transporter->id}}" selected>{{$transporter->name}}</option>
-                           @else
-                           <option value="{{$transporter->id}}" selected>{{$transporter->name}}</option>
-                           @endif
-                           @endforeach
-                        </select>
-                        <label for="Name">Transport Company</label>
+
+                  <div class=" mt-4 txt-s txt-blue">Sale Quantity & Respective Cost Info --------------------</div>
+                  <div class="frow stretched mt-4" @if($purchase->numofbori_left()==0) hidden @endif>
+                     <div class="fancyinput w-20">
+                        <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$purchase->numofbori_left()}}" required>
+                        <label for="Name">Number of Bori</label>
                      </div>
                      <div class="fancyinput w-15">
-                        <input type="text" class="text-center" name='vehicleno' value="{{$purchase->vehicleno}}">
-                        <label for="Name">Vehicle No</label>
+                        <input type="text" class='text-center' name='reduction0' id='reduction0' value="{{$config->reduction0}}" oninput="calcPrice()" required>
+                        <label for="Name">@ reduction</label>
                      </div>
                      <div class="fancyinput w-15">
-                        <input type="number" class="text-center" name='grossweight' id='grossweight' min="0" value="0" required oninput="calcProfit()">
-                        <label for=" Name">Gross (kg)</label>
+                        <input type="number" class="text-center" name='commission0' id='commission0' min="0" value="0" oninput="calcProfit()" required>
+                        <label for="Name">@ Comm.</label>
                      </div>
                      <div class="fancyinput w-15">
-                        <input type="number" class="text-center" name='numofbori' id='numofbori' min="0" max='{{$purchase->numofbori_left()}}' value="{{$purchase->numofbori_left()}}" required oninput="calcProfit()">
-                        <label for="Name">No. of Bori</label>
+                        <input type="text" class='text-center' name='bagprice0' id='bagprice0' value="0">
+                        <label for="Name">@ bag price</label>
+                     </div>
+
+                     <div class="fancyinput w-15">
+                        <input type="text" class='text-center' name='packing0' id='packing0' value="0">
+                        <label for="Name">@ packing</label>
                      </div>
                      <div class="fancyinput w-15">
-                        <input type="number" class="text-center" name='numoftora' id='numoftora' min="0" max='{{$purchase->numoftora_left()}}' value="{{$purchase->numoftora_left()}}" required oninput="calcProfit()">
-                        <label for="Name">No. of Tora</label>
+                        <input type="text" class='text-center' name='loading0' id='loading0' value="{{$config->loading0}}">
+                        <label for="Name">@ loading</label>
+                     </div>
+
+                  </div>
+                  <div class="frow stretched mt-3" @if($purchase->numoftora_left()==0) hidden @endif>
+                     <div class="fancyinput w-20">
+                        <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$purchase->numoftora_left()}}" required>
+                        <label for="Name">Number of Tora</label>
+                     </div>
+                     <div class="fancyinput w-15">
+                        <input type="text" class='text-center' name='reduction1' id='reduction1' value="{{$config->reduction1}}" oninput="calcPrice()" required>
+                        <label for="Name">@ reduction</label>
+                     </div>
+                     <div class="fancyinput w-15">
+                        <input type="number" class="text-center" name='commission1' id='commission1' min="0" value="0" oninput="calcProfit()" required>
+                        <label for="Name">@ Comm.</label>
+                     </div>
+                     <div class="fancyinput w-15">
+                        <input type="text" class='text-center' name='bagprice1' id='bagprice1' value="0">
+                        <label for="Name">@ bag price</label>
+                     </div>
+                     <div class="fancyinput w-15">
+                        <input type="text" class='text-center' name='packing1' id='packing1' value="0">
+                        <label for="Name">@ packing</label>
+                     </div>
+                     <div class="fancyinput w-15">
+                        <input type="text" class='text-center' name='loading1' id='loading1' value="{{$config->loading1}}">
+                        <label for="Name">@ loading</label>
                      </div>
                   </div>
+
+                  <div class="frow stretched mt-4">
+                     <div class="fancyinput w-24">
+                        <input type="number" class='text-center' name='selector' id='selector' value="0">
+                        <label for="Name">Selector</label>
+                     </div>
+                     <div class="fancyinput w-24">
+                        <input type="number" class='text-center' name='sorting' id='sorting' value="0">
+                        <label for="Name">Sorting</label>
+                     </div>
+                     <div class="fancyinput w-24">
+                        <input type="number" class='text-center' name='random' id='random' min='0' value="0">
+                        <label for="Name">Random</label>
+                     </div>
+                     <div class="fancyinput w-24">
+                        <input type="number" class='text-center' name='sadqa' id='sadqa' min='0' value="500">
+                        <label for="Name">Sadqa</label>
+                     </div>
+                  </div>
+                  <div class=" mt-4 txt-s txt-blue">Buyer, Gross Weight & Sale Price Info --------------------</div>
                   <div class="frow stretched mt-3">
-                     <div class="fancyselect w-48">
-                        <select name="client_id" id="" required>
+                     <div class="fancyselect w-40">
+                        <select name="buyer_id" id="" required>
                            <option value="">Select an option ...</option>
-                           @foreach($clients as $client)
-                           <option value="{{$client->id}}">{{$client->name}}</option>
+                           @foreach($buyers as $buyer)
+                           <option value="{{$buyer->id}}">{{$buyer->name}}</option>
                            @endforeach
                         </select>
-                        <label for="Name">Client (Buyer)</label>
+                        <label for="Name">Buyer Name</label>
                      </div>
-                     <div class="fancyinput w-15">
+                     <div class="fancyinput w-12">
+                        <input type="number" class='text-center' name='gross' id='gross' min='0' value="0">
+                        <label for="Name">Gross</label>
+                     </div>
+                     <div class="fancyinput w-12">
                         <input type="number" class="text-center" name='carriage' id='carriage' value="0" oninput="calcProfit()" required>
                         <label for="Name">Carriage</label>
                      </div>
-                     <div class="fancyinput w-15">
+                     <div class="fancyinput w-12">
                         <input type="number" class="text-center" name='commission' id='commission' min="0" value="0" oninput="calcProfit()" required>
-                        <label for="Name">Commission</label>
+                        <label for="Name">Comm.</label>
                      </div>
-                     <div class="fancyinput w-15">
-                        <input type="number" class="text-center" name='saleprice' id='saleprice' min="0" value="0" oninput="calcProfit()" required>
+                     <div class="fancyinput w-18">
+                        <input type="number" class="text-center txt-red txt-b" name='saleprice' id='saleprice' min="0" value="0" oninput="calcProfit()" required>
                         <label for="Name">Final Sale Price</label>
+                     </div>
+                  </div>
+                  <div>
+                     <div class="fancyinput mt-3">
+                        <input type="text" class='text-center' name='note' id='note'>
+                        <label for="Name">Any Note</label>
                      </div>
                   </div>
                </div>
@@ -130,6 +185,7 @@
                         <div class="w-48 txt-s">Reduction</div>
                         <div class="w-48 txt-s text-right" id='lbl_reduction'>0</div>
                      </div>
+
                      <div class="frow stretched">
                         <div class="w-48 txt-s">Actual Weight</div>
                         <div class="w-48 txt-s text-right" id='lbl_actualweight'>0</div>
@@ -153,6 +209,11 @@
                      </div>
 
                   </div>
+
+
+
+
+
                   <div class="frow mid-right mt-4">
                      <button type="submit" class="btn btn-primary w-100">Submit</button>
                   </div>
@@ -170,33 +231,33 @@
 
 @section('script')
 <script lang="javascript">
-   document.getElementById('dateon').valueAsDate = new Date();
+document.getElementById('dateon').valueAsDate = new Date();
 
-   function calcProfit() {
-      var actual = 0;
-      var gross = parseInt($('#grossweight').val())
-      var numofbori = parseInt($('#numofbori').val());
-      var numoftora = parseInt($('#numoftora').val());
-      var reduction0 = parseFloat($('#_reduction0').val());
-      var reduction1 = parseFloat($('#_reduction1').val());
-      var actualcostperkg = parseFloat($('#lbl_actualcostperkg').html());
+function calcProfit() {
+   var actual = 0;
+   var gross = parseInt($('#grossweight').val())
+   var numofbori = parseInt($('#numofbori').val());
+   var numoftora = parseInt($('#numoftora').val());
+   var reduction0 = parseFloat($('#_reduction0').val());
+   var reduction1 = parseFloat($('#_reduction1').val());
+   var actualcostperkg = parseFloat($('#lbl_actualcostperkg').html());
 
-      // alert(purchaseprice)
-      var saleprice = parseInt($('#saleprice').val());
+   // alert(purchaseprice)
+   var saleprice = parseInt($('#saleprice').val());
 
 
-      if (gross > 0)
-         actual = gross - reduction0 * numofbori - reduction1 * numoftora;
+   if (gross > 0)
+      actual = gross - reduction0 * numofbori - reduction1 * numoftora;
 
-      costprice = actual * actualcostperkg;
-      var profit = saleprice - costprice;
+   costprice = actual * actualcostperkg;
+   var profit = saleprice - costprice;
 
-      $('#lbl_grossweight').html(gross);
-      $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
-      $('#lbl_actualweight').html(actual);
-      $('#lbl_basicprice').html(costprice);
-      $('#lbl_saleprice').html(saleprice);
-      $('#lbl_profit').html(profit);
-   }
+   $('#lbl_grossweight').html(gross);
+   $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
+   $('#lbl_actualweight').html(actual);
+   $('#lbl_basicprice').html(costprice);
+   $('#lbl_saleprice').html(saleprice);
+   $('#lbl_profit').html(profit);
+}
 </script>
 @endsection

@@ -11,14 +11,16 @@ class Sale extends Model
     protected $fillable = [
         'purchase_id',
         'buyer_id',
+        'cost_id',
+        'store_id',
+
         'numofbori',
         'numoftora',
         'grossweight',
         'reduction0',
         'reduction1',
         'saleprice',
-        'cost_id',
-        'store_id',
+
         'dateon',
 
     ];

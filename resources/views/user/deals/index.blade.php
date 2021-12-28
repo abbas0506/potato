@@ -46,7 +46,7 @@ Swal.fire({
          <div class="frow px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
             <div class="w-5">ID</div>
             <div class="w-10">Date</div>
-            <div class="w-20">Seller Client</div>
+            <div class="w-20">Seller</div>
             <div class="w-15">Product</div>
             <div class="w-10">Agreed Qty.</div>
             <div class="w-10">@ kg</div>
@@ -61,7 +61,7 @@ Swal.fire({
          <div class="frow px-2 my-2 stretched tr ">
             <div class="w-5 txt-s"><a href="{{route('deals.show',$deal)}}" class="txt-blue">{{$deal->id}}</a></div>
             <div class="w-10 txt-s">{{$deal->dateon}}</div>
-            <div class="w-20 txt-s">{{$deal->client->name}}</div>
+            <div class="w-20 txt-s">{{$deal->seller->name}}</div>
             <div class="w-15 txt-s">{{$deal->product->name}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori}} + {{$deal->numoftora}}</div>
             <div class="w-10 txt-s">{{$deal->priceperkg}}</div>

@@ -25,6 +25,10 @@ class CreateConfigsTable extends Migration
             $table->unsignedFloat('packing1');
             $table->unsignedFloat('loading0');
             $table->unsignedFloat('loading1');
+            $table->unsignedFloat('carriage0');
+            $table->unsignedFloat('carriage1');
+            $table->unsignedFloat('storage0');
+            $table->unsignedFloat('storage1');
             $table->timestamps();
         });
     }

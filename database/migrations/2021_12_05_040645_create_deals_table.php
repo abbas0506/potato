@@ -20,6 +20,8 @@ class CreateDealsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
+            $table->unsignedFloat('reduction0');
+            $table->unsignedFloat('reduction1');
             $table->unsignedFloat('priceperkg');
             $table->date('dateon');
 

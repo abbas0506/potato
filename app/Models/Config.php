@@ -19,6 +19,10 @@ class Config extends Model
         'packing1',
         'loading0',
         'loading1',
+        'carriage0',
+        'carriage1',
+        'storage0',
+        'storage1',
     ];
 
     public $timestamps = false;

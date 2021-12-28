@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
-use App\Models\Client;
+use App\Models\Seller;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Storage;
@@ -35,10 +35,10 @@ class DealController extends Controller
     {
         //
         $products = Product::all();
-        $clients = Client::all();
+        $sellers = Seller::all();
         $stores = Store::all();
         $transporters = Transporter::all();
-        return view('user.deals.create', compact('products', 'clients', 'stores', 'transporters'));
+        return view('user.deals.create', compact('products', 'sellers', 'stores', 'transporters'));
     }
 
     /**
@@ -51,7 +51,7 @@ class DealController extends Controller
     {
         //
         $request->validate([
-            'client_id' => 'required',
+            'seller_id' => 'required',
             'product_id' => 'required',
             'numofbori' => 'required',
             'numoftora' => 'required',
@@ -94,9 +94,9 @@ class DealController extends Controller
     public function edit(deal $deal)
     {
         //
-        $clients = Client::all();
+        $sellers = seller::all();
         $products = Product::all();
-        return view('user.deals.edit', compact('deal', 'clients', 'products'));
+        return view('user.deals.edit', compact('deal', 'sellers', 'products'));
     }
 
     /**
@@ -110,7 +110,7 @@ class DealController extends Controller
     {
         //
         $request->validate([
-            'client_id' => 'required',
+            'seller_id' => 'required',
             'product_id' => 'required',
             'numofbori' => 'required',
             'numoftora' => 'required',
@@ -148,16 +148,16 @@ class DealController extends Controller
     public function get_sell($id)
     {
         $deal = deal::find($id);
-        $clients = Client::all();
+        $sellers = seller::all();
         $transporters = Transporter::all();
         $stores = Store::all();
-        return view('user.deals.sell', compact('deal', 'clients', 'transporters', 'stores'));
+        return view('user.deals.sell', compact('deal', 'sellers', 'transporters', 'stores'));
     }
     public function post_sell(Request $request, $id)
     {
         $request->validate([
             'deal_id' => 'required',
-            'client_id' => 'required',
+            'seller_id' => 'required',
             'numofbori' => 'required',
             'numoftora' => 'required',
             'grossweight' => 'required',

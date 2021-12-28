@@ -45,22 +45,17 @@ Swal.fire({
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
             </div>
-            <div class="frow stretched mt-3">
-               <div class="fcol w-100">
-                  <div class="fancyselect">
-                     <select name="client_id" id="" required>
-                        <option value="">Select an option ...</option>
-                        @foreach($clients as $client)
-                        <option value="{{$client->id}}">{{$client->name}}</option>
-                        @endforeach
-                     </select>
-                     <label for="Name">Client (Seller)</label>
-                  </div>
+            <div class="frow stretched mt-4">
+               <div class="fancyselect w-48">
+                  <select name="seller_id" id="" required>
+                     <option value="">Select an option ...</option>
+                     @foreach($sellers as $seller)
+                     <option value="{{$seller->id}}">{{$seller->name}}</option>
+                     @endforeach
+                  </select>
+                  <label for="Name">Seller</label>
                </div>
-            </div>
-            <div class="frow stretched mt-3">
-
-               <div class="fancyselect w-50">
+               <div class="fancyselect w-48">
                   <select name="product_id" id="">
                      <option value="">Select an option ...</option>
                      @foreach($products as $product)
@@ -69,17 +64,28 @@ Swal.fire({
                   </select>
                   <label for="Name">Product</label>
                </div>
-               <div class="fancyinput w-15">
+
+            </div>
+            <div class="frow stretched mt-3">
+               <div class="fancyinput w-25">
                   <input type="number" class="text-center" name='numofbori' id='numofbori' min="0" value="0" required oninput="calcPrice()">
-                  <label for="Name">Number of Bori</label>
+                  <label for="Name">Number of bori</label>
+               </div>
+               <div class="fancyinput w-25">
+                  <input type="number" class="text-center" name='numoftora' id='numoftora' min="0" value="0" required oninput="calcPrice()">
+                  <label for="Name">Number of tora</label>
                </div>
                <div class="fancyinput w-15">
-                  <input type="number" class="text-center" name='numoftora' id='numoftora' min="0" value="0" required oninput="calcPrice()">
-                  <label for="Name">Number of Tora</label>
+                  <input type="text" class="text-center" name='reduction0' id='reduction0' value="2" required oninput="calcPrice()">
+                  <label for="Name">Reduction / bori</label>
+               </div>
+               <div class="fancyinput w-15">
+                  <input type="text" class="text-center" name='reduction1' id='reduction1' value="0.5" required oninput="calcPrice()">
+                  <label for="Name">Reduction / tora</label>
                </div>
                <div class="fancyinput w-15">
                   <input type="text" class="text-center" name='priceperkg' id='priceperkg' value="0" oninput="calcPrice()" required>
-                  <label for="Name">@ kg</label>
+                  <label for="Name">Rate / kg </label>
                </div>
 
             </div>

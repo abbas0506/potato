@@ -46,26 +46,22 @@ Swal.fire({
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
             </div>
-            <div class="frow stretched mt-3">
-               <div class="fcol w-100">
-                  <div class="fancyselect">
-                     <select name="client_id" id="" required>
-                        <option value="">Select an option ...</option>
-                        @foreach($clients as $client)
-                        @if($client->id==$deal->client->id)
-                        <option value="{{$client->id}}" selected>{{$client->name}}</option>
-                        @else
-                        <option value="{{$client->id}}">{{$client->name}}</option>
-                        @endif
-                        @endforeach
-                     </select>
-                     <label for="Name">Client (Seller)</label>
-                  </div>
-               </div>
-            </div>
-            <div class="frow stretched mt-3">
+            <div class="frow stretched mt-4">
 
-               <div class="fancyselect w-50">
+               <div class="fancyselect w-48">
+                  <select name="seller_id" id="" required>
+                     <option value="">Select an option ...</option>
+                     @foreach($sellers as $seller)
+                     @if($seller->id==$deal->seller->id)
+                     <option value="{{$seller->id}}" selected>{{$seller->name}}</option>
+                     @else
+                     <option value="{{$seller->id}}">{{$seller->name}}</option>
+                     @endif
+                     @endforeach
+                  </select>
+                  <label for="Name">Seller</label>
+               </div>
+               <div class="fancyselect w-48">
                   <select name="product_id" id="">
                      <option value="">Select an option ...</option>
                      @foreach($products as $product)
@@ -78,13 +74,26 @@ Swal.fire({
                   </select>
                   <label for="Name">Product</label>
                </div>
-               <div class="fancyinput w-15">
+
+            </div>
+            <div class="frow stretched mt-3">
+
+
+               <div class="fancyinput w-25">
                   <input type="number" class="text-center" name='numofbori' id='numofbori' min="0" value="{{$deal->numofbori}}" required oninput="calcPrice()">
                   <label for="Name">Number of Bori</label>
                </div>
-               <div class="fancyinput w-15">
+               <div class="fancyinput w-25">
                   <input type="number" class="text-center" name='numoftora' id='numoftora' min="0" value="{{$deal->numoftora}}" required oninput="calcPrice()">
                   <label for="Name">Number of Tora</label>
+               </div>
+               <div class="fancyinput w-15">
+                  <input type="text" class="text-center" name='reduction0' id='reduction0' value="{{$deal->reduction0}}" required oninput="calcPrice()">
+                  <label for="Name">Reduction / bori</label>
+               </div>
+               <div class="fancyinput w-15">
+                  <input type="text" class="text-center" name='reduction1' id='reduction1' value="{{$deal->reduction1}}" required oninput="calcPrice()">
+                  <label for="Name">Reduction / tora</label>
                </div>
                <div class="fancyinput w-15">
                   <input type="text" class="text-center" name='priceperkg' id='priceperkg' value="{{$deal->priceperkg}}" oninput="calcPrice()" required>
