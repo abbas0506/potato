@@ -50,8 +50,8 @@ Swal.fire({
             <div class="frow centered stretched mt-4">
                <div class="w-70">
                   <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
-                  <input type="hidden" id="_reduction0" value="{{$purchase->reduction0}}">
-                  <input type="hidden" id="_reduction1" value="{{$purchase->reduction1}}">
+                  <input type="hidden" name="commission0" value="0">
+                  <input type="hidden" name="commission1" value="0">
                   <div class="frow w-100 my-4 mid-left">
                      <div class="fancyinput">
                         <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
@@ -77,13 +77,13 @@ Swal.fire({
                      </div>
                   </div>
                   <div class=" mt-4 txt-s txt-blue">Sale Quantity & Respective Cost Info --------------------</div>
-                  <div class="frow stretched mt-4" @if($purchase->numofbori==0) hidden @endif>
+                  <div class="frow stretched mt-4" @if($purchase->numofbori_stored()==0) hidden @endif>
                      <div class="fancyinput w-20">
                         <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$purchase->numofbori_stored()}}" required>
                         <label for="Name">Number of Bori</label>
                      </div>
                      <div class="fancyinput w-18">
-                        <input type="text" class='text-center' name='reduction0' id='reduction0' value="{{$config->reduction0}}" oninput="calcPrice()" required>
+                        <input type="text" class='text-center' name='reduction0' id='reduction0' value="@if($purchase->numofbori_stored()==0) 0 @else {{$config->reduction0}} @endif" oninput="calcPrice()" required>
                         <label for="Name">@ reduction</label>
                      </div>
                      <div class="fancyinput w-18">
@@ -96,18 +96,18 @@ Swal.fire({
                         <label for="Name">@ packing</label>
                      </div>
                      <div class="fancyinput w-18">
-                        <input type="text" class='text-center' name='loading0' id='loading0' value="{{$config->loading0}}">
+                        <input type="text" class='text-center' name='loading0' id='loading0' value="@if($purchase->numofbori_stored()==0) 0 @else {{$config->loading0}} @endif">
                         <label for="Name">@ loading</label>
                      </div>
 
                   </div>
-                  <div class="frow stretched mt-3" @if($purchase->numoftora==0) hidden @endif>
+                  <div class="frow stretched mt-3" @if($purchase->numoftora_stored()==0) hidden @endif>
                      <div class="fancyinput w-20">
                         <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$purchase->numoftora_stored()}}" required>
                         <label for="Name">Number of Tora</label>
                      </div>
                      <div class="fancyinput w-18">
-                        <input type="text" class='text-center' name='reduction1' id='reduction1' value="{{$config->reduction1}}" oninput="calcPrice()" required>
+                        <input type="text" class='text-center' name='reduction1' id='reduction1' value="@if($purchase->numoftora_stored()==0) 0 @else {{$config->reduction1}} @endif" oninput="calcPrice()" required>
                         <label for="Name">@ reduction</label>
                      </div>
                      <div class="fancyinput w-18">
@@ -119,7 +119,7 @@ Swal.fire({
                         <label for="Name">@ packing</label>
                      </div>
                      <div class="fancyinput w-18">
-                        <input type="text" class='text-center' name='loading1' id='loading1' value="{{$config->loading1}}">
+                        <input type="text" class='text-center' name='loading1' id='loading1' value="@if($purchase->numoftora_stored()==0) 0 @else {{$config->loading1}} @endif">
                         <label for="Name">@ loading</label>
                      </div>
                   </div>
@@ -154,7 +154,7 @@ Swal.fire({
                         <label for="Name">Buyer Name</label>
                      </div>
                      <div class="fancyinput w-12">
-                        <input type="number" class='text-center' name='gross' id='gross' min='0' value="0">
+                        <input type="number" class='text-center' name='grossweight' id='grossweight' min='0' value="0">
                         <label for="Name">Gross</label>
                      </div>
                      <div class="fancyinput w-12">

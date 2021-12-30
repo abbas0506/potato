@@ -9,8 +9,6 @@ class Cost extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'selector',
-        'sorting',
         'commission0',
         'commission1',
         'bagprice0',
@@ -23,6 +21,8 @@ class Cost extends Model
         'carriage1',
         'storage0',
         'storage1',
+        'selector',
+        'sorting',
         'sadqa',
         'random',
         'note',

@@ -76,7 +76,7 @@ Swal.fire({
                      <label for="Name">Number of Bori</label>
                   </div>
                   <div class="fancyinput w-24">
-                     <input type="number" class='text-center' name='numoftora' id='numoftora' min='0' max='{{$deal->numofbori_left()+$purchase->numoftora}}' value="{{$purchase->numoftora}}" required oninput="calcPrice()">
+                     <input type="number" class='text-center' name='numoftora' id='numoftora' min='0' max='{{$deal->numoftora_left()+$purchase->numoftora}}' value="{{$purchase->numoftora}}" required oninput="calcPrice()">
                      <label for="Name">Number of Tora</label>
                   </div>
 
@@ -114,7 +114,7 @@ Swal.fire({
                   </div>
                </div>
                <div class="frow mt-4">
-                  <button type="submit" class="btn btn-primary w-100">Submit</button>
+                  <button type="submit" class="btn btn-primary w-100">Update</button>
                </div>
             </div>
 

@@ -51,13 +51,13 @@ class Deal extends Model
     public function numofbori_stored()
     {
         return $this->purchases->sum(function ($purchase) {
-            return $purchase->storages->sum('numofbori');
+            return $purchase->storages->sum('numofbori') - $purchase->sales_storage->sum('numofbori');
         });
     }
     public function numoftora_stored()
     {
         return $this->purchases->sum(function ($purchase) {
-            return $purchase->storages->sum('numoftora');
+            return $purchase->storages->sum('numoftora') - $purchase->sales_storage->sum('numoftora');
         });
     }
     public function numofbori_sold()

@@ -73,13 +73,13 @@ Swal.fire({
             <div class="w-10">Amount</div>
             <div class="w-10">Sold</div>
             <div class="w-10">Stored</div>
-            <div class="w-10">Pending</div>
+            <div class="w-10">Balance</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
          @foreach($deal->purchases->sortDesc() as $purchase)
          <div class="frow px-2 my-2 stretched tr ">
-            <div class="w-5 txt-s"><a href="{{route('purchases.show', $purchase)}}">{{$purchase->id}}</a></div>
+            <div class="w-5 txt-s"><a href="{{route('purchases.show', $purchase)}}" class="txt-blue txt-b">{{$purchase->id}}</a></div>
             <div class="w-10 txt-s">{{$purchase->dateon}}</div>
             <div class="w-10 txt-s">{{$purchase->vehicleno}}</div>
             <div class="w-10 txt-s">{{$purchase->numofbori}} + {{$purchase->numoftora}}</div>

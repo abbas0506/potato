@@ -45,30 +45,46 @@ class StorageController extends Controller
             'numofbori' => 'required',
             'numoftora' => 'required',
             'dateon' => 'required',
+
+            'commission0' => 'required',
+            'commission1' => 'required',
+            'bagprice0' => 'required',
+            'bagprice1' => 'required',
+            'packing0' => 'required',
+            'packing1' => 'required',
+            'loading0' => 'required',
+            'loading1' => 'required',
+            'carriage0' => 'required',
+            'carriage1' => 'required',
+            'storage0' => 'required',
+            'storage1' => 'required',
+            'selector' => 'required',
+            'sorting' => 'required',
+            'random' => 'required',
+
         ]);
         DB::beginTransaction();
 
         try {
             $cost = Cost::create([
                 'commission0' => $request->commission0,
+                'commission1' => $request->commission1,
                 'bagprice0' => $request->bagprice0,
-                'selector' => $request->bagprice0,
-                'sorting' => $request->bagprice0,
-                'commission0' => $request->bagprice0,
-                'commission1' => $request->bagprice0,
-                'bagprice0' => $request->bagprice0,
-                'bagprice1' => $request->bagprice0,
-                'packing0' => $request->bagprice0,
-                'packing1' => $request->bagprice0,
-                'loading0' => $request->bagprice0,
-                'loading1' => $request->bagprice0,
-                'carriage0' => $request->bagprice0,
-                'carriage1' => $request->bagprice0,
-                'storage0' => $request->bagprice0,
-                'storage1' => $request->bagprice0,
-                'sadqa' => $request->bagprice0,
-                'random' => $request->bagprice0,
-                'note' => $request->bagprice0,
+                'bagprice1' => $request->bagprice1,
+                'packing0' => $request->packing0,
+                'packing1' => $request->packing1,
+                'loading0' => $request->loading0,
+                'loading1' => $request->loading1,
+                'carriage0' => $request->carriage0,
+                'carriage1' => $request->carriage1,
+                'storage0' => $request->storage0,
+                'storage1' => $request->storage0,
+                'selector' => $request->selector,
+                'sorting' => $request->sorting,
+                'random' => $request->random,
+                'sadqa' => 0,
+                'note' => $request->note,
+
             ]);
             $cost->save();
 
@@ -133,5 +149,11 @@ class StorageController extends Controller
     public function destroy(Storage $storage)
     {
         //
+    }
+    public function wastes_create($id)
+    {
+        $deal = session('deal');
+        $storage = Storage::find($id);
+        return view('user.wastes.create', compact('storage', 'deal'));
     }
 }

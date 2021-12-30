@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Purchase;
 use App\Models\Waste;
 use Illuminate\Http\Request;
+use Exception;
 
 class WasteController extends Controller
 {
@@ -36,6 +38,23 @@ class WasteController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'purchase_id' => 'required',
+            'store_id' => 'required',
+            'numofbori' => 'required',
+            'numoftora' => 'required',
+        ]);
+
+        try {
+            $purchase = Purchase::find($request->purchase_id);
+            $new = Waste::create($request->all());
+            $new->save();
+            return redirect()->route('purchases.show', $purchase)->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            //return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**

@@ -17,9 +17,6 @@ class CreateCostsTable extends Migration
             $table->id();
             $table->unsignedFloat('commission0');
             $table->unsignedFloat('commission1');
-            $table->unsignedInteger('selector');
-            $table->unsignedInteger('sorting');
-
             $table->unsignedFloat('bagprice0');
             $table->unsignedFloat('bagprice1');
             $table->unsignedFloat('packing0');
@@ -30,7 +27,8 @@ class CreateCostsTable extends Migration
             $table->unsignedInteger('carriage1');
             $table->unsignedInteger('storage0')->nullable();
             $table->unsignedInteger('storage1')->nullable();
-
+            $table->unsignedInteger('selector');
+            $table->unsignedInteger('sorting');
             $table->unsignedInteger('sadqa');
             $table->unsignedInteger('random');
             $table->string('note')->nullable();

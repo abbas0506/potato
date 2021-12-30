@@ -64,70 +64,70 @@ Swal.fire({
                   </select>
                   <label for="Name">Cold Store Name</label>
                </div>
-               <div class="fancyinput w-18" @if($purchase->numofbori==0) hidden @endif>
+               <div class="fancyinput w-18" @if($purchase->numofbori_left()==0) hidden @endif>
                   <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$purchase->numofbori_left()}}" required>
                   <label for="Name">Number of Bori</label>
                </div>
-               <div class="fancyinput w-18" @if($purchase->numoftora==0) hidden @endif>
+               <div class="fancyinput w-18" @if($purchase->numoftora_left()==0) hidden @endif>
                   <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$purchase->numoftora_left()}}" required>
                   <label for="Name">Number of Tora</label>
                </div>
             </div>
-            <div class="frow stretched mt-4" @if($purchase->numofbori==0) hidden @endif>
+            <div class="frow stretched mt-4" @if($purchase->numofbori_left()==0) hidden @endif>
                <div class="w-20 text-danger text-center txt-b bg-light-grey py-2">Per Bori >></div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='commission0' id='commission0' value="{{$config->commission0}}">
+                  <input type="text" class='text-center' name='commission0' id='commission0' value="@if($purchase->numofbori_left()==0) 0 @else {{$config->commission0}} @endif">
                   <label for="Name">@ commission</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='bagprice0' id='bagprice0' value="{{$config->bagprice0}}">
+                  <input type="text" class='text-center' name='bagprice0' id='bagprice0' value="@if($purchase->numofbori_left()==0) 0 @else {{$config->bagprice0}} @endif">
                   <label for="Name">@ bag price</label>
                </div>
 
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='packing0' id='packing0' value="{{$config->packing0}}">
+                  <input type="text" class='text-center' name='packing0' id='packing0' value="@if($purchase->numofbori_left()==0) 0 @else {{$config->packing0}} @endif">
                   <label for="Name">@ packing</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='loading0' id='loading0' value="{{$config->loading0}}">
+                  <input type="text" class='text-center' name='loading0' id='loading0' value="@if($purchase->numofbori_left()==0) 0 @else {{$config->loading0}} @endif">
                   <label for="Name">@ loading</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='carriage0' id='carriage0' value="{{$config->carriage0}}">
+                  <input type="text" class='text-center' name='carriage0' id='carriage0' value="@if($purchase->numofbori_left()==0) 0 @else {{$config->carriage0}} @endif">
                   <label for="Name">@ carriage</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="number" class="text-center" name='storage0' id='storage0' min="0" value="{{$config->storage0}}">
+                  <input type="text" class="text-center" name='storage0' id='storage0' min="0" value="@if($purchase->numofbori_left()==0) 0 @else {{$config->storage0}} @endif">
                   <label for="Name">@ Storage</label>
                </div>
 
             </div>
 
 
-            <div class="frow stretched mt-3" @if($purchase->numoftora==0 ) hidden @endif>
+            <div class="frow stretched mt-3" @if($purchase->numoftora_left()==0 ) hidden @endif>
                <div class="w-20 text-danger text-center txt-b bg-light-grey py-2">Per Tora >></div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' class='text-center' name='commission1' id='commission1' value="{{$config->commission1}}">
+                  <input type="text" class='text-center' class='text-center' name='commission1' id='commission1' value="@if($purchase->numoftora_left()==0 ) 0 @else {{$config->commission1}} @endif">
                   <label for="Name">@ commision</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='bagprice1' id='bagprice1' value="{{$config->bagprice1}}">
+                  <input type="text" class='text-center' name='bagprice1' id='bagprice1' value="@if($purchase->numoftora_left()==0 ) 0 @else {{$config->bagprice1}} @endif">
                   <label for="Name">@ bag price</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='packing1' id='packing1' value="{{$config->packing1}}">
+                  <input type="text" class='text-center' name='packing1' id='packing1' value="@if($purchase->numoftora_left()==0 ) 0 @else {{$config->packing1}} @endif">
                   <label for="Name">@ packing</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='loading1' id='loading1' value="{{$config->loading1}}">
+                  <input type="text" class='text-center' name='loading1' id='loading1' value="@if($purchase->numoftora_left()==0 ) 0 @else {{$config->loading1}} @endif">
                   <label for="Name">@ loading</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="text" class='text-center' name='carriage1' id='carriage1' value="{{$config->carriage1}}">
+                  <input type="text" class='text-center' name='carriage1' id='carriage1' value="@if($purchase->numoftora_left()==0 ) 0 @else {{$config->carriage1}} @endif">
                   <label for="Name">@ carriage</label>
                </div>
                <div class="fancyinput w-12">
-                  <input type="number" class="text-center" name='storage1' id='storage1' min="0" value="{{$config->storage1}}">
+                  <input type="text" class="text-center" name='storage1' id='storage1' min="0" value="@if($purchase->numoftora_left()==0 ) 0 @else {{$config->storage1}} @endif">
                   <label for="Name">@ Storage</label>
                </div>
 
@@ -153,7 +153,7 @@ Swal.fire({
                </div>
             </div>
 
-            <div class="frow mid-right mt-4" @if($purchase->numoftora==0 || $purchase->numoftora_left()==0) hidden @endif>
+            <div class="frow mid-right mt-4">
                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
 

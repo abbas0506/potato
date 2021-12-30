@@ -12,6 +12,7 @@ use App\Http\Controllers\TransporterController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DealController;
 use App\Http\Controllers\StorageController;
+use App\Http\Controllers\WasteController;
 
 
 
@@ -46,13 +47,11 @@ Route::group(['middleware' => 'user'], function () {
     Route::resource('deals', DealController::class);
     Route::resource('sales', SaleController::class);
     Route::resource('storage', StorageController::class);
+    Route::resource('wastes', WasteController::class);
 
     Route::get('sell/fromfield/{id}', [PurchaseController::class, 'sellfromfield_create']);
     Route::get('sell/fromstore/{id}', [PurchaseController::class, 'sellfromstore_create']);
-
-    //Route::post('purchases/sell/{id}', [PurchaseController::class, 'sales_post']);
     Route::get('purchases/store/{id}', [PurchaseController::class, 'storage_create']);
-
-
+    Route::get('wastes/create/{id}', [StorageController::class, 'wastes_create']);
     Route::get('user/signout', [UserController::class, 'signout']);
 });

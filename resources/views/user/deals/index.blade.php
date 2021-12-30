@@ -48,18 +48,18 @@ Swal.fire({
             <div class="w-10">Date</div>
             <div class="w-20">Seller</div>
             <div class="w-15">Product</div>
-            <div class="w-10">Agreed Qty.</div>
+            <div class="w-10">Agreed</div>
             <div class="w-10">@ kg</div>
-            <div class="w-10">Picked Qty.</div>
-            <div class="w-10">Sold Qty.</div>
-            <div class="w-10">Stored Qty.</div>
-            <div class="w-10">Left Qty.</div>
-            <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
+            <div class="w-10">Picked</div>
+            <div class="w-10">Sold</div>
+            <div class="w-10">Stored</div>
+            <div class="w-10 text-center"><i data-feather='map-pin' class="feather-xsmall"></i></div>
+            <div class="w-10 text-center"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
          @foreach($deals as $deal)
          <div class="frow px-2 my-2 stretched tr ">
-            <div class="w-5 txt-s"><a href="{{route('deals.show',$deal)}}" class="txt-blue">{{$deal->id}}</a></div>
+            <div class="w-5 txt-s"><a href="{{route('deals.show',$deal)}}" class="txt-blue txt-b">{{$deal->id}}</a></div>
             <div class="w-10 txt-s">{{$deal->dateon}}</div>
             <div class="w-20 txt-s">{{$deal->seller->name}}</div>
             <div class="w-15 txt-s">{{$deal->product->name}}</div>
@@ -68,7 +68,7 @@ Swal.fire({
             <div class="w-10 txt-s">{{$deal->numofbori_picked()}} + {{$deal->numoftora_picked()}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori_sold()}} + {{$deal->numoftora_sold()}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori_stored()}} + {{$deal->numoftora_stored()}}</div>
-            <div class="w-10 txt-s">{{$deal->numofbori_left()}} + {{$deal->numoftora_left()}}</div>
+            <div class="w-10 txt-s text-center">{{$deal->numofbori_left()}} + {{$deal->numoftora_left()}}</div>
             <div class="frow w-10 centered">
                <a href="{{route('deals.edit',$deal)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>

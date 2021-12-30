@@ -103,7 +103,7 @@ Swal.fire({
             </div>
 
             <div class="frow mid-right mt-4">
-               <button type="submit" class="btn btn-primary">Submit</button>
+               <button type="submit" class="btn btn-primary">Update</button>
             </div>
 
          </form>
