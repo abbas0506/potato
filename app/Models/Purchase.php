@@ -31,24 +31,12 @@ class Purchase extends Model
         return $this->belongsTo(Transporter::class, 'transporter_id');
     }
 
-    public function storages()
-    {
-        return $this->hasMany(Storage::class, 'purchase_id');
-    }
-    public function sales()
-    {
-        return $this->hasMany(Sale::class, 'purchase_id');
-    }
 
     public function sales_field()
     {
         return $this->hasMany(Sale::class, 'purchase_id')->whereNull('store_id');
     }
 
-    public function sales_storage()
-    {
-        return $this->hasMany(Sale::class, 'purchase_id')->whereNotNull('store_id');
-    }
 
     public function stores()
     {
@@ -77,20 +65,95 @@ class Purchase extends Model
         $totalcost = $this->basicprice() + $this->addlcost();
         return $totalcost / $this->actual();
     }
+
+    // QTY
+    public function qty()
+    {
+        return $this->numofbori . "+" . $this->numoftora;
+    }
+
+    // STORAGE
+
+    public function storages()
+    {
+        return $this->hasMany(Storage::class, 'purchase_id');
+    }
+
     public function numofbori_stored()
     {
-        $numofbori_stored = $this->storages()->sum('numofbori');
-        $numofbori_soldfromstorage = $this->sales_storage()->sum('numofbori');
-        return $numofbori_stored - $numofbori_soldfromstorage;
+        return $this->storages()->sum('numofbori');
     }
 
     public function numoftora_stored()
     {
-        $numoftora_stored = $this->storages()->sum('numoftora');
-        $numoftora_soldfromstorage = $this->sales_storage()->sum('numoftora');
-        return $numoftora_stored - $numoftora_soldfromstorage;
+        return $this->storages()->sum('numoftora');
     }
 
+    public function stored()
+    {
+        return $this->numofbori_stored() . "+" . $this->numoftora_stored();
+    }
+
+    // RETENSION
+    public function numofbori_retained()
+    {
+        return $this->numofbori_stored() - $this->numofbori_exported() - $this->numofbori_wasted();
+    }
+    public function numoftora_retained()
+    {
+        return $this->numoftora_stored() - $this->numoftora_exported() - $this->numoftora_wasted();
+    }
+    public function retained()
+    {
+        $numofbori_retained = $this->numofbori_stored() - $this->numofbori_exported() - $this->numofbori_wasted();
+        $numoftora_retained = $this->numoftora_stored() - $this->numoftora_exported() - $this->numoftora_wasted();
+        return $numofbori_retained . "+" . $numoftora_retained;
+    }
+
+    // EXPORT
+    public function exports()
+    {
+        return $this->hasMany(Sale::class, 'purchase_id')->whereNotNull('store_id');
+    }
+    public function numofbori_exported()
+    {
+        return $this->exports()->sum('numofbori');
+    }
+    public function numoftora_exported()
+    {
+        return $this->exports()->sum('numoftora');
+    }
+    public function exported()
+    {
+        return $this->numofbori_exported() . "+" . $this->numoftora_exported();
+    }
+
+    // WASTE
+
+    public function wastes()
+    {
+        return $this->hasMany(Waste::class, 'purchase_id');
+    }
+    public function numofbori_wasted()
+    {
+        return $this->wastes()->sum('numofbori');
+    }
+    public function numoftora_wasted()
+    {
+        return $this->wastes()->sum('numoftora');
+    }
+    public function wasted()
+    {
+        return $this->numofbori_wasted() . "+" . $this->numoftora_wasted();
+    }
+
+
+    //SALE
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class, 'purchase_id');
+    }
     public function numofbori_sold()
     {
         return $this->sales()->sum('numofbori');
@@ -99,12 +162,24 @@ class Purchase extends Model
     {
         return $this->sales()->sum('numoftora');
     }
+    public function sold()
+    {
+        return $this->numofbori_sold() . "+" . $this->numoftora_sold();
+    }
+
+
+    // LEFT or REMAINING
+
     public function numofbori_left()
     {
-        return $this->numofbori - $this->numofbori_sold() - $this->numofbori_stored();
+        return $this->numofbori - $this->numofbori_sold() - $this->numofbori_retained() - $this->numofbori_wasted();
     }
     public function numoftora_left()
     {
-        return $this->numoftora - $this->numoftora_sold() - $this->numoftora_stored();
+        return $this->numoftora - $this->numoftora_sold() - $this->numoftora_retained() - $this->numoftora_wasted();
+    }
+    public function left()
+    {
+        return $this->numofbori_left() . "+" . $this->numoftora_left();
     }
 }

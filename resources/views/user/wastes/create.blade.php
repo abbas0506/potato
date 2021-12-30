@@ -47,29 +47,27 @@ Swal.fire({
 
          <form action="{{route('wastes.store')}}" method='post'>
             @csrf
-            <input type="hidden" name="purchase_id" value="{{$storage->purchase->id}}">
+            <input type="hidden" name="purchase_id" value="{{$purchase->id}}">
             <div class="frow mid-left mt-4">
                <div class="fancyinput w-24">
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name">
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
-               <div class="txt-m txt-b txt-red ml-3"><span class="badge badge-warning rounded txt-s"> Max Storable : </span></div>
+               <div class="txt-m txt-b txt-red ml-3"><span class="badge badge-warning rounded txt-s"> Max Wastable : {{$store->numofbori_left($purchase->id)}}+ {{$store->numoftora_left($purchase->id)}} </span></div>
             </div>
             <div class="frow stretched mt-4">
                <div class="fancyselect w-60">
                   <select name="store_id" id="">
-
-                     <option value="{{$storage->store->id}}">{{$storage->store->name}}</option>
-
+                     <option value="{{$store->id}}">{{$store->name}}</option>
                   </select>
                   <label for="Name">Cold Store Name</label>
                </div>
                <div class="fancyinput w-18">
-                  <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$storage->numofbori}}" required>
+                  <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$store->numofbori_left($purchase->id)}}" required>
                   <label for="Name">Number of Bori</label>
                </div>
                <div class="fancyinput w-18">
-                  <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$storage->numoftora}}" required>
+                  <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$store->numoftora_left($purchase->id)}}" required>
                   <label for="Name">Number of Tora</label>
                </div>
             </div>

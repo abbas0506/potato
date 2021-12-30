@@ -59,9 +59,9 @@ Swal.fire({
                      </div>
                      <div class="frow ml-5">
                         <div class="txt-b txt-red mr-4">Where to sell from???</div>
-                        <div class="rounded-pill bg-warning px-2 mx-2"><i data-feather='map-pin' class="feather-xsmall mb-1 mr-2"></i> {{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}} </div>
+                        <div class="rounded-pill bg-warning px-2 mx-2"><i data-feather='map-pin' class="feather-xsmall mb-1 mr-2"></i> {{$purchase->left()}} </div>
                         <a href="{{url('sell/fromstore',$purchase)}}">
-                           <div class="rounded-pill bg-light-grey px-2"><i data-feather='database' class="feather-xsmall mb-1 mr-2"></i> {{$purchase->numofbori_stored()}} + {{$purchase->numoftora_stored()}} </div>
+                           <div class="rounded-pill bg-light-grey px-2"><i data-feather='database' class="feather-xsmall mb-1 mr-2"></i> {{$purchase->retained()}} </div>
                         </a>
                      </div>
                   </div>
@@ -142,7 +142,7 @@ Swal.fire({
                   </div>
                   <div class=" mt-4 txt-s txt-blue">Buyer, Gross Weight & Sale Price Info --------------------</div>
                   <div class="frow stretched mt-3">
-                     <div class="fancyselect w-40">
+                     <div class="fancyselect w-48">
                         <select name="buyer_id" id="" required>
                            <option value="">Select an option ...</option>
                            @foreach($buyers as $buyer)
@@ -151,19 +151,11 @@ Swal.fire({
                         </select>
                         <label for="Name">Buyer Name</label>
                      </div>
-                     <div class="fancyinput w-12">
+                     <div class="fancyinput w-24">
                         <input type="number" class='text-center' name='grossweight' id='grossweight' min='0' value="0">
                         <label for="Name">Gross</label>
                      </div>
-                     <div class="fancyinput w-12">
-                        <input type="number" class="text-center" name='carriage' id='carriage' value="0" oninput="calcProfit()" required>
-                        <label for="Name">Carriage</label>
-                     </div>
-                     <div class="fancyinput w-12">
-                        <input type="number" class="text-center" name='commission' id='commission' min="0" value="0" oninput="calcProfit()" required>
-                        <label for="Name">Comm.</label>
-                     </div>
-                     <div class="fancyinput w-18">
+                     <div class="fancyinput w-24">
                         <input type="number" class="text-center txt-red txt-b" name='saleprice' id='saleprice' min="0" value="0" oninput="calcProfit()" required>
                         <label for="Name">Final Sale Price</label>
                      </div>
@@ -209,10 +201,6 @@ Swal.fire({
                      </div>
 
                   </div>
-
-
-
-
 
                   <div class="frow mid-right mt-4">
                      <button type="submit" class="btn btn-primary w-100">Submit</button>

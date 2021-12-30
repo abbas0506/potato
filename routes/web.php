@@ -52,6 +52,6 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('sell/fromfield/{id}', [PurchaseController::class, 'sellfromfield_create']);
     Route::get('sell/fromstore/{id}', [PurchaseController::class, 'sellfromstore_create']);
     Route::get('purchases/store/{id}', [PurchaseController::class, 'storage_create']);
-    Route::get('wastes/create/{id}', [StorageController::class, 'wastes_create']);
+    Route::get('wastes/create/{sid}/{pid}', [StorageController::class, 'wastes_create']);
     Route::get('user/signout', [UserController::class, 'signout']);
 });

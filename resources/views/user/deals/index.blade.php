@@ -53,6 +53,7 @@ Swal.fire({
             <div class="w-10">Picked</div>
             <div class="w-10">Sold</div>
             <div class="w-10">Stored</div>
+            <div class="w-10">Wasted</div>
             <div class="w-10 text-center"><i data-feather='map-pin' class="feather-xsmall"></i></div>
             <div class="w-10 text-center"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
@@ -66,9 +67,10 @@ Swal.fire({
             <div class="w-10 txt-s">{{$deal->numofbori}} + {{$deal->numoftora}}</div>
             <div class="w-10 txt-s">{{$deal->priceperkg}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori_picked()}} + {{$deal->numoftora_picked()}}</div>
-            <div class="w-10 txt-s">{{$deal->numofbori_sold()}} + {{$deal->numoftora_sold()}}</div>
-            <div class="w-10 txt-s">{{$deal->numofbori_stored()}} + {{$deal->numoftora_stored()}}</div>
-            <div class="w-10 txt-s text-center">{{$deal->numofbori_left()}} + {{$deal->numoftora_left()}}</div>
+            <div class="w-10 txt-s">{{$deal->sold()}}</div>
+            <div class="w-10 txt-s">{{$deal->stored()}}</div>
+            <div class="w-10 txt-s">{{$deal->wasted()}}</div>
+            <div class="w-10 txt-s text-center">{{$deal->left()}}</div>
             <div class="frow w-10 centered">
                <a href="{{route('deals.edit',$deal)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>

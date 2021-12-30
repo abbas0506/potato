@@ -19,7 +19,7 @@ class CreateWastesTable extends Migration
             $table->unsignedBigInteger('purchase_id');
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->string('note', 200);
+            $table->string('note', 200)->nullable();
 
             $table->foreign('purchase_id')
                 ->references('id')

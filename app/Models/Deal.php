@@ -51,44 +51,64 @@ class Deal extends Model
     public function numofbori_stored()
     {
         return $this->purchases->sum(function ($purchase) {
-            return $purchase->storages->sum('numofbori') - $purchase->sales_storage->sum('numofbori');
+            return $purchase->storages()->sum('numofbori') - $purchase->exports()->sum('numofbori') - $purchase->wastes()->sum('numofbori');
         });
     }
     public function numoftora_stored()
     {
         return $this->purchases->sum(function ($purchase) {
-            return $purchase->storages->sum('numoftora') - $purchase->sales_storage->sum('numoftora');
+            return $purchase->storages()->sum('numoftora') - $purchase->exports()->sum('numoftora') - $purchase->wastes()->sum('numoftora');
         });
     }
     public function numofbori_sold()
     {
         return $this->purchases->sum(function ($purchase) {
-            return $purchase->sales->sum('numofbori');
+            return $purchase->sales()->sum('numofbori');
         });
     }
     public function numoftora_sold()
     {
         return $this->purchases->sum(function ($purchase) {
-            return $purchase->sales->sum('numoftora');
+            return $purchase->sales()->sum('numoftora');
+        });
+    }
+
+    public function numofbori_wasted()
+    {
+        return $this->purchases->sum(function ($purchase) {
+            return $purchase->wastes->sum('numofbori');
+        });
+    }
+    public function numoftora_wasted()
+    {
+        return $this->purchases->sum(function ($purchase) {
+            return $purchase->wastes->sum('numoftora');
         });
     }
 
     public function numofbori_left()
     {
-        return $this->numofbori - $this->purchases()->sum('numofbori');
+        return $this->numofbori - $this->numofbori_picked();
     }
     public function numoftora_left()
     {
-        return $this->numoftora - $this->purchases()->sum('numoftora');
+        return $this->numoftora - $this->numoftora_picked();
     }
 
-
-    public function stored()
-    {
-        //return $this->storages()->sum('numofbori') . "-" . $this->storages()->sum('numoftora');
-    }
     public function sold()
     {
-        // return $this->sales()->sum('numofbori') . "-" . $this->sales()->sum('numoftora');
+        return $this->numofbori_sold() . "-" . $this->numoftora_sold();
+    }
+    public function stored()
+    {
+        return $this->numofbori_stored() . "-" . $this->numoftora_stored();
+    }
+    public function wasted()
+    {
+        return $this->numofbori_wasted() . "-" . $this->numoftora_wasted();
+    }
+    public function left()
+    {
+        return $this->numofbori_left() . "-" . $this->numoftora_left();
     }
 }

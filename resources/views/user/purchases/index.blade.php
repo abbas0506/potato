@@ -62,34 +62,36 @@ Swal.fire({
          </div>
 
          <!-- table header row -->
-         <div class="frow px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
+         <div class="frow stretched px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
             <div class="w-5">ID</div>
-            <div class="w-10">Date</div>
-            <div class="w-10">Vehicle</div>
-            <div class="w-10">Picked</div>
+            <div class="w-12">Date</div>
+            <div class="w-10 text-center">Vehicle</div>
+            <div class="w-10">Qty</div>
             <div class="w-10">Gross</div>
             <div class="w-10">Actual</div>
             <div class="w-10">@ kg</div>
             <div class="w-10">Amount</div>
             <div class="w-10">Sold</div>
             <div class="w-10">Stored</div>
+            <div class="w-10">Wasted</div>
             <div class="w-10">Balance</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
          @foreach($deal->purchases->sortDesc() as $purchase)
          <div class="frow px-2 my-2 stretched tr ">
-            <div class="w-5 txt-s"><a href="{{route('purchases.show', $purchase)}}" class="txt-blue txt-b">{{$purchase->id}}</a></div>
-            <div class="w-10 txt-s">{{$purchase->dateon}}</div>
-            <div class="w-10 txt-s">{{$purchase->vehicleno}}</div>
-            <div class="w-10 txt-s">{{$purchase->numofbori}} + {{$purchase->numoftora}}</div>
+            <div class="w-5 txt-s">{{$purchase->id}}</div>
+            <div class="w-12 txt-s">{{$purchase->dateon}}</div>
+            <div class="w-10 txt-s text-center"><a href="{{route('purchases.show', $purchase)}}" class="txt-blue txt-b">{{$purchase->vehicleno}}</a></div>
+            <div class="w-10 txt-s">{{$purchase->qty()}}</div>
             <div class="w-10 txt-s">{{$purchase->grossweight}}</div>
             <div class="w-10 txt-s">{{$purchase->actual()}}</div>
             <div class="w-10 txt-s">{{$purchase->priceperkg}}</div>
             <div class="w-10 txt-s">{{$purchase->basicprice()}}</div>
-            <div class="w-10 txt-s">{{$purchase->numofbori_sold()}} + {{$purchase->numoftora_sold()}}</div>
-            <div class="w-10 txt-s">{{$purchase->numofbori_stored()}} + {{$purchase->numoftora_stored()}}</div>
-            <div class="w-10 txt-s">{{$purchase->numofbori_left()}} + {{$purchase->numoftora_left()}}</div>
+            <div class="w-10 txt-s">{{$purchase->sold()}}</div>
+            <div class="w-10 txt-s">{{$purchase->retained()}}</div>
+            <div class="w-10 txt-s">{{$purchase->wasted()}}</div>
+            <div class="w-10 txt-s">{{$purchase->left()}}</div>
             <div class="frow w-10 centered">
                <a href="{{url('sell/fromfield',$purchase)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
                <a href="{{url('purchases/store',$purchase)}}"><i data-feather='database' class="feather-xsmall mx-1 txt-info"></i></a>

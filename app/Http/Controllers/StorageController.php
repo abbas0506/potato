@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cost;
+use App\Models\Purchase;
 use App\Models\Storage;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -150,10 +152,11 @@ class StorageController extends Controller
     {
         //
     }
-    public function wastes_create($id)
+    public function wastes_create($sid, $pid)
     {
         $deal = session('deal');
-        $storage = Storage::find($id);
-        return view('user.wastes.create', compact('storage', 'deal'));
+        $store = Store::find($sid);
+        $purchase = Purchase::find($pid);
+        return view('user.wastes.create', compact('store', 'purchase', 'deal'));
     }
 }
