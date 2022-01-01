@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <!-- purchasing -->
@@ -36,7 +36,7 @@ Swal.fire({
       <div class="border-1 border-left border-success py-2 my-3 text-primary txt-m" style="background-color: #eee;">
          <div class="frow px-4 stretched">
             <div>
-               {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
+               {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
             </div>
             <div class="frow spaced txt-s mid-right">
                <span class="txt-b">Edit Pick</span>
@@ -49,7 +49,7 @@ Swal.fire({
             @method('PATCH')
             <div class="w-70 bg-light">
                <input type="hidden" name='deal_id' value="{{$deal->id}}">
-               <div class="txt-red mt-3">Pick Date: {{$purchase->dateon}}</div>
+               <div class="txt-red mt-3">Pick Date: {{$purchase->dateon->format('d/m/y')}}</div>
 
                <div class="frow stretched mt-3">
                   <div class="fancyselect w-72 py-1">
@@ -127,41 +127,41 @@ Swal.fire({
 
 @section('script')
 <script lang="javascript">
-document.getElementById('dateon').valueAsDate = new Date();
+   document.getElementById('dateon').valueAsDate = new Date();
 
-function search(event) {
-   var searchtext = event.target.value.toLowerCase();
-   var str = 0;
-   $('.tr').each(function() {
-      if (!(
-            $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
-         )) {
-         $(this).addClass('hide');
-      } else {
-         $(this).removeClass('hide');
-      }
-   });
-}
+   function search(event) {
+      var searchtext = event.target.value.toLowerCase();
+      var str = 0;
+      $('.tr').each(function() {
+         if (!(
+               $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
+            )) {
+            $(this).addClass('hide');
+         } else {
+            $(this).removeClass('hide');
+         }
+      });
+   }
 
-function calcPrice() {
-   var actual = 0;
+   function calcPrice() {
+      var actual = 0;
 
-   var gross = parseFloat($('#grossweight').val())
+      var gross = parseFloat($('#grossweight').val())
 
-   var numofbori = parseInt($('#numofbori').val());
-   var numoftora = parseInt($('#numoftora').val());
-   var priceperkg = parseFloat($('#priceperkg').val());
-   var reduction0 = parseFloat($('#_reduction0').val());
-   var reduction1 = parseFloat($('#_reduction1').val());
+      var numofbori = parseInt($('#numofbori').val());
+      var numoftora = parseInt($('#numoftora').val());
+      var priceperkg = parseFloat($('#priceperkg').val());
+      var reduction0 = parseFloat($('#_reduction0').val());
+      var reduction1 = parseFloat($('#_reduction1').val());
 
-   if (gross > 0)
-      actual = gross - reduction0 * numofbori - reduction1 * numoftora;
+      if (gross > 0)
+         actual = gross - reduction0 * numofbori - reduction1 * numoftora;
 
-   $('#lbl_grossweight').html(gross);
-   $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
-   $('#lbl_actualweight').html(actual);
-   $('#lbl_basicprice').html(actual * priceperkg)
+      $('#lbl_grossweight').html(gross);
+      $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
+      $('#lbl_actualweight').html(actual);
+      $('#lbl_basicprice').html(actual * priceperkg)
 
-}
+   }
 </script>
 @endsection

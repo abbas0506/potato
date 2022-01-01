@@ -17,7 +17,7 @@ class Storage extends Model
         'cost_id',
         'dateon',
     ];
-
+    protected $dates = ['dateon'];
     public $timestamps = false;
 
     public function purchase()
@@ -28,10 +28,7 @@ class Storage extends Model
     {
         return $this->belongsTo(Store::class, 'store_id');
     }
-    public function transporter()
-    {
-        return $this->belongsTo(Transporter::class, 'transporter_id');
-    }
+
     public function exports()
     {
         return Sale::where('purchase_id', $this->purchase_id)->where('store_id', $this->store_id);
@@ -66,7 +63,6 @@ class Storage extends Model
     }
     public function left()
     {
-
         $numofbori_left = $this->numofbori - $this->numofbori_wasted();
         $numoftora_left = $this->numoftora - $this->numoftora_wasted();
         return $numofbori_left . "+" . $numoftora_left;

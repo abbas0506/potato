@@ -60,13 +60,13 @@ Swal.fire({
 
          @foreach($deals as $deal)
          <div class="frow px-2 my-2 stretched tr ">
-            <div class="w-5 txt-s"><a href="{{route('deals.show',$deal)}}" class="txt-blue txt-b">{{$deal->id}}</a></div>
-            <div class="w-10 txt-s">{{$deal->dateon}}</div>
+            <div class="w-5 txt-s"><a href="{{route('deals.show',$deal)}}" class="hover-orange txt-b">{{$deal->id}}</a></div>
+            <div class="w-10 txt-s">{{$deal->dateon->format('d/m/y')}}</div>
             <div class="w-20 txt-s">{{$deal->seller->name}}</div>
             <div class="w-15 txt-s">{{$deal->product->name}}</div>
             <div class="w-10 txt-s">{{$deal->numofbori}} + {{$deal->numoftora}}</div>
             <div class="w-10 txt-s">{{$deal->priceperkg}}</div>
-            <div class="w-10 txt-s">{{$deal->numofbori_picked()}} + {{$deal->numoftora_picked()}}</div>
+            <div class="w-10 txt-s">{{$deal->picked()}}</div>
             <div class="w-10 txt-s">{{$deal->sold()}}</div>
             <div class="w-10 txt-s">{{$deal->stored()}}</div>
             <div class="w-10 txt-s">{{$deal->wasted()}}</div>

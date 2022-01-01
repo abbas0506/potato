@@ -18,7 +18,7 @@ class Deal extends Model
         'priceperkg',
         'dateon',
     ];
-
+    protected $dates = ['dateon'];
     public $timestamps = false;
 
     public function seller()
@@ -39,7 +39,19 @@ class Deal extends Model
     {
         //return $this->hasMany(Sale::class, 'purchase_id');
     }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'deal_id');
+    }
 
+    //QTY
+    public function qty()
+    {
+        return $this->numofbori . "+" . $this->numoftora;
+    }
+
+
+    // PICK
     public function numofbori_picked()
     {
         return $this->purchases()->sum('numofbori');
@@ -48,6 +60,13 @@ class Deal extends Model
     {
         return $this->purchases()->sum('numoftora');
     }
+
+    public function picked()
+    {
+        return $this->numofbori_picked() . "+" . $this->numoftora_picked();
+    }
+
+    // STORED
     public function numofbori_stored()
     {
         return $this->purchases->sum(function ($purchase) {
@@ -60,6 +79,13 @@ class Deal extends Model
             return $purchase->storages()->sum('numoftora') - $purchase->exports()->sum('numoftora') - $purchase->wastes()->sum('numoftora');
         });
     }
+    public function stored()
+    {
+        return $this->numofbori_stored() . "+" . $this->numoftora_stored();
+    }
+
+
+    // SALE
     public function numofbori_sold()
     {
         return $this->purchases->sum(function ($purchase) {
@@ -73,6 +99,13 @@ class Deal extends Model
         });
     }
 
+    public function sold()
+    {
+        return $this->numofbori_sold() . "-" . $this->numoftora_sold();
+    }
+
+    // WASTED
+
     public function numofbori_wasted()
     {
         return $this->purchases->sum(function ($purchase) {
@@ -85,6 +118,12 @@ class Deal extends Model
             return $purchase->wastes->sum('numoftora');
         });
     }
+    public function wasted()
+    {
+        return $this->numofbori_wasted() . "-" . $this->numoftora_wasted();
+    }
+
+    // LEFT
 
     public function numofbori_left()
     {
@@ -94,21 +133,20 @@ class Deal extends Model
     {
         return $this->numoftora - $this->numoftora_picked();
     }
-
-    public function sold()
-    {
-        return $this->numofbori_sold() . "-" . $this->numoftora_sold();
-    }
-    public function stored()
-    {
-        return $this->numofbori_stored() . "-" . $this->numoftora_stored();
-    }
-    public function wasted()
-    {
-        return $this->numofbori_wasted() . "-" . $this->numoftora_wasted();
-    }
     public function left()
     {
         return $this->numofbori_left() . "-" . $this->numoftora_left();
+    }
+
+    // payable
+    public function bill()
+    {
+        return $this->purchases->sum(function ($purchase) {
+            return $purchase->basicprice();
+        });
+    }
+    public function paid()
+    {
+        return $this->payments()->sum('paid');
     }
 }

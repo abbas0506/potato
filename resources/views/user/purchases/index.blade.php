@@ -36,11 +36,16 @@ Swal.fire({
       <!-- page content -->
       <div class="bg-custom-light p-4">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
-            <div class="frow px-4 stretched">
+            <div class="frow mid-left px-4 stretched">
                <div>
-                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
+                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->qty()}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
                </div>
-               <div class="frow txt-s mid-right"> Pick Detail</div>
+               <div class="frow centered">
+                  <div class="txt-s"> Pick Detail</div> <span class="mx-1 txt-s">|</span>
+                  <div class="txt-s"> <a href="{{route('payments.index')}}" class="hover-orange"> Payments</a></div><span class="mx-1 txt-s">|</span>
+                  <div class="txt-s"> <a href="{{url('print\seller\report')}}" class="hover-orange" target="_blank"><i data-feather='printer' class="feather-xsmall" style="position:relative;"></i> Seller Report</a></div>
+               </div>
+
             </div>
          </div>
          <div class="frow my-4 mid-left fancy-search-grow">
@@ -81,8 +86,8 @@ Swal.fire({
          @foreach($deal->purchases->sortDesc() as $purchase)
          <div class="frow px-2 my-2 stretched tr ">
             <div class="w-5 txt-s">{{$purchase->id}}</div>
-            <div class="w-12 txt-s">{{$purchase->dateon}}</div>
-            <div class="w-10 txt-s text-center"><a href="{{route('purchases.show', $purchase)}}" class="txt-blue txt-b">{{$purchase->vehicleno}}</a></div>
+            <div class="w-12 txt-s">{{$purchase->dateon->format('d/m/y')}}</div>
+            <div class="w-10 txt-s text-center"><a href="{{route('purchases.show', $purchase)}}" class="hover-orange txt-b">{{$purchase->vehicleno}}</a></div>
             <div class="w-10 txt-s">{{$purchase->qty()}}</div>
             <div class="w-10 txt-s">{{$purchase->grossweight}}</div>
             <div class="w-10 txt-s">{{$purchase->actual()}}</div>

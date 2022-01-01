@@ -20,7 +20,7 @@
       </a>
    </div>
    <div class="fcol w-15 ml-5 border bg-light-grey">
-      <a href="{{route('purchases.index')}}">
+      <a href="{{route('accounts.index')}}">
          <div class="fcol centered p-4">
             <div class="txt-l my-2"><i data-feather='users' class="feather-larger"></i></i></div>
          </div>

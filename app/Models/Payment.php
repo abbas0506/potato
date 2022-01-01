@@ -10,8 +10,20 @@ class Payment extends Model
     use HasFactory;
     protected $fillable = [
         'seller_id',
+        'deal_id',
         'paid',
+        'paymode',
+        'note',
     ];
 
-    public $timestamps = false;
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class, 'seller_id');
+    }
+    public function deal()
+    {
+        return $this->belongsTo(Deal::class, 'deal_id');
+    }
+
+    //public $timestamps = false;
 }

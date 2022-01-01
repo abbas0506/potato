@@ -45,8 +45,6 @@ class SaleController extends Controller
             'numofbori' => 'required',
             'numoftora' => 'required',
             'grossweight' => 'required',
-            'carriage' => 'required',
-            'commission' => 'required',
             'saleprice' => 'required',
             'dateon' => 'required',
         ]);
@@ -119,6 +117,9 @@ class SaleController extends Controller
     public function edit(Sale $sale)
     {
         //
+        $deal = session('deal');
+        $cost = Cost::find($sale->cost_id);
+        return view('user.sales.edit', compact('sale', 'deal', 'cost'));
     }
 
     /**
@@ -131,6 +132,59 @@ class SaleController extends Controller
     public function update(Request $request, Sale $sale)
     {
         //
+        $request->validate([
+            'numofbori' => 'required',
+            'numoftora' => 'required',
+            'commission0' => 'required',
+            'commission1' => 'required',
+            'bagprice0' => 'required',
+            'bagprice1' => 'required',
+            'packing0' => 'required',
+            'packing1' => 'required',
+            'loading0' => 'required',
+            'loading1' => 'required',
+            'selector' => 'required',
+            'sorting' => 'required',
+            'random' => 'required',
+
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            //update storage
+            $sale->numofbori = $request->numofbori;
+            $sale->numoftora = $request->numoftora;
+            $sale->reduction0 = $request->reduction0;
+            $sale->reduction1 = $request->reduction1;
+            $sale->grossweight = $request->grossweight;
+            $sale->saleprice = $request->saleprice;
+            $sale->update();
+
+            //update related cost parameters
+            $cost = Cost::find($sale->cost_id);
+            $cost->commission0 = $request->commission0;
+            $cost->commission1 = $request->commission1;
+            $cost->bagprice0 = $request->bagprice0;
+            $cost->bagprice1 = $request->bagprice1;
+            $cost->packing0 = $request->packing0;
+            $cost->packing1 = $request->packing1;
+            $cost->loading0 = $request->loading0;
+            $cost->loading1 = $request->loading1;
+            $cost->selector = $request->selector;
+            $cost->sorting = $request->sorting;
+            $cost->random = $request->random;
+            $cost->sadqa = $request->sadqa;
+            $cost->note = $request->note;
+            $cost->update();
+
+            DB::commit(); //commit all changes
+            return redirect('purchases/' . $sale->purchase->id)->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            //return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**

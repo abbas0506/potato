@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deal;
 use App\Models\Payment;
+use App\Models\Seller;
 use Illuminate\Http\Request;
+use Exception;
 
 class PaymentController extends Controller
 {
@@ -15,6 +18,8 @@ class PaymentController extends Controller
     public function index()
     {
         //
+        $deal = session('deal');
+        return view('user.payments.index', compact('deal'));
     }
 
     /**
@@ -25,6 +30,8 @@ class PaymentController extends Controller
     public function create()
     {
         //
+        $deal = session('deal');
+        return view('user.payments.create', compact('deal'));
     }
 
     /**
@@ -36,6 +43,22 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'deal_id' => 'required',
+            'seller_id' => 'required',
+            'paid' => 'required',
+            'paymode' => 'required',
+        ]);
+
+        try {
+
+            $new = Payment::create($request->all());
+            $new->save();
+            return redirect('payments')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**
@@ -58,6 +81,8 @@ class PaymentController extends Controller
     public function edit(Payment $payment)
     {
         //
+        $deal = session('deal');
+        return view('user.payments.edit', compact('deal', 'payment'));
     }
 
     /**
@@ -70,6 +95,19 @@ class PaymentController extends Controller
     public function update(Request $request, Payment $payment)
     {
         //
+        $request->validate([
+            'paid' => 'required',
+            'paymode' => 'required',
+        ]);
+
+        try {
+
+            $payment->update($request->all());
+            return redirect()->route('payments.index')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->route('payments.index')->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**
@@ -81,5 +119,12 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         //
+        try {
+            $payment->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 }

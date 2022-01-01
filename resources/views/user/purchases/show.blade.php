@@ -18,7 +18,7 @@
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
+                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
                </div>
                <div class="frow spaced txt-s mid-right">Sales & Storage Detail</div>
             </div>
@@ -42,7 +42,7 @@
          @foreach($purchase->sales as $sale)
          <div class="frow px-2 my-2 stretched tr ">
             <div class="w-5 txt-s">{{$sale->id}}</div>
-            <div class="w-15 txt-s">{{$sale->dateon}}</div>
+            <div class="w-15 txt-s">{{$sale->dateon->format('d/m/y')}}</div>
             <div class="w-30 txt-s">{{$sale->buyer->name}}</div>
             <div class="w-10 txt-s">{{$sale->numofbori}} + {{$sale->numoftora}}</div>
             <div class="w-10 txt-s">{{$sale->grossweight}}</div>
@@ -52,20 +52,14 @@
             <div class="w-10 txt-s">{{$sale->saleprice}}</div>
             <div class="w-10 txt-s">{{$sale->profit()}}</div>
             <div class="frow w-10 centered">
-               <div>
-                  <form action="{{route('sales.destroy',$sale)}}" method="POST" id='del_form{{$sale->id}}'>
-                     @csrf
-                     @method('DELETE')
-                     <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$sale->id}}')"><i data-feather='x' class="feather-xsmall mx-1 txt-red"></i></button>
-                  </form>
-               </div>
+               <a href="{{route('sales.edit',$sale)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
             </div>
          </div>
          @endforeach
 
 
-         <div class="frow my-4 mid-left txt-b txt-blue">Storage</div>
-         <!-- table header row -->
+         <div class="frow my-4 mid-left txt-b txt-green">Storage</div>
+         <!-- storage summary header -->
          <div class="frow stretched px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
             <div class="w-10">ID</div>
             <div class="w-30">Store Name</div>
@@ -82,7 +76,7 @@
          @foreach($purchase->stores() as $store)
          <div class="frow stretched px-2 my-2 tr">
             <div class="w-10 txt-s">{{$sr++}}</div>
-            <div class="w-30 txt-s">{{$store->name}}</div>
+            <div class="w-30 txt-s"><a href="#store{{$store->id}}" data-toggle="collapse" class="txt-blue">{{$store->name}}</a></div>
             <div class="w-10 txt-s">{{$store->numofbori_stored($purchase->id)}}+{{$store->numoftora_stored($purchase->id)}}</div>
             <div class="w-10 txt-s">~Weight</div>
             <div class="w-10 txt-s">~Value</div>
@@ -93,6 +87,27 @@
                <a href="{{url('wastes/create/'.$store->id.'/'.$purchase->id)}}"><i data-feather='trash' class="feather-xsmall mx-1 txt-red"></i></a>
             </div>
          </div>
+         <!-- Storage detail -->
+         <div class="container bg-light-grey w-80 p-3 centered collapse" id='store{{$store->id}}'>
+            <div class="frow stretched txt-s border-bottom" style="color:teal">
+               <div class="w-10">ID</div>
+               <div class="w-30">Date</div>
+               <div class="w-50">Qty.</div>
+               <div class="w-10 text-center"><i data-feather='settings' class="feather-xsmall"></i></div>
+
+            </div>
+            @foreach($store->storages($purchase->id)->get()->sortDesc() as $storage)
+            <div class="frow stretched my-2">
+               <div class="w-10 txt-s">{{$storage->id}}</div>
+               <div class="w-30 txt-s">{{$storage->dateon->format('d/m/y')}}</div>
+               <div class="w-50 txt-s">{{$storage->numofbori}} +{{$storage->numoftora}}</div>
+               <div class="frow w-10 centered">
+                  <a href="{{route('storage.edit',$storage)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
+               </div>
+            </div>
+            @endforeach
+         </div>
+
          @endforeach
       </div>
 
@@ -100,4 +115,44 @@
 
 </div>
 
+@endsection
+
+@section('script')
+<script lang="javascript">
+function delsale(formid) {
+   event.preventDefault();
+   Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+   }).then((result) => {
+      if (result.value) {
+         //submit corresponding form
+         $('#del_from_sale' + formid).submit();
+      }
+   });
+}
+
+function delstorage(formid) {
+   event.preventDefault();
+   Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+   }).then((result) => {
+      if (result.value) {
+         //submit corresponding form
+         $('#del_from)storage' + formid).submit();
+      }
+   });
+}
+</script>
 @endsection

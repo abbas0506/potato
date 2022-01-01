@@ -19,7 +19,7 @@ class Purchase extends Model
         'cost_id',
         'dateon',
     ];
-
+    protected $dates = ['dateon'];
     public $timestamps = false;
 
     public function deal()

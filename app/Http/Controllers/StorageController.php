@@ -128,6 +128,9 @@ class StorageController extends Controller
     public function edit(Storage $storage)
     {
         //
+        $deal = session('deal');
+        $cost = Cost::find($storage->cost_id);
+        return view('user.storage.edit', compact('storage', 'deal', 'cost'));
     }
 
     /**
@@ -140,6 +143,63 @@ class StorageController extends Controller
     public function update(Request $request, Storage $storage)
     {
         //
+        $request->validate([
+            'numofbori' => 'required',
+            'numoftora' => 'required',
+            'commission0' => 'required',
+            'commission1' => 'required',
+            'bagprice0' => 'required',
+            'bagprice1' => 'required',
+            'packing0' => 'required',
+            'packing1' => 'required',
+            'loading0' => 'required',
+            'loading1' => 'required',
+            'carriage0' => 'required',
+            'carriage1' => 'required',
+            'storage0' => 'required',
+            'storage1' => 'required',
+            'selector' => 'required',
+            'sorting' => 'required',
+            'random' => 'required',
+
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            //update storage
+            $storage->numofbori = $request->numofbori;
+            $storage->numoftora = $request->numoftora;
+            $storage->update();
+
+            //update related cost parameters
+            $cost = Cost::find($storage->cost_id);
+            $cost->commission0 = $request->commission0;
+            $cost->commission1 = $request->commission1;
+            $cost->bagprice0 = $request->bagprice0;
+            $cost->bagprice1 = $request->bagprice1;
+            $cost->packing0 = $request->packing0;
+            $cost->packing1 = $request->packing1;
+            $cost->loading0 = $request->loading0;
+            $cost->loading1 = $request->loading1;
+            $cost->carriage0 = $request->carriage0;
+            $cost->carriage1 = $request->carriage1;
+            $cost->storage0 = $request->storage0;
+            $cost->storage1 = $request->storage0;
+            $cost->selector = $request->selector;
+            $cost->sorting = $request->sorting;
+            $cost->random = $request->random;
+            $cost->sadqa = $request->sadqa;
+            $cost->note = $request->note;
+            $cost->update();
+
+            DB::commit(); //commit all changes
+            return redirect('purchases/' . $storage->purchase->id)->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            //return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**
@@ -151,6 +211,13 @@ class StorageController extends Controller
     public function destroy(Storage $storage)
     {
         //
+        try {
+            $storage->delete();
+            return redirect()->back()->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
     public function wastes_create($sid, $pid)
     {

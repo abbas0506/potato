@@ -13,7 +13,8 @@ use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DealController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\WasteController;
-
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AcctController;
 
 
 /*
@@ -43,15 +44,21 @@ Route::group(['middleware' => 'admin'], function () {
 });
 Route::group(['middleware' => 'user'], function () {
     Route::view('user', 'user.index');
+    Route::resource('accounts', AcctController::class);
     Route::resource('purchases', PurchaseController::class);
     Route::resource('deals', DealController::class);
     Route::resource('sales', SaleController::class);
     Route::resource('storage', StorageController::class);
     Route::resource('wastes', WasteController::class);
+    Route::resource('payments', PaymentController::class);
 
     Route::get('sell/fromfield/{id}', [PurchaseController::class, 'sellfromfield_create']);
     Route::get('sell/fromstore/{id}', [PurchaseController::class, 'sellfromstore_create']);
     Route::get('purchases/store/{id}', [PurchaseController::class, 'storage_create']);
     Route::get('wastes/create/{sid}/{pid}', [StorageController::class, 'wastes_create']);
+    Route::get('print/seller/report', [DealController::class, 'print_seller_report']);
+
+
+
     Route::get('user/signout', [UserController::class, 'signout']);
 });

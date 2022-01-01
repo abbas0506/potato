@@ -24,6 +24,7 @@ class Sale extends Model
         'dateon',
 
     ];
+    protected $dates = ['dateon'];
     public $timestamps = false;
 
     public function buyer()

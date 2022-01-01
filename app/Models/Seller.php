@@ -14,5 +14,10 @@ class Seller extends Model
         'address',
     ];
 
+    public function deals()
+    {
+        return $this->hasMany(Deal::class, 'seller_id');
+    }
+
     public $timestamps = false;
 }

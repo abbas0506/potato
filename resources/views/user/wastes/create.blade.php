@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <!-- purchasing -->
@@ -37,7 +37,7 @@ Swal.fire({
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon}}</span>
+                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
                </div>
                <div class="frow spaced txt-s mid-right">
                   <span class="txt-b">New Waste</span>
@@ -91,6 +91,6 @@ Swal.fire({
 
 @section('script')
 <script lang="javascript">
-document.getElementById('dateon').valueAsDate = new Date();
+   document.getElementById('dateon').valueAsDate = new Date();
 </script>
 @endsection
