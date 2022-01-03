@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deal;
-use App\Models\Payment;
-use App\Models\Seller;
+use App\Models\Buyer;
+use App\Models\Buyerpayment;
 use Illuminate\Http\Request;
 use Exception;
 
-class PaymentController extends Controller
+class BuyerpaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         //
-        $deal = session('deal');
-        return view('user.payments.index', compact('deal'));
+        $buyer = Buyer::find($id);
+        return view('user.payments.buyer.index', compact('buyer'));
     }
 
     /**
@@ -27,11 +26,11 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
-        $deal = session('deal');
-        return view('user.payments.create', compact('deal'));
+        $buyer = Buyer::find($id);
+        return view('user.payments..buyer.create', compact('buyer'));
     }
 
     /**
@@ -44,17 +43,16 @@ class PaymentController extends Controller
     {
         //
         $request->validate([
-            'deal_id' => 'required',
-            'seller_id' => 'required',
+            'buyer_id' => 'required',
             'paid' => 'required',
             'mode' => 'required',
         ]);
 
         try {
-
-            $new = Payment::create($request->all());
+            $buyer = Buyer::find($request->buyer_id);
+            $new = Buyerpayment::create($request->all());
             $new->save();
-            return redirect('payments')->with('success', 'Successfully created');
+            return redirect('buyerpayments/' . $buyer->id)->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -64,10 +62,10 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Payment  $payment
+     * @param  \App\Models\Buyerpayment  $buyerpayment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show(Buyerpayment $buyerpayment)
     {
         //
     }
@@ -75,52 +73,41 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Payment  $payment
+     * @param  \App\Models\Buyerpayment  $buyerpayment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Payment $payment)
+    public function edit($id)
     {
         //
-        $deal = session('deal');
-        return view('user.payments.edit', compact('deal', 'payment'));
+        $buyerpayment = Buyerpayment::find($id);
+        $buyer = $buyerpayment->buyer;
+        return view('user.payments..buyer.edit', compact('buyerpayment', 'buyer'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Payment  $payment
+     * @param  \App\Models\Buyerpayment  $buyerpayment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, $id)
     {
         //
-        $request->validate([
-            'paid' => 'required',
-            'mode' => 'required',
-        ]);
-
-        try {
-
-            $payment->update($request->all());
-            return redirect()->route('payments.index')->with('success', 'Successfully created');
-        } catch (Exception $e) {
-            return redirect()->route('payments.index')->withErrors($e->getMessage());
-            // something went wrong
-        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Payment  $payment
+     * @param  \App\Models\Buyerpayment  $buyerpayment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Payment $payment)
+    public function destroy($id)
     {
         //
+        $buyerpayment = Buyerpayment::find($id);
         try {
-            $payment->delete();
+            $buyerpayment->delete();
             return redirect()->back()->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());

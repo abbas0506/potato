@@ -147,6 +147,6 @@ class Deal extends Model
     }
     public function paid()
     {
-        return $this->payments()->sum('paid');
+        return $this->payments->sum('paid');
     }
 }

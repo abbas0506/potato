@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\SellerController;
+use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SaleController;
@@ -14,7 +15,8 @@ use App\Http\Controllers\DealController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\WasteController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\AcctController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\BuyerpaymentController;
 
 
 /*
@@ -36,7 +38,8 @@ Route::post('signin', [UserController::class, 'signin']);
 Route::group(['middleware' => 'admin'], function () {
     Route::get('admin', [UserController::class, 'index'])->name('admin');
     Route::resource('products', ProductController::class);
-    Route::resource('clients', ClientController::class);
+    Route::resource('sellers', SellerController::class);
+    Route::resource('buyers', BuyerController::class);
     Route::resource('stores', StoreController::class);
     Route::resource('transporters', TransporterController::class);
     Route::resource('configs', ConfigController::class);
@@ -44,7 +47,6 @@ Route::group(['middleware' => 'admin'], function () {
 });
 Route::group(['middleware' => 'user'], function () {
     Route::view('user', 'user.index');
-    Route::resource('accounts', AcctController::class);
     Route::resource('purchases', PurchaseController::class);
     Route::resource('deals', DealController::class);
     Route::resource('sales', SaleController::class);
@@ -52,11 +54,23 @@ Route::group(['middleware' => 'user'], function () {
     Route::resource('wastes', WasteController::class);
     Route::resource('payments', PaymentController::class);
 
+    Route::get('buyerpayments/{id}', [BuyerpaymentController::class, 'index']);
+    Route::get('buyerpayments/create/{id}', [BuyerpaymentController::class, 'create']);
+    Route::post('buyerpayments', [BuyerpaymentController::class, 'store']);
+    Route::get('buyerpayments/edit/{id}', [BuyerpaymentController::class, 'edit']);
+    Route::post('buyerpayments/update', [BuyerpaymentController::class, 'update']);
+    Route::delete('buyerpayments/{id}', [BuyerpaymentController::class, 'destroy']);
+
+
     Route::get('sell/fromfield/{id}', [PurchaseController::class, 'sellfromfield_create']);
     Route::get('sell/fromstore/{id}', [PurchaseController::class, 'sellfromstore_create']);
     Route::get('purchases/store/{id}', [PurchaseController::class, 'storage_create']);
     Route::get('wastes/create/{sid}/{pid}', [StorageController::class, 'wastes_create']);
-    Route::get('print/seller/report', [DealController::class, 'print_seller_report']);
+
+    Route::get('seller/list', [ReportController::class, 'seller_list']);
+    Route::get('buyer/list', [ReportController::class, 'buyer_list']);
+    Route::get('print/seller/report/{id}', [ReportController::class, 'print_seller_report']);
+    Route::get('print/buyer/report/{id}', [ReportController::class, 'print_buyer_report']);
 
 
 

@@ -11,7 +11,7 @@ use App\Models\Store;
 use App\Models\Transporter;
 use Illuminate\Http\Request;
 
-use Barryvdh\DomPDF\Facade as PDF;
+
 use Exception;
 
 class DealController extends Controller
@@ -217,16 +217,5 @@ class DealController extends Controller
 
     //PRINT
 
-    public function print_seller_report()
-    {
-        $deal = session('deal');
-        $pdf = PDF::loadView('print.seller_report', compact('deal'));
 
-        $pdf->output();
-        $dom_pdf = $pdf->getDomPDF();
-        $canvas = $dom_pdf->get_canvas();
-        $canvas->page_text(500, 800, "Page {PAGE_NUM} of {PAGE_COUNT}", null, 8, array(0, 0, 0));
-
-        return $pdf->setPaper('a4')->stream();
-    }
 }

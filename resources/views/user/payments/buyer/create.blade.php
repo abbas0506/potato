@@ -2,10 +2,9 @@
 
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
+   <div class="txt-l txt-b">Payments</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('payments.index')}}" class="hover-orange"> Payments </a> <span class="mx-2">/</span>
+      <a href="{{url('buyerpayments/'.$buyer->id)}}" class="hover-orange"> Buyer Payments </a> <span class="mx-2">/</span>
       New
    </div>
 </div>
@@ -23,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-   Swal.fire({
-      icon: 'success',
-      title: "Successful",
-      showConfirmButton: false,
-      timer: 1500
-   });
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
 </script>
 @endif
 <div class="frow centered">
@@ -37,19 +36,18 @@
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
                <div>
-                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
+                  Buyer Payment
                </div>
                <div class="frow centered">
-                  <a href="{{route('deals.show', $deal)}}" class="hover-orange txt-s"> Pick Detail </a> <span class="mx-2 txt-s">|</span>
+                  <a href="{{url('buyerpayments/'.$buyer->id)}}" class="hover-orange txt-s"> Buyers List </a> <span class="mx-2 txt-s">|</span>
                   <div class="frow txt-s mid-right"> New Payment</div>
                </div>
             </div>
          </div>
-         <form action="{{route('payments.store')}}" method='post'>
+         <form action="{{url('buyerpayments')}}" method='post'>
             @csrf
             <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
-            <input type="text" name="deal_id" value="{{$deal->id}}" hidden>
-            <input type="text" name="seller_id" value="{{$deal->seller->id}}" hidden>
+            <input type="text" name="buyer_id" value="{{$buyer->id}}" hidden>
             <div class="frow mt-5">
                <div class="fancyinput w-24">
                   <input type="number" class="text-center" name='paid' min="0" value="0" required>

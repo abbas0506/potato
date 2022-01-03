@@ -23,12 +23,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <div class="frow centered">
@@ -57,10 +57,10 @@ Swal.fire({
                   <label for="Name">Paid</label>
                </div>
                <div class="fancyselect w-48 ml-3">
-                  <select name="paymode" id="" required>
-                     <option value="Cash" @if($payment->paymode=='Cash') selected @endif>Cash</option>
-                     <option value="Cheque" @if($payment->paymode=='Cheque') selected @endif>Cheque</option>
-                     <option value="Online" @if($payment->paymode=='Online') selected @endif>Online Trasfer</option>
+                  <select name="mode" id="" required>
+                     <option value="Cash" @if($payment->mode=='Cash') selected @endif>Cash</option>
+                     <option value="Cheque" @if($payment->mode=='Cheque') selected @endif>Cheque</option>
+                     <option value="Online" @if($payment->mode=='Online') selected @endif>Online Trasfer</option>
                   </select>
                   <label for="Name">Mode of Payment</label>
                </div>

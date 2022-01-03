@@ -43,7 +43,7 @@ Swal.fire({
                <div class="frow centered">
                   <div class="txt-s"> Pick Detail</div> <span class="mx-1 txt-s">|</span>
                   <div class="txt-s"> <a href="{{route('payments.index')}}" class="hover-orange"> Payments</a></div><span class="mx-1 txt-s">|</span>
-                  <div class="txt-s"> <a href="{{url('print\seller\report')}}" class="hover-orange" target="_blank"><i data-feather='printer' class="feather-xsmall" style="position:relative;"></i> Seller Report</a></div>
+                  <div class="txt-s"> <a href="{{url('print/seller/report/'.$deal->id)}}" class="hover-orange" target="_blank"><i data-feather='printer' class="feather-xsmall" style="position:relative;"></i> Seller Report</a></div>
                </div>
 
             </div>

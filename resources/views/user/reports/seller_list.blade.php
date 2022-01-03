@@ -1,16 +1,29 @@
 @extends('layouts.admin')
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">Seller Accounts</div>
+   <div class="txt-l txt-b">Accounts</div>
    <div class="frow">
       <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      Accounts
+      Accounts / Seller
    </div>
 </div>
 @endsection
 @section('page-content')
 <div class="frow centered">
    <div class="fcol w-60">
+
+      <div class="border-1 border-left border-success py-2 my-3 text-primary txt-m" style="background-color: #eee;">
+         <div class="frow px-4 stretched">
+            <div>
+               Sellers List
+            </div>
+            <div class="frow spaced txt-s mid-right">
+               <div class="txt-b">Seller Report</div><span class="mx-1">|</span>
+               <div class=""><a href="{{url('buyer/list')}}" class="hover-orange">Buyer Report</a></div><span class="mx-1">|</span>
+               <div class="">Storage Report</div>
+            </div>
+         </div>
+      </div>
       <!-- page content -->
       <div class="bg-custom-light p-4">
          <div class="fancy-search-grow">
@@ -26,7 +39,7 @@
          @foreach($sellers as $seller)
          <div class="frow px-2 my-2 tr">
             <div class="w-10">{{$seller->id}}</div>
-            <div class="w-30"><a href="#seller{{$seller->id}}" data-toggle="collapse" class="txt-blue">{{$seller->name}}</a></div>
+            <div class="w-30"><a href="#seller{{$seller->id}}" data-toggle="collapse" class="hover-orange">{{$seller->name}}</a></div>
             <div class="w-20">{{$seller->phone}}</div>
             <div class="w-40">{{$seller->address}}</div>
          </div>
@@ -41,6 +54,7 @@
                <div class="w-10"><span class='txt-b'> Left</div>
                <div class="w-10"><span class='txt-b'> Payable</div>
                <div class="w-10"><span class='txt-b'> Paid</div>
+               <div class="w-10"><span class='txt-b'> Balance</div>
                <div class="w-10 text-center"><i data-feather='settings' class="feather-xsmall"></i></div>
             </div>
             @php $sr=1; @endphp
@@ -51,11 +65,11 @@
                <div class="w-10">{{$deal->qty()}}</div>
                <div class="w-10">{{$deal->picked()}}</div>
                <div class="w-10">{{$deal->left()}}</div>
-               <div class="w-10">{{$deal->due()}}</div>
-               <div class="w-10">0</div>
+               <div class="w-10">{{$deal->bill()}}</div>
+               <div class="w-10">{{$deal->paid()}}</div>
+               <div class="w-10">{{$deal->bill()-$deal->paid()}}</div>
                <div class="frow w-10 centered">
-                  <a href="{{url('deals/print/'.$deal->id)}}"><i data-feather='printer' class="feather-xsmall mx-1 text-primary"></i></a>
-                  <a href="{{url('payments/index/'.$deal->id)}}"><i data-feather='dollar-sign' class="feather-xsmall mx-1 txt-blue"></i></a>
+                  <a href="{{url('print/seller/report/'.$deal->id)}}" target="_blank" class="hover-orange"><i data-feather='printer' class="feather-xsmall"></i></a>
                </div>
             </div>
             @endforeach
@@ -74,18 +88,18 @@
 
 @section('script')
 <script lang="javascript">
-   function search(event) {
-      var searchtext = event.target.value.toLowerCase();
-      var str = 0;
-      $('.tr').each(function() {
-         if (!(
-               $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
-            )) {
-            $(this).addClass('hide');
-         } else {
-            $(this).removeClass('hide');
-         }
-      });
-   }
+function search(event) {
+   var searchtext = event.target.value.toLowerCase();
+   var str = 0;
+   $('.tr').each(function() {
+      if (!(
+            $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+         )) {
+         $(this).addClass('hide');
+      } else {
+         $(this).removeClass('hide');
+      }
+   });
+}
 </script>
 @endsection
