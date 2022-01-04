@@ -52,7 +52,7 @@ class BuyerpaymentController extends Controller
             $buyer = Buyer::find($request->buyer_id);
             $new = Buyerpayment::create($request->all());
             $new->save();
-            return redirect('buyerpayments/' . $buyer->id)->with('success', 'Successfully created');
+            return redirect()->route('payments.show', 2)->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -76,12 +76,12 @@ class BuyerpaymentController extends Controller
      * @param  \App\Models\Buyerpayment  $buyerpayment
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Buyerpayment $buyerpayment)
     {
         //
-        $buyerpayment = Buyerpayment::find($id);
+        //$buyerpayment = Buyerpayment::find($id);
         $buyer = $buyerpayment->buyer;
-        return view('user.payments..buyer.edit', compact('buyerpayment', 'buyer'));
+        return view('user.payments.buyer.edit', compact('buyerpayment', 'buyer'));
     }
 
     /**
@@ -94,6 +94,19 @@ class BuyerpaymentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $buyerpayment = Buyerpayment::find($id);
+        $request->validate([
+            'paid' => 'required',
+        ]);
+
+        try {
+
+            $buyerpayment->update($request->all());
+            return redirect()->route('payments.show', 2)->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            // something went wrong
+        }
     }
 
     /**
@@ -102,13 +115,12 @@ class BuyerpaymentController extends Controller
      * @param  \App\Models\Buyerpayment  $buyerpayment
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Buyerpayment $buyerpayment)
     {
         //
-        $buyerpayment = Buyerpayment::find($id);
         try {
             $buyerpayment->delete();
-            return redirect()->back()->with('success', 'Successfully deleted');
+            return redirect()->route('payments.show', 2)->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong

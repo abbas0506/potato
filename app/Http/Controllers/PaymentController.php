@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buyer;
 use App\Models\Deal;
 use App\Models\Payment;
 use App\Models\Seller;
@@ -27,11 +28,16 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($pagecode, $id)
     {
         //
-        $deal = session('deal');
-        return view('user.payments.create', compact('deal'));
+        if ($pagecode == 1) {
+            return view('user.payments.seller.create');
+        }
+        if ($pagecode == 2) {
+            $buyer = Buyer::find($id);
+            return view('user.payments.buyer.create', compact('buyer'));
+        }
     }
 
     /**
@@ -67,9 +73,16 @@ class PaymentController extends Controller
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Payment $payment)
+    public function show($id)
     {
         //
+        if ($id == 1) { //show seller list
+            $sellers = Seller::all();
+            return view('user.payments.seller.index', compact('sellers'));
+        } else { //show buyers list
+            $buyers = Buyer::all();
+            return view('user.payments.buyer.index', compact('buyers'));
+        }
     }
 
     /**

@@ -4,7 +4,8 @@
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
    <div class="txt-l txt-b">Payments</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{url('buyerpayments/'.$buyer->id)}}" class="hover-orange"> Buyer Payments </a> <span class="mx-2">/</span>
+      <a href="{{route('payments.index')}}" class="hover-orange"> Payment Options </a> <span class="mx-2">/</span>
+      <a href="{{route('payments.show',2)}}" class="hover-orange"> Buyers</a> <span class="mx-2">/</span>
       New
    </div>
 </div>
@@ -31,20 +32,12 @@ Swal.fire({
 </script>
 @endif
 <div class="frow centered">
-   <div class="fcol w-70">
-      <div class="w-100 bg-light my-3">
+   <div class="fcol w-50">
+      <div class="w-100 bg-light my-4">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
-            <div class="frow px-4 stretched">
-               <div>
-                  Buyer Payment
-               </div>
-               <div class="frow centered">
-                  <a href="{{url('buyerpayments/'.$buyer->id)}}" class="hover-orange txt-s"> Buyers List </a> <span class="mx-2 txt-s">|</span>
-                  <div class="frow txt-s mid-right"> New Payment</div>
-               </div>
-            </div>
+            <div class="frow px-4">New Payment</div>
          </div>
-         <form action="{{url('buyerpayments')}}" method='post'>
+         <form action="{{route('buyerpayments.store')}}" method='post'>
             @csrf
             <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
             <input type="text" name="buyer_id" value="{{$buyer->id}}" hidden>

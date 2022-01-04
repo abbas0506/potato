@@ -1,31 +1,22 @@
 @extends('layouts.admin')
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">Accounts</div>
+   <div class="txt-l txt-b">Reports</div>
    <div class="frow">
       <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      Accounts / Seller
+      <a href="{{route('reports.index')}}" class="hover-orange"> Report Options </a> <span class="mx-2">/</span>
+      Sellers List
    </div>
 </div>
 @endsection
 @section('page-content')
 <div class="frow centered">
    <div class="fcol w-60">
-
-      <div class="border-1 border-left border-success py-2 my-3 text-primary txt-m" style="background-color: #eee;">
-         <div class="frow px-4 stretched">
-            <div>
-               Sellers List
-            </div>
-            <div class="frow spaced txt-s mid-right">
-               <div class="txt-b">Seller Report</div><span class="mx-1">|</span>
-               <div class=""><a href="{{url('buyer/list')}}" class="hover-orange">Buyer Report</a></div><span class="mx-1">|</span>
-               <div class="">Storage Report</div>
-            </div>
-         </div>
+      <div class="border-1 border-left border-success py-2 pl-4 my-4 text-primary txt-m" style="background-color: #eee;">
+         Sellers List
       </div>
       <!-- page content -->
-      <div class="bg-custom-light p-4">
+      <div class="bg-custom-light">
          <div class="fancy-search-grow">
             <input type="text" placeholder="Search" oninput="search(event)"><i data-feather='search' class="feather-small" style="position:relative; right:24;"></i>
          </div>

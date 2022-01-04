@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Buyer;
 use App\Models\Deal;
 use App\Models\Seller;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -18,6 +19,7 @@ class ReportController extends Controller
     public function index()
     {
         //
+        return view('user.reports.index');
     }
 
     /**
@@ -50,6 +52,17 @@ class ReportController extends Controller
     public function show($id)
     {
         //
+        if ($id == 1) {
+            //show sellers list
+            $sellers = Seller::all();
+            return view('user.reports.lists.sellers_list', compact('sellers'));
+        } else if ($id == 2) { //show buyers list
+            $buyers = Buyer::all();
+            return view('user.reports.lists.buyers_list', compact('buyers'));
+        } else { //show storage list
+            $stores = Store::all();
+            //return view('user.reports.lists.stores_list', compact('buyers'));
+        }
     }
 
     /**
@@ -85,20 +98,16 @@ class ReportController extends Controller
     {
         //
     }
-    public function seller_list()
+    public function sellers_list()
     {
-        $sellers = Seller::all();
-        return view('user.reports.seller_list', compact('sellers'));
     }
-    public function buyer_list()
+    public function buyers_list()
     {
-        $buyers = Buyer::all();
-        return view('user.reports.buyer_list', compact('buyers'));
     }
     public function print_seller_report($id)
     {
         $deal = Deal::find($id);
-        $pdf = PDF::loadView('user.reports.print.seller_report', compact('deal'));
+        $pdf = PDF::loadView('user.reports.pdf.seller_report', compact('deal'));
 
         $pdf->output();
         $dom_pdf = $pdf->getDomPDF();
@@ -110,7 +119,7 @@ class ReportController extends Controller
     public function print_buyer_report($id)
     {
         $buyer = Buyer::find($id);
-        $pdf = PDF::loadView('user.reports.print.buyer_report', compact('buyer'));
+        $pdf = PDF::loadView('user.reports.pdf.buyer_report', compact('buyer'));
 
         $pdf->output();
         $dom_pdf = $pdf->getDomPDF();

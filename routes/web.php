@@ -17,6 +17,7 @@ use App\Http\Controllers\WasteController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\BuyerpaymentController;
+use App\Http\Controllers\SellerpaymentController;
 
 
 /*
@@ -53,13 +54,15 @@ Route::group(['middleware' => 'user'], function () {
     Route::resource('storage', StorageController::class);
     Route::resource('wastes', WasteController::class);
     Route::resource('payments', PaymentController::class);
+    Route::get('payments/create/{pagecode}/{id}', [PaymentController::class, 'create']);
 
-    Route::get('buyerpayments/{id}', [BuyerpaymentController::class, 'index']);
-    Route::get('buyerpayments/create/{id}', [BuyerpaymentController::class, 'create']);
-    Route::post('buyerpayments', [BuyerpaymentController::class, 'store']);
-    Route::get('buyerpayments/edit/{id}', [BuyerpaymentController::class, 'edit']);
-    Route::post('buyerpayments/update', [BuyerpaymentController::class, 'update']);
-    Route::delete('buyerpayments/{id}', [BuyerpaymentController::class, 'destroy']);
+    Route::resource('sellerpayments', SellerpaymentController::class);
+    Route::resource('buyerpayments', BuyerpaymentController::class);
+    Route::resource('reports', ReportController::class);
+
+    //Route::get('buyerpayments/edit/{id}', [BuyerpaymentController::class, 'edit']);
+    // Route::patch('buyerpayments/{id}', [BuyerpaymentController::class, 'update']);
+    //Route::delete('buyerpayments/{id}', [BuyerpaymentController::class, 'destroy']);
 
 
     Route::get('sell/fromfield/{id}', [PurchaseController::class, 'sellfromfield_create']);
@@ -67,8 +70,6 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('purchases/store/{id}', [PurchaseController::class, 'storage_create']);
     Route::get('wastes/create/{sid}/{pid}', [StorageController::class, 'wastes_create']);
 
-    Route::get('seller/list', [ReportController::class, 'seller_list']);
-    Route::get('buyer/list', [ReportController::class, 'buyer_list']);
     Route::get('print/seller/report/{id}', [ReportController::class, 'print_seller_report']);
     Route::get('print/buyer/report/{id}', [ReportController::class, 'print_buyer_report']);
 

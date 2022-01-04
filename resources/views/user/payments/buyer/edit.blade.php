@@ -31,7 +31,7 @@ Swal.fire({
 </script>
 @endif
 <div class="frow centered">
-   <div class="fcol w-70">
+   <div class="fcol w-60">
       <div class="w-100 bg-light my-3">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
@@ -44,25 +44,23 @@ Swal.fire({
                </div>
             </div>
          </div>
-         <form action="{{url('buyerpayments/update',$buyerpayment->id)}}" method='post'>
+         <form action="{{url('buyerpayments',$buyerpayment->id)}}" method='post'>
             @csrf
-            @method('PACTH')
-            <div class="frow mt-5">
-               <div class="fancyinput w-24">
-                  <input type="number" class="text-center" name='paid' min="0" value="{{$buyerpayment->paid}}" required>
-                  <label for="Name">Amount</label>
+            @method('PATCH')
+            <div class="txt-l mt-3">{{$buyerpayment->mode}}
+               <div class="frow mt-3 stretched">
+                  <div class="fancyinput w-24">
+                     <input type="number" class="text-center" name='paid' min="0" value="{{$buyerpayment->paid}}" required>
+                     <label for="Name">Amount</label>
+                  </div>
+                  <div class="fancyinput w-72">
+                     <input type="text" class="text-center" name='note' value="{{$buyerpayment->note}}" required>
+                     <label for="Name">Note</label>
+                  </div>
                </div>
-               <div class="w-48 ml-3">{{$buyerpayment->mode}}
+               <div class="text-right mt-3">
+                  <button type="submit" class="btn btn-primary">Update</button>
                </div>
-
-            </div>
-            <div class="fancyinput mt-3">
-               <input type="text" class="text-center" name='note' value="{{$buyerpayment->note}}" required>
-               <label for="Name">Note</label>
-            </div>
-            <div class="text-right mt-3">
-               <button type="submit" class="btn btn-primary">Update</button>
-            </div>
          </form>
       </div>
    </div>
