@@ -6,9 +6,9 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link href="{{public_path('css/pdf.css') }}" rel="stylesheet">
    <style>
-      @page {
-         margin: 50px 25px;
-      }
+   @page {
+      margin: 50px 25px;
+   }
    </style>
 
 </head>
@@ -31,6 +31,18 @@
          <tr class="mt-2">
             <td class="txt-s w-20 txt-b">Address: </td>
             <td class="txt-s w-50">{{$buyer->address}}</td>
+         </tr>
+         <tr class="mt-2">
+            <td class="txt-s w-20 txt-b">Bill: </td>
+            <td class="txt-s w-50">{{$buyer->bill()}}</td>
+         </tr>
+         <tr class="mt-2">
+            <td class="txt-s w-20 txt-b">Paid: </td>
+            <td class="txt-s w-50">{{$buyer->paid()}}</td>
+         </tr>
+         <tr class="mt-2">
+            <td class="txt-s w-20 txt-b">Due: </td>
+            <td class="txt-s w-50">{{$buyer->bill()-$buyer->paid()}}</td>
          </tr>
       </tbody>
    </table>

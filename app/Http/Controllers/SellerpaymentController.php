@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deal;
 use App\Models\Seller;
+use App\Models\Payment;
 use App\Models\Sellerpayment;
 use Illuminate\Http\Request;
+use Exception;
 
 class SellerpaymentController extends Controller
 {
@@ -16,7 +19,8 @@ class SellerpaymentController extends Controller
     public function index()
     {
         //
-        return view('user.payments.seller.index');
+        $sellers = Seller::all();
+        return view('user.payments.seller.index', compact('sellers'));
     }
 
     /**
@@ -24,9 +28,11 @@ class SellerpaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $deal = Deal::find($id);
+        return view('user.payments.seller.create', compact('deal'));
     }
 
     /**
@@ -38,6 +44,23 @@ class SellerpaymentController extends Controller
     public function store(Request $request)
     {
         //
+        //
+        $request->validate([
+            'deal_id' => 'required',
+            'seller_id' => 'required',
+            'paid' => 'required',
+            'mode' => 'required',
+        ]);
+
+        try {
+
+            $new = Sellerpayment::create($request->all());
+            $new->save();
+            return redirect()->route('sellerpayments.index')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**
@@ -60,6 +83,8 @@ class SellerpaymentController extends Controller
     public function edit(Sellerpayment $sellerpayment)
     {
         //
+        $deal = $sellerpayment->deal;
+        return view('user.payments.seller.edit', compact('sellerpayment', 'deal'));
     }
 
     /**
@@ -72,6 +97,19 @@ class SellerpaymentController extends Controller
     public function update(Request $request, Sellerpayment $sellerpayment)
     {
         //
+        $request->validate([
+            'paid' => 'required',
+            'mode' => 'required',
+        ]);
+
+        try {
+
+            $sellerpayment->update($request->all());
+            return redirect()->route('sellerpayments.index')->with('success', 'Successfully created');
+        } catch (Exception $e) {
+            return redirect()->route('sellerpayments.index')->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 
     /**
@@ -83,5 +121,12 @@ class SellerpaymentController extends Controller
     public function destroy(Sellerpayment $sellerpayment)
     {
         //
+        try {
+            $sellerpayment->delete();
+            return redirect()->route('sellerpayments.index')->with('success', 'Successfully deleted');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+            // something went wrong
+        }
     }
 }

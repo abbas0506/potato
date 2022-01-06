@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">Payments</div>
+   <div class="txt-l txt-b">Deals</div>
    <div class="frow">
       <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       Payment Options

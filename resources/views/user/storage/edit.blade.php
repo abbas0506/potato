@@ -4,7 +4,7 @@
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Picks </a> <span class="mx-2">/</span> Storage
+      <a href="{{route('deals.show',$deal)}}" class="hover-orange">{{$deal->id}} </a> <span class="mx-2">/</span> Storage
    </div>
 </div>
 @endsection
@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-   Swal.fire({
-      icon: 'success',
-      title: "Successful",
-      showConfirmButton: false,
-      timer: 1500
-   });
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
 </script>
 @endif
 <!-- purchasing -->
@@ -36,12 +36,8 @@
       <div class="w-100 bg-light my-3">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
-               <div>
-                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
-               </div>
-               <div class="frow spaced txt-s mid-right">
-                  <span class="txt-b">Edit Storage</span>
-               </div>
+               <div class="">Edit Storage</div>
+               <div class="frow centered txt-s"><b>{{$deal->seller->name}} </b>[ Deal No. {{$deal->id}} dated {{$deal->dateon->format('d/m/y')}}, {{$deal->product->name}}@Rs.{{$deal->priceperkg}}]</div>
             </div>
          </div>
 
@@ -51,17 +47,14 @@
             <div class="txt-red mt-4">Storage Date: {{$storage->dateon->format('d/m/y')}}</div>
             <div class="frow stretched mt-4">
                <div class="txt-m text-primary w-60">{{$storage->store->name}}</div>
-               <div class="fancyinput w-18" @if($storage->numofbori==0) hidden @endif>
+
+
+            </div>
+            <div class="frow stretched mt-4" @if($storage->numofbori==0) hidden @endif>
+               <div class="fancyinput w-18">
                   <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$storage->numofbori}}" required>
                   <label for="Name">Number of Bori</label>
                </div>
-               <div class="fancyinput w-18" @if($storage->numoftora==0) hidden @endif>
-                  <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$storage->numoftora}}" required>
-                  <label for="Name">Number of Tora</label>
-               </div>
-            </div>
-            <div class="frow stretched mt-4" @if($storage->numofbori==0) hidden @endif>
-               <div class="w-20 text-center txt-b bg-light-grey py-2">Per Bori >></div>
                <div class="fancyinput w-12">
                   <input type="text" class='text-center' name='commission0' id='commission0' value="{{$cost->commission0}}">
                   <label for="Name">@ commission</label>
@@ -92,7 +85,10 @@
 
 
             <div class="frow stretched mt-3" @if($storage->numoftora==0 ) hidden @endif>
-               <div class="w-20 text-center txt-b bg-light-grey py-2">Per Tora >></div>
+               <div class="fancyinput w-18" @if($storage->numoftora==0) hidden @endif>
+                  <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$storage->numoftora}}" required>
+                  <label for="Name">Number of Tora</label>
+               </div>
                <div class="fancyinput w-12">
                   <input type="text" class='text-center' class='text-center' name='commission1' id='commission1' value="{{$cost->commission1}}">
                   <label for="Name">@ commision</label>
@@ -121,20 +117,19 @@
             </div>
 
             <div class="frow stretched mt-4">
-               <div class="w-20 text-center txt-b bg-light-grey py-2">Misc. >></div>
-               <div class="fancyinput w-12">
+               <div class="fancyinput w-15">
                   <input type="number" class='text-center' name='selector' id='selector' value="{{$cost->selector}}">
                   <label for="Name">Selector</label>
                </div>
-               <div class="fancyinput w-12">
+               <div class="fancyinput w-15">
                   <input type="number" class='text-center' name='sorting' id='sorting' value="{{$cost->sorting}}">
                   <label for="Name">Sorting</label>
                </div>
-               <div class="fancyinput w-12">
+               <div class="fancyinput w-15">
                   <input type="number" class='text-center' name='random' id='random' min='0' value="{{$cost->random}}">
                   <label for="Name">Random</label>
                </div>
-               <div class="fancyinput w-40">
+               <div class="fancyinput w-50">
                   <input type="text" class='text-center' name='note' id='note' value="{{$cost->note}}">
                   <label for="Name">Random Note</label>
                </div>

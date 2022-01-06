@@ -4,7 +4,7 @@
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
    <div class="txt-l txt-b">Payments</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{route('payments.index')}}" class="hover-orange"> Payment Options </a> <span class="mx-2">/</span>
+      <a href="{{url('payments')}}" class="hover-orange"> Payment Options </a> <span class="mx-2">/</span>
       <a href="{{route('payments.show',2)}}" class="hover-orange"> Buyers</a> <span class="mx-2">/</span>
       New
    </div>
@@ -23,19 +23,22 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <div class="frow centered">
    <div class="fcol w-50">
       <div class="w-100 bg-light my-4">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
-            <div class="frow px-4">New Payment</div>
+            <div class="frow px-4 stretched">
+               <div>New Payment</div>
+               <div class="frow txt-s centered">{{$buyer->name}}</div>
+            </div>
          </div>
          <form action="{{route('buyerpayments.store')}}" method='post'>
             @csrf

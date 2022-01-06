@@ -162,16 +162,18 @@ class PurchaseController extends Controller
         $config = Config::find(1);
         return view('user.sales.fromfield.create', compact('deal', 'purchase', 'buyers', 'config'));
     }
-    public function sellfromstore_create($id)
+    public function sellfromstore_create($pid, $sid)
     {
-        $purchase = Purchase::find($id);
+        $purchase = Purchase::find($pid);
         $deal = $purchase->deal;
         $buyers = Buyer::all();
         $transporters = Transporter::all();
-        $stores = $purchase->stores();
+        $storage = Storage::where('store_id', $sid)->where('purchase_id', $pid)->first();
+        $store = $storage->store;
+
         $config = Config::find(1);
 
-        return view('user.sales.fromstore.create', compact('deal', 'purchase', 'buyers', 'transporters', 'stores', 'config'));
+        return view('user.sales.fromstore.create', compact('deal', 'purchase', 'buyers', 'transporters', 'store', 'storage', 'config'));
     }
     public function storage_create($id)
     {

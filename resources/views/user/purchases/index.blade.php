@@ -4,8 +4,9 @@
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      Picks
+      <a href="{{route('deals.index')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
+      <a href="{{route('deals.show',$deal->id)}}" class="hover-orange"> {{$deal->id}} </a> <span class="mx-2">/</span>
+      Collections
    </div>
 </div>
 @endsection
@@ -37,15 +38,8 @@ Swal.fire({
       <div class="bg-custom-light p-4">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow mid-left px-4 stretched">
-               <div>
-                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->qty()}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
-               </div>
-               <div class="frow centered">
-                  <div class="txt-s"> Pick Detail</div> <span class="mx-1 txt-s">|</span>
-                  <div class="txt-s"> <a href="{{route('payments.index')}}" class="hover-orange"> Payments</a></div><span class="mx-1 txt-s">|</span>
-                  <div class="txt-s"> <a href="{{url('print/seller/report/'.$deal->id)}}" class="hover-orange" target="_blank"><i data-feather='printer' class="feather-xsmall" style="position:relative;"></i> Seller Report</a></div>
-               </div>
-
+               <div class="frow centered">Collections Detail</div>
+               <div class="frow centered txt-s"><b>{{$deal->seller->name}}</b> [ Deal No. {{$deal->id}} dated {{$deal->dateon->format('d/m/y')}}, {{$deal->product->name}}@Rs.{{$deal->priceperkg}}]</div>
             </div>
          </div>
          <div class="frow my-4 mid-left fancy-search-grow">
@@ -69,16 +63,16 @@ Swal.fire({
          <!-- table header row -->
          <div class="frow stretched px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
             <div class="w-5">ID</div>
-            <div class="w-12">Date</div>
+            <div class="w-10">Date</div>
             <div class="w-10 text-center">Vehicle</div>
             <div class="w-10">Qty</div>
             <div class="w-10">Gross</div>
             <div class="w-10">Actual</div>
             <div class="w-10">@ kg</div>
-            <div class="w-10">Amount</div>
-            <div class="w-10">Sold</div>
-            <div class="w-10">Stored</div>
-            <div class="w-10">Wasted</div>
+            <div class="w-10">Price</div>
+            <div class="w-10"><i data-feather='truck' class="feather-xsmall"></i></div>
+            <div class="w-10"><i data-feather='database' class="feather-xsmall"></i></div>
+            <div class="w-10"><i data-feather='trash-2' class="feather-xsmall"></i></div>
             <div class="w-10">Balance</div>
             <div class="fcol centered w-10"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
@@ -86,7 +80,7 @@ Swal.fire({
          @foreach($deal->purchases->sortDesc() as $purchase)
          <div class="frow px-2 my-2 stretched tr ">
             <div class="w-5 txt-s">{{$purchase->id}}</div>
-            <div class="w-12 txt-s">{{$purchase->dateon->format('d/m/y')}}</div>
+            <div class="w-10 txt-s">{{$purchase->dateon->format('d/m/y')}}</div>
             <div class="w-10 txt-s text-center"><a href="{{route('purchases.show', $purchase)}}" class="hover-orange txt-b">{{$purchase->vehicleno}}</a></div>
             <div class="w-10 txt-s">{{$purchase->qty()}}</div>
             <div class="w-10 txt-s">{{$purchase->grossweight}}</div>
@@ -98,8 +92,6 @@ Swal.fire({
             <div class="w-10 txt-s">{{$purchase->wasted()}}</div>
             <div class="w-10 txt-s">{{$purchase->left()}}</div>
             <div class="frow w-10 centered">
-               <a href="{{url('sell/fromfield',$purchase)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
-               <a href="{{url('purchases/store',$purchase)}}"><i data-feather='database' class="feather-xsmall mx-1 txt-info"></i></a>
                <a href="{{route('purchases.edit',$purchase)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>
                   <form action="{{route('purchases.destroy',$purchase)}}" method="POST" id='del_form{{$purchase->id}}'>

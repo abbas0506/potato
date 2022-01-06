@@ -2,10 +2,10 @@
 
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
+   <div class="txt-l txt-b">Payments</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('payments.index')}}" class="hover-orange"> Payments </a> <span class="mx-2">/</span>
+      <a href="{{url('payments')}}" class="hover-orange"> Payment Options </a> <span class="mx-2">/</span>
+      <a href="{{route('sellerpayments.index')}}" class="hover-orange"> Sellers</a> <span class="mx-2">/</span>
       New
    </div>
 </div>
@@ -32,20 +32,15 @@
 </script>
 @endif
 <div class="frow centered">
-   <div class="fcol w-70">
+   <div class="fcol w-60">
       <div class="w-100 bg-light my-3">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
-               <div>
-                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
-               </div>
-               <div class="frow centered">
-                  <a href="{{route('deals.show', $deal)}}" class="hover-orange txt-s"> Pick Detail </a> <span class="mx-2 txt-s">|</span>
-                  <div class="frow txt-s mid-right"> New Payment</div>
-               </div>
+               <div>New Payment</div>
+               <div class="frow centered txt-s">{{$deal->seller->name}} [ Deal No. {{$deal->id}} dated {{$deal->dateon->format('d/m/y')}}, {{$deal->product->name}}@Rs.{{$deal->priceperkg}}]</div>
             </div>
          </div>
-         <form action="{{route('payments.store')}}" method='post'>
+         <form action="{{route('sellerpayments.store')}}" method='post'>
             @csrf
             <!-- <div class="txt-m txt-b txt-red my-2 px-4 border-left border-2 border-success">Purchasing</div> -->
             <input type="text" name="deal_id" value="{{$deal->id}}" hidden>

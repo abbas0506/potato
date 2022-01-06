@@ -20,6 +20,12 @@ class Storage extends Model
     protected $dates = ['dateon'];
     public $timestamps = false;
 
+    // QTY
+    public function qty()
+    {
+        return $this->numofbori . "-" . $this->numoftora;
+    }
+
     public function purchase()
     {
         return $this->belongsTo(Purchase::class, 'purchase_id');
@@ -35,7 +41,7 @@ class Storage extends Model
     }
     public function exported()
     {
-        return $this->exports()->sum('numofbori') . "+" . $this->exports()->sum('numoftora');
+        return $this->exports()->sum('numofbori') . "-" . $this->exports()->sum('numoftora');
     }
     public function wastes()
     {
@@ -43,7 +49,7 @@ class Storage extends Model
     }
     public function wasted()
     {
-        return $this->wastes()->sum('numofbori') . "+" . $this->wastes()->sum('numoftora');
+        return $this->wastes()->sum('numofbori') . "-" . $this->wastes()->sum('numoftora');
     }
     public function numofbori_wasted()
     {
@@ -53,18 +59,29 @@ class Storage extends Model
     {
         return $this->wastes()->sum('numoftora');
     }
+
+    public function left()
+    {
+        $numofbori_left = $this->numofbori -  $this->numofbori_wasted();
+        $numoftora_left = $this->numoftora - $this->numoftora_wasted();
+        return $numofbori_left . "-" . $numoftora_left;
+    }
+
     public function cost()
     {
         return $this->belongsTo(Cost::class, 'cost_id');
     }
-    public function storage()
+    public function storagecost()
     {
-        return $this->numofbori * $this->cost->storage0 + $this->numoftora * $this->cost->storage1;
+        $cost = $this->cost;
+        $costperbori = $cost->commission0 + $cost->bagprice0 + $cost->packing0 + $cost->loading0 + $cost->carriage0 + $cost->storage0;
+        $costpertora = $cost->commission1 + $cost->bagprice1 + $cost->packing1 + $cost->loading1 + $cost->carriage1 + $cost->storage1;
+        $addl = $cost->selector + $cost->sorting + $cost->sadqa + $cost->random;
+        return $this->numofbori * $costperbori + $this->numoftora * $costpertora + $addl;
     }
-    public function left()
+    public function storagecostperkg()
     {
-        $numofbori_left = $this->numofbori - $this->numofbori_wasted();
-        $numoftora_left = $this->numoftora - $this->numoftora_wasted();
-        return $numofbori_left . "+" . $numoftora_left;
+        $weight = 100 * $this->numofbori + 50 * $this->numoftora;
+        return $this->storagecost / $weight;
     }
 }

@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-   Swal.fire({
-      icon: 'success',
-      title: "Successful",
-      showConfirmButton: false,
-      timer: 1500
-   });
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
 </script>
 @endif
 <!-- purchasing -->
@@ -86,7 +86,7 @@
                         <label for="Name">Number of Tora</label>
                      </div>
                      <div class="fancyinput w-15">
-                        <input type="text" class='text-center' name='reduction1' id='reduction1' value="{{$sale->numoftora}}" required>
+                        <input type="text" class='text-center' name='reduction1' id='reduction1' value="{{$sale->reduction1}}" required>
                         <label for="Name">@ reduction</label>
                      </div>
                      <div class="fancyinput w-15">
@@ -161,33 +161,33 @@
 
 @section('script')
 <script lang="javascript">
-   document.getElementById('dateon').valueAsDate = new Date();
+document.getElementById('dateon').valueAsDate = new Date();
 
-   function calcProfit() {
-      var actual = 0;
-      var gross = parseInt($('#grossweight').val())
-      var numofbori = parseInt($('#numofbori').val());
-      var numoftora = parseInt($('#numoftora').val());
-      var reduction0 = parseFloat($('#_reduction0').val());
-      var reduction1 = parseFloat($('#_reduction1').val());
-      var actualcostperkg = parseFloat($('#lbl_actualcostperkg').html());
+function calcProfit() {
+   var actual = 0;
+   var gross = parseInt($('#grossweight').val())
+   var numofbori = parseInt($('#numofbori').val());
+   var numoftora = parseInt($('#numoftora').val());
+   var reduction0 = parseFloat($('#_reduction0').val());
+   var reduction1 = parseFloat($('#_reduction1').val());
+   var actualcostperkg = parseFloat($('#lbl_actualcostperkg').html());
 
-      // alert(purchaseprice)
-      var saleprice = parseInt($('#saleprice').val());
+   // alert(purchaseprice)
+   var saleprice = parseInt($('#saleprice').val());
 
 
-      if (gross > 0)
-         actual = gross - reduction0 * numofbori - reduction1 * numoftora;
+   if (gross > 0)
+      actual = gross - reduction0 * numofbori - reduction1 * numoftora;
 
-      costprice = actual * actualcostperkg;
-      var profit = saleprice - costprice;
+   costprice = actual * actualcostperkg;
+   var profit = saleprice - costprice;
 
-      $('#lbl_grossweight').html(gross);
-      $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
-      $('#lbl_actualweight').html(actual);
-      $('#lbl_basicprice').html(costprice);
-      $('#lbl_saleprice').html(saleprice);
-      $('#lbl_profit').html(profit);
-   }
+   $('#lbl_grossweight').html(gross);
+   $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
+   $('#lbl_actualweight').html(actual);
+   $('#lbl_basicprice').html(costprice);
+   $('#lbl_saleprice').html(saleprice);
+   $('#lbl_profit').html(profit);
+}
 </script>
 @endsection

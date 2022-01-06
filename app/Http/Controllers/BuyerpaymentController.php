@@ -14,11 +14,11 @@ class BuyerpaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         //
-        $buyer = Buyer::find($id);
-        return view('user.payments.buyer.index', compact('buyer'));
+        $buyers = Buyer::all();
+        return view('user.payments.buyer.index', compact('buyers'));
     }
 
     /**
@@ -30,7 +30,7 @@ class BuyerpaymentController extends Controller
     {
         //
         $buyer = Buyer::find($id);
-        return view('user.payments..buyer.create', compact('buyer'));
+        return view('user.payments.buyer.create', compact('buyer'));
     }
 
     /**
@@ -52,7 +52,7 @@ class BuyerpaymentController extends Controller
             $buyer = Buyer::find($request->buyer_id);
             $new = Buyerpayment::create($request->all());
             $new->save();
-            return redirect()->route('payments.show', 2)->with('success', 'Successfully created');
+            return redirect()->route('buyerpayments.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
@@ -102,7 +102,7 @@ class BuyerpaymentController extends Controller
         try {
 
             $buyerpayment->update($request->all());
-            return redirect()->route('payments.show', 2)->with('success', 'Successfully created');
+            return redirect()->route('buyerpayments.index')->with('success', 'Successfully created');
         } catch (Exception $e) {
             echo $e->getMessage();
             // something went wrong
@@ -120,7 +120,7 @@ class BuyerpaymentController extends Controller
         //
         try {
             $buyerpayment->delete();
-            return redirect()->route('payments.show', 2)->with('success', 'Successfully deleted');
+            return redirect()->route('buyerpayments.index')->with('success', 'Successfully deleted');
         } catch (Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong

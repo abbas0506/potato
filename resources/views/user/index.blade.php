@@ -12,7 +12,7 @@
       </a>
    </div>
    <div class="fcol w-15 ml-5 border bg-teal">
-      <a href="{{route('payments.index')}}">
+      <a href="{{url('payments')}}">
          <div class="fcol centered p-4">
             <div class="txt-l txt-white my-2">Rs.</div>
          </div>

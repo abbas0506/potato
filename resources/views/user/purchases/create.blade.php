@@ -3,8 +3,9 @@
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
    <div class="txt-l txt-b">Deal # {{$deal->id}}</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{url('deals')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
-      <a href="{{route('deals.show',$deal)}}" class="hover-orange">Picks </a> <span class="mx-2">/</span> New
+      <a href="{{route('deals.index')}}" class="hover-orange"> Deals </a> <span class="mx-2">/</span>
+      <a href="{{route('deals.show',$deal->id)}}" class="hover-orange"> {{$deal->id}} </a> <span class="mx-2">/</span>
+      New
    </div>
 </div>
 @endsection
@@ -22,12 +23,12 @@
 <br />
 @elseif(session('success'))
 <script>
-   Swal.fire({
-      icon: 'success',
-      title: "Successful",
-      showConfirmButton: false,
-      timer: 1500
-   });
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
 </script>
 @endif
 <!-- purchasing -->
@@ -35,12 +36,8 @@
    <div class="fcol w-80">
       <div class="border-1 border-left border-success py-2 my-3 text-primary txt-m" style="background-color: #eee;">
          <div class="frow px-4 stretched">
-            <div>
-               {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
-            </div>
-            <div class="frow spaced txt-s mid-right">
-               <span class="txt-b">New Pick</span>
-            </div>
+            <div class="">New Collection</div>
+            <div class="frow centered txt-s"><b>{{$deal->seller->name}} </b>[ Deal No. {{$deal->id}} dated {{$deal->dateon->format('d/m/y')}}, {{$deal->product->name}}@Rs.{{$deal->priceperkg}}]</div>
          </div>
       </div>
       <form action="{{route('purchases.store')}}" method='post'>
@@ -129,41 +126,41 @@
 
 @section('script')
 <script lang="javascript">
-   document.getElementById('dateon').valueAsDate = new Date();
+document.getElementById('dateon').valueAsDate = new Date();
 
-   function search(event) {
-      var searchtext = event.target.value.toLowerCase();
-      var str = 0;
-      $('.tr').each(function() {
-         if (!(
-               $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
-            )) {
-            $(this).addClass('hide');
-         } else {
-            $(this).removeClass('hide');
-         }
-      });
-   }
+function search(event) {
+   var searchtext = event.target.value.toLowerCase();
+   var str = 0;
+   $('.tr').each(function() {
+      if (!(
+            $(this).children().eq(0).prop('outerText').toLowerCase().includes(searchtext)
+         )) {
+         $(this).addClass('hide');
+      } else {
+         $(this).removeClass('hide');
+      }
+   });
+}
 
-   function calcPrice() {
-      var actual = 0;
+function calcPrice() {
+   var actual = 0;
 
-      var gross = parseFloat($('#grossweight').val())
+   var gross = parseFloat($('#grossweight').val())
 
-      var numofbori = parseInt($('#numofbori').val());
-      var numoftora = parseInt($('#numoftora').val());
-      var priceperkg = parseFloat($('#priceperkg').val());
-      var reduction0 = parseFloat($('#_reduction0').val());
-      var reduction1 = parseFloat($('#_reduction1').val());
+   var numofbori = parseInt($('#numofbori').val());
+   var numoftora = parseInt($('#numoftora').val());
+   var priceperkg = parseFloat($('#priceperkg').val());
+   var reduction0 = parseFloat($('#_reduction0').val());
+   var reduction1 = parseFloat($('#_reduction1').val());
 
-      if (gross > 0)
-         actual = gross - reduction0 * numofbori - reduction1 * numoftora;
+   if (gross > 0)
+      actual = gross - reduction0 * numofbori - reduction1 * numoftora;
 
-      $('#lbl_grossweight').html(gross);
-      $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
-      $('#lbl_actualweight').html(actual);
-      $('#lbl_basicprice').html(actual * priceperkg)
+   $('#lbl_grossweight').html(gross);
+   $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
+   $('#lbl_actualweight').html(actual);
+   $('#lbl_basicprice').html(actual * priceperkg)
 
-   }
+}
 </script>
 @endsection

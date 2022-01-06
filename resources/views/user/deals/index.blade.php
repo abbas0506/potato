@@ -2,7 +2,10 @@
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
    <div class="txt-l txt-b">Deals</div>
-   <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span> Deals</div>
+   <div class="frow">
+      <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
+      Deals
+   </div>
 
 </div>
 @endsection
@@ -29,7 +32,7 @@ Swal.fire({
 @endif
 
 <div class="frow centered">
-   <div class="fcol w-80">
+   <div class="fcol w-90">
       <!-- page content -->
       <div class="bg-custom-light p-4">
          <div class="frow my-4 mid-left fancy-search-grow">
@@ -51,10 +54,13 @@ Swal.fire({
             <div class="w-10">Agreed</div>
             <div class="w-10">@ kg</div>
             <div class="w-10">Picked</div>
-            <div class="w-10">Sold</div>
-            <div class="w-10">Stored</div>
-            <div class="w-10">Wasted</div>
-            <div class="w-10 text-center"><i data-feather='map-pin' class="feather-xsmall"></i></div>
+            <div class="w-10"><i data-feather='truck' class="feather-xsmall"></i></div>
+            <div class="w-10"><i data-feather='database' class="feather-xsmall"></i></div>
+            <div class="w-10"><i data-feather='trash-2' class="feather-xsmall"></i></div>
+            <div class="w-10"><i data-feather='map-pin' class="feather-xsmall"></i></div>
+            <div class="w-10">Bill</div>
+            <div class="w-10">Paid</div>
+            <div class="w-10">Due</div>
             <div class="w-10 text-center"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
@@ -64,13 +70,18 @@ Swal.fire({
             <div class="w-10 txt-s">{{$deal->dateon->format('d/m/y')}}</div>
             <div class="w-20 txt-s">{{$deal->seller->name}}</div>
             <div class="w-15 txt-s">{{$deal->product->name}}</div>
-            <div class="w-10 txt-s">{{$deal->numofbori}} + {{$deal->numoftora}}</div>
+            <div class="w-10 txt-s">{{$deal->qty()}}</div>
             <div class="w-10 txt-s">{{$deal->priceperkg}}</div>
             <div class="w-10 txt-s">{{$deal->picked()}}</div>
+
             <div class="w-10 txt-s">{{$deal->sold()}}</div>
             <div class="w-10 txt-s">{{$deal->stored()}}</div>
             <div class="w-10 txt-s">{{$deal->wasted()}}</div>
-            <div class="w-10 txt-s text-center">{{$deal->left()}}</div>
+
+            <div class="w-10 txt-s">{{$deal->left()}}</div>
+            <div class="w-10 txt-s">{{$deal->bill()}}</div>
+            <div class="w-10 txt-s">{{$deal->paid()}}</div>
+            <div class="w-10 txt-s">{{$deal->bill()-$deal->paid()}}</div>
             <div class="frow w-10 centered">
                <a href="{{route('deals.edit',$deal)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>

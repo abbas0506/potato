@@ -100,7 +100,8 @@ class StorageController extends Controller
             ]);
             $new->save();
             DB::commit(); //commit all changes
-            return redirect()->route('deals.show', session('deal'))->with('success', 'Successfully created');
+            $purchase = Purchase::find($request->purchase_id);
+            return redirect()->route('purchases.show', $purchase)->with('success', 'Successfully created');
         } catch (Exception $e) {
             echo $e->getMessage();
             //return redirect()->back()->withErrors($e->getMessage());
@@ -175,17 +176,20 @@ class StorageController extends Controller
             //update related cost parameters
             $cost = Cost::find($storage->cost_id);
             $cost->commission0 = $request->commission0;
-            $cost->commission1 = $request->commission1;
             $cost->bagprice0 = $request->bagprice0;
-            $cost->bagprice1 = $request->bagprice1;
             $cost->packing0 = $request->packing0;
-            $cost->packing1 = $request->packing1;
             $cost->loading0 = $request->loading0;
-            $cost->loading1 = $request->loading1;
             $cost->carriage0 = $request->carriage0;
-            $cost->carriage1 = $request->carriage1;
             $cost->storage0 = $request->storage0;
-            $cost->storage1 = $request->storage0;
+
+            $cost->commission1 = $request->commission1;
+            $cost->bagprice1 = $request->bagprice1;
+            $cost->packing1 = $request->packing1;
+            $cost->loading1 = $request->loading1;
+            $cost->carriage1 = $request->carriage1;
+            $cost->storage1 = $request->storage1;
+
+
             $cost->selector = $request->selector;
             $cost->sorting = $request->sorting;
             $cost->random = $request->random;
@@ -194,7 +198,8 @@ class StorageController extends Controller
             $cost->update();
 
             DB::commit(); //commit all changes
-            return redirect('purchases/' . $storage->purchase->id)->with('success', 'Successfully created');
+            $purchase = $storage->purchase;
+            return redirect()->route('purchases.show', $purchase)->with('success', 'Successfully updated');
         } catch (Exception $e) {
             echo $e->getMessage();
             //return redirect()->back()->withErrors($e->getMessage());
@@ -225,5 +230,27 @@ class StorageController extends Controller
         $store = Store::find($sid);
         $purchase = Purchase::find($pid);
         return view('user.wastes.create', compact('store', 'purchase', 'deal'));
+    }
+
+    public function fetch(Request $request)
+    {    //ajax call
+        $request->validate([
+            'purchase_id' => 'required',
+            'store_id' => 'required',
+        ]);
+
+        try {
+            $storage = Storage::where('store_id', $request->store_id)->where('purchase_id', $request->purchase_id)->first();
+            $storage0 = $storage->cost->storage0;
+            $storage1 = $storage->cost->storage1;
+            return response()->json([
+                'numofbori' => $storage->numofbori,
+                'numoftora' => $storage->numoftora,
+                'storage0' => $storage0,
+                'storage1' => $storage1,
+            ]);
+        } catch (Exception $ex) {
+            return response()->json(['msg' => $ex->getMessage()]);
+        }
     }
 }

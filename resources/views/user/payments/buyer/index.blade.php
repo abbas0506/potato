@@ -5,7 +5,7 @@
    <div class="txt-l txt-b">Payments</div>
    <div class="frow">
       <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
-      <a href="{{route('payments.index')}}" class="hover-orange"> Payment Options </a> <span class="mx-2">/</span>
+      <a href="{{url('payments')}}" class="hover-orange"> Payment Options </a> <span class="mx-2">/</span>
       Buyers
    </div>
 </div>
@@ -23,12 +23,12 @@
 <br />
 @elseif(session('success'))
 <script>
-Swal.fire({
-   icon: 'success',
-   title: "Successful",
-   showConfirmButton: false,
-   timer: 1500
-});
+   Swal.fire({
+      icon: 'success',
+      title: "Successful",
+      showConfirmButton: false,
+      timer: 1500
+   });
 </script>
 @endif
 <div class="frow centered">
@@ -53,12 +53,12 @@ Swal.fire({
          @foreach($buyers as $buyer)
          <div class="frow px-2 txt-s my-2 stretched tr">
             <div class="w-5">{{$buyer->id}}</div>
-            <div class="w-40"><a href="#buyer{{$buyer->id}}" data-toggle="collapse" class="hover-orange">{{$buyer->name}}</a></div>
+            <div class="w-40">{{$buyer->name}}</div>
             <div class="w-15">{{$buyer->bill()}}</div>
-            <div class="w-15">{{$buyer->paid()}}</div>
+            <div class="w-15"><a href="#buyer{{$buyer->id}}" data-toggle="collapse" class="hover-orange">{{$buyer->paid()}}</a></div>
             <div class="w-15">{{$buyer->bill()-$buyer->paid()}}</div>
 
-            <div class="w-10 text-center"><a href="{{url('payments/create/2',$buyer->id)}}" class="hover-orange"><i data-feather='plus-square' class="feather-xsmall mr-1"></i></a></div>
+            <div class="w-10 text-center"><a href="{{url('buyerpayment/create',$buyer->id)}}" class="hover-orange"><i data-feather='plus-square' class="feather-xsmall mr-1"></i></a></div>
          </div>
          <div class="p-3 bg-light-grey collapse" id='buyer{{$buyer->id}}'>
             @if($buyer->payments()->count()>0)
@@ -94,8 +94,6 @@ Swal.fire({
             <div class="text-center">0 payments found</div>
             @endif
          </div>
-
-
          @endforeach
       </div>
 
@@ -108,36 +106,36 @@ Swal.fire({
 
 @section('script')
 <script lang="javascript">
-function search(event) {
-   var searchtext = event.target.value.toLowerCase();
-   var str = 0;
-   $('.tr').each(function() {
-      if (!(
-            $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
-         )) {
-         $(this).addClass('hide');
-      } else {
-         $(this).removeClass('hide');
-      }
-   });
-}
+   function search(event) {
+      var searchtext = event.target.value.toLowerCase();
+      var str = 0;
+      $('.tr').each(function() {
+         if (!(
+               $(this).children().eq(1).prop('outerText').toLowerCase().includes(searchtext)
+            )) {
+            $(this).addClass('hide');
+         } else {
+            $(this).removeClass('hide');
+         }
+      });
+   }
 
-function delme(formid) {
-   event.preventDefault();
-   Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-   }).then((result) => {
-      if (result.value) {
-         //submit corresponding form
-         $('#del_form' + formid).submit();
-      }
-   });
-}
+   function delme(formid) {
+      event.preventDefault();
+      Swal.fire({
+         title: 'Are you sure?',
+         text: "You won't be able to revert this!",
+         type: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+         if (result.value) {
+            //submit corresponding form
+            $('#del_form' + formid).submit();
+         }
+      });
+   }
 </script>
 @endsection

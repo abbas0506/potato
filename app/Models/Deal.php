@@ -41,7 +41,7 @@ class Deal extends Model
     }
     public function payments()
     {
-        return $this->hasMany(Payment::class, 'deal_id');
+        return $this->hasMany(Sellerpayment::class, 'deal_id');
     }
 
     //QTY

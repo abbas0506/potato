@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cost;
+use App\Models\Purchase;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,8 @@ class SaleController extends Controller
     public function index()
     {
         //
+        // $deal
+        // return view('user.sales.index', compact('deal'));
     }
 
     /**
@@ -88,8 +91,8 @@ class SaleController extends Controller
             ]);
             $new->save();
             DB::commit(); //commit all changes
-
-            return redirect()->route('deals.show', session('deal'))->with('success', 'Successfully created');
+            $purchase = Purchase::find($request->purchase_id);
+            return redirect()->route('purchases.show', $purchase)->with('success', 'Successfully created');
         } catch (Exception $e) {
             echo $e->getMessage();
             //return redirect()->back()->withErrors($e->getMessage());

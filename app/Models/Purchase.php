@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Purchase extends Model
 {
@@ -31,13 +32,6 @@ class Purchase extends Model
         return $this->belongsTo(Transporter::class, 'transporter_id');
     }
 
-
-    public function sales_field()
-    {
-        return $this->hasMany(Sale::class, 'purchase_id')->whereNull('store_id');
-    }
-
-
     public function stores()
     {
         $store_ids = $this->storages->unique()->pluck('store_id')->toArray();
@@ -54,10 +48,10 @@ class Purchase extends Model
     {
         return $this->actual() * $this->priceperkg;
     }
+
     public function addlcost()
     {
-        $addlcost = $this->selector + $this->sorting + $this->numofbori * ($this->bagprice0 + $this->packing0 + $this->loading0 + $this->commission0) + $this->numoftora * ($this->bagprice1 + $this->packing1 + $this->loading1 + $this->commission1) + $this->random + $this->sadqa;
-        return $addlcost;
+        return $this->selector + $this->sorting + $this->numofbori * ($this->bagprice0 + $this->commission0 + $this->packing0 + $this->loading0 + $this->commission0) + $this->numoftora * ($this->bagprice1 + $this->commission1 + $this->packing1 + $this->loading1 + $this->commission1) + $this->random + $this->sadqa;
     }
 
     public function finalcostperkg()
@@ -69,7 +63,7 @@ class Purchase extends Model
     // QTY
     public function qty()
     {
-        return $this->numofbori . "+" . $this->numoftora;
+        return $this->numofbori . "-" . $this->numoftora;
     }
 
     // STORAGE
@@ -125,7 +119,7 @@ class Purchase extends Model
     }
     public function exported()
     {
-        return $this->numofbori_exported() . "+" . $this->numoftora_exported();
+        return $this->numofbori_exported() . "-" . $this->numoftora_exported();
     }
 
     // WASTE
