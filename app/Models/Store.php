@@ -34,14 +34,26 @@ class Store extends Model
     {
         return $this->storages($id)->sum('numoftora');
     }
-    public function numofbori_sold($id)
+    public function stored($id)
+    {
+        return $this->numofbori_stored($id) . "-" . $this->numoftora_stored($id);
+    }
+
+    //EXPORT or SALE
+    public function numofbori_exported($id)
     {
         return $this->sales($id)->sum('numofbori');
     }
-    public function numoftora_sold($id)
+    public function numoftora_exported($id)
     {
         return $this->sales($id)->sum('numoftora');
     }
+    public function exported($id)
+    {
+        return $this->numofbori_exported($id) . "-" . $this->numoftora_exported($id);
+    }
+
+    //WASTE
     public function numofbori_wasted($id)
     {
         return $this->wastes($id)->sum('numofbori');
@@ -50,19 +62,57 @@ class Store extends Model
     {
         return $this->wastes($id)->sum('numoftora');
     }
+    public function wasted($id)
+    {
+        return $this->numofbori_wasted($id) . "-" . $this->numoftora_wasted($id);
+    }
 
-    public function numofbori_left($id)
+
+    //RETENSION
+    public function numofbori_retained($id)
     {
-        return $this->numofbori_stored($id) - $this->numofbori_sold($id) - $this->numofbori_wasted($id);
+        return $this->numofbori_stored($id) - $this->numofbori_exported($id) - $this->numofbori_wasted($id);
     }
-    public function numoftora_left($id)
+    public function numoftora_retained($id)
     {
-        return $this->numoftora_stored($id) - $this->numoftora_sold($id) - $this->numoftora_wasted($id);
+        return $this->numoftora_stored($id) - $this->numoftora_exported($id) - $this->numoftora_wasted($id);
     }
-    public function approxweight($id)
+
+    public function retained($id)
     {
-        $purchase = Purchase::find($id);
-        return 0;
+        return $this->numofbori_retained($id) . "-" . $this->numoftora_retained($id);
+    }
+
+    // public function approxstorageweight($id)
+    // {
+    //     return 118 * $this->numofbori_stored($id)  + 57 * $this->numoftora_stored($id);
+    // }
+
+    public function approxcostperkg($id)
+    {
+        //calculate total storage weight using normal wwights like 158 kg / bori, 57kg/tora
+        $approx_weight = $this->storages($id)->get()->sum(function ($storage) {
+            return $storage->approxweight();
+        });
+
+        $approx_cost = $this->storages($id)->get()->sum(function ($storage) {
+            return $storage->approxcost();
+        });
+        if ($approx_weight == 0) return -1;
+        else return $approx_cost / $approx_weight;
+    }
+
+    // public function approxstoragevalue($id)
+    // {
+    //     $purchase = Purchase::find($id);
+    //     $approx_weight = $this->approxstorageweight($id);
+    //     return $approx_weight * ($this->storagecostperkg($id) + $purchase->priceperkg);
+    // }
+
+    public function approxvalue_retained($id)
+    {
+        $approxweight_retained = 118 * $this->numofbori_retained($id) + 57 * $this->numoftora_retained($id);
+        return $approxweight_retained * $this->approxcostperkg($id);
     }
 
     public $timestamps = false;

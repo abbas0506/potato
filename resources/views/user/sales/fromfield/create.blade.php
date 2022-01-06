@@ -36,7 +36,7 @@ Swal.fire({
       <div class="w-100 bg-light my-3">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
-               <div class="">New Sale (from field)</div>
+               <div class="">New Sale <span class="txt-s">(from field)</span></div>
                <div class="frow centered txt-s"><b>{{$deal->seller->name}} </b>[ Deal No. {{$deal->id}} dated {{$deal->dateon->format('d/m/y')}}, {{$deal->product->name}}@Rs.{{$deal->priceperkg}}]</div>
             </div>
          </div>

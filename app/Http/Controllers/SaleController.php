@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buyer;
+use App\Models\Config;
 use App\Models\Cost;
 use App\Models\Purchase;
 use App\Models\Sale;
+use App\Models\Storage;
+use App\Models\Transporter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -206,5 +210,28 @@ class SaleController extends Controller
             return redirect()->back()->withErrors($e->getMessage());
             // something went wrong
         }
+    }
+
+    public function fromfield_create($id)
+    {
+        $purchase = Purchase::find($id);
+        $deal = $purchase->deal;
+        $buyers = Buyer::all();
+        $transporters = Transporter::all();
+        $config = Config::find(1);
+        return view('user.sales.fromfield.create', compact('deal', 'purchase', 'buyers', 'config'));
+    }
+    public function fromstore_create($pid, $sid)
+    {
+        $purchase = Purchase::find($pid);
+        $deal = $purchase->deal;
+        $buyers = Buyer::all();
+        $transporters = Transporter::all();
+        $storage = Storage::where('store_id', $sid)->where('purchase_id', $pid)->first();
+        $store = $storage->store;
+
+        $config = Config::find(1);
+
+        return view('user.sales.fromstore.create', compact('deal', 'purchase', 'buyers', 'transporters', 'store', 'storage', 'config'));
     }
 }

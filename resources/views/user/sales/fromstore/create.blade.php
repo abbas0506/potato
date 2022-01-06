@@ -36,83 +36,67 @@ Swal.fire({
       <div class="w-100 bg-light my-3">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
-               <div class="">New Sale (from store)</div>
+               <div class="">New Sale <span class="txt-s">(from {{$store->name}})</span></div>
                <div class="frow centered txt-s"><b>{{$deal->seller->name}} </b>[ Deal No. {{$deal->id}} dated {{$deal->dateon->format('d/m/y')}}, {{$deal->product->name}}@Rs.{{$deal->priceperkg}}]</div>
             </div>
          </div>
 
          <form action="{{route('sales.store')}}" method='post'>
             @csrf
-            <div class="frow my-4 mid-left stretched">
+            <div class="frow mt-4 mid-left">
                <div class="fancyinput w-25">
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name" required>
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
-               <div class="fancyselect w-60">
-                  <select name="store_id" id="store_id" onchange="fetchstorage(event)" required>
-                     <option value="{{$store->id}}">{{$store->name}}</option>
-
-                  </select>
-                  <label for="Name">Cold Store Name</label>
-               </div>
-               <div class="rounded-pill bg-warning px-3"><i data-feather='database' class="feather-xsmall mb-1 mr-1"></i> {{$store->numofbori_left($purchase->id)}}-{{$store->numoftora_left($purchase->id)}} </div>
-
+               <input type="text" name='store_id' value='{{$store->id}}' hidden>
+               <div class="rounded-pill bg-warning ml-2 px-3"><i data-feather='database' class="feather-xsmall mb-1 mr-1"></i> {{$store->numofbori_retained($purchase->id)}}-{{$store->numoftora_retained($purchase->id)}} </div>
             </div>
-            <div class="frow centered stretched mt-4">
-
+            <div class="frow centered stretched mt-3">
                <div class="w-70">
                   <input type="hidden" name="purchase_id" id='purchase_id' value="{{$purchase->id}}">
                   <input type="hidden" name="commission0" value="0">
                   <input type="hidden" name="commission1" value="0">
-                  <div class="frow stretched mt-4" @if($store->numofbori_left($purchase->id)==0) hidden @endif>
+                  <div class="frow stretched mt-4" @if($store->numofbori_retained($purchase->id)==0) hidden @endif>
                      <div class="fancyinput w-20">
-                        <input type="text" class='text-center' name='numofbori' id='numofbori' value="{{$store->numofbori_left($purchase->id)}}" oninput="calcProfit()" required>
+                        <input type="text" class='text-center' name='numofbori' id='numofbori' value="{{$store->numofbori_retained($purchase->id)}}" oninput="calcProfit()" required>
                         <label for="Name">Number of Bori</label>
                      </div>
-                     <div class="fancyinput w-15">
-                        <input type="text" class='text-center' name='reduction0' id='reduction0' value="@if($purchase->numofbori_retained()==0) 0 @else {{$config->reduction0}} @endif" oninput="calcProfit()" required>
+                     <div class="fancyinput w-18">
+                        <input type="text" class='text-center' name='reduction0' id='reduction0' value="{{$deal->reduction0}}" oninput="calcProfit()" required>
                         <label for="Name">@ reduction</label>
                      </div>
-                     <div class="fancyinput w-15">
-                        <input type="text" class='text-center' id='storage0' value="{{$storage->cost->storage0}}" oninput="calcProfit()" disabled>
-                        <label for="Name">@ storage</label>
-                     </div>
-                     <div class="fancyinput w-15">
+                     <div class="fancyinput w-18">
                         <input type="text" class='text-center' name='bagprice0' id='bagprice0' value="0" oninput="calcProfit()">
                         <label for="Name">@ bag price</label>
                      </div>
-                     <div class="fancyinput w-15">
+                     <div class="fancyinput w-18">
                         <input type="text" class='text-center' name='packing0' id='packing0' value="0" oninput="calcProfit()">
                         <label for="Name">@ packing</label>
                      </div>
-                     <div class="fancyinput w-15">
+                     <div class="fancyinput w-18">
                         <input type="text" class='text-center' name='loading0' id='loading0' value="{{$config->loading0}}" oninput="calcProfit()">
                         <label for="Name">@ loading</label>
                      </div>
                   </div>
-                  <div class="frow stretched mt-3" @if($store->numoftora_left($purchase->id)==0) hidden @endif>
+                  <div class="frow stretched mt-3" @if($store->numoftora_retained($purchase->id)==0) hidden @endif>
                      <div class="fancyinput w-20">
-                        <input type="text" class='text-center' name='numoftora' id='numoftora' value="{{$store->numoftora_left($purchase->id)}}" required oninput="calcProfit()">
+                        <input type="text" class='text-center' name='numoftora' id='numoftora' value="{{$store->numoftora_retained($purchase->id)}}" required oninput="calcProfit()">
                         <label for="Name">Number of Tora</label>
                      </div>
-                     <div class="fancyinput w-15">
-                        <input type="text" class='text-center' name='reduction1' id='reduction1' value="@if($purchase->numoftora_retained()==0) 0 @else {{$config->reduction1}} @endif" oninput="calcProfit()" required>
+                     <div class="fancyinput w-18">
+                        <input type="text" class='text-center' name='reduction1' id='reduction1' value="{{$deal->reduction1}}" oninput="calcProfit()" required>
                         <label for="Name">@ reduction</label>
                      </div>
-                     <div class="fancyinput w-15">
-                        <input type="text" class='text-center' id='storage1' value="{{$storage->cost->storage1}}" oninput="calcProfit()" disabled>
-                        <label for="Name">@ storage</label>
-                     </div>
-                     <div class="fancyinput w-15">
+                     <div class="fancyinput w-18">
                         <input type="text" class='text-center' name='bagprice1' id='bagprice1' value="0" oninput="calcProfit()">
                         <label for="Name">@ bag price</label>
                      </div>
-                     <div class="fancyinput w-15">
+                     <div class="fancyinput w-18">
                         <input type="text" class='text-center' name='packing1' id='packing1' value="0" oninput="calcProfit()">
                         <label for="Name">@ packing</label>
                      </div>
-                     <div class="fancyinput w-15">
-                        <input type="text" class='text-center' name='loading1' id='loading1' value="@if($purchase->numoftora_retained()==0) 0 @else {{$config->loading1}} @endif" oninput="calcProfit()">
+                     <div class="fancyinput w-18">
+                        <input type="text" class='text-center' name='loading1' id='loading1' value="{{$config->loading1}}" oninput="calcProfit()">
                         <label for="Name">@ loading</label>
                      </div>
                   </div>
@@ -177,16 +161,16 @@ Swal.fire({
                         <div class="w-48 txt-s text-right" id='lbl_actualweight'>0</div>
                      </div>
                      <div class="frow stretched">
-                        <div class="w-48 txt-s">Seller Price / kg</div>
-                        <div class="w-48 txt-s text-right" id='lbl_costperkg'>{{$purchase->priceperkg}}</div>
+                        <div class="w-48 txt-s">~ Cost / kg</div>
+                        <div class="w-48 txt-s text-right" id='lbl_costperkg'>{{round($store->approxcostperkg($purchase->id),2)}}</div>
                      </div>
                      <div class="frow stretched txt-b">
-                        <div class="w-48 txt-s">Storage Cost / kg</div>
-                        <div class="w-48 txt-s text-right" id='lbl_storagecost'>-1</div>
+                        <div class="w-48 txt-s">~ Pre. Cost</div>
+                        <div class="w-48 txt-s text-right" id='lbl_precost'></div>
                      </div>
                      <div class="frow stretched txt-b">
-                        <div class="w-48 txt-s">Addl Cost</div>
-                        <div class="w-48 txt-s text-right" id='lbl_addlcost'></div>
+                        <div class="w-48 txt-s">Current Cost</div>
+                        <div class="w-48 txt-s text-right" id='lbl_currentcost'></div>
                      </div>
                      <div class="frow stretched txt-b">
                         <div class="w-48 txt-s">Cost Price</div>
@@ -227,16 +211,13 @@ function calcProfit() {
    var numofbori = parseInt($('#numofbori').val());
    var numoftora = parseInt($('#numoftora').val());
 
-
    var reduction0 = parseFloat($('#reduction0').val());
-   //var storage0 = parseFloat($('#storage0').val());
    var commission0 = parseFloat($('#commission0').val());
    var bagprice0 = parseFloat($('#bagprice0').val());
    var packing0 = parseFloat($('#packing0').val());
    var loading0 = parseFloat($('#loading0').val());
 
    var reduction1 = parseFloat($('#reduction1').val());
-   //var storage1 = parseFloat($('#storage1').val());
    var commission1 = parseFloat($('#commission1').val());
    var bagprice1 = parseFloat($('#bagprice1').val());
    var packing1 = parseFloat($('#packing1').val());
@@ -247,26 +228,28 @@ function calcProfit() {
    var random = parseInt($('#random').val());
    var sadqa = parseInt($('#sadqa').val());
 
-
    var costperkg = parseFloat($('#lbl_costperkg').html());
 
-   // alert(purchaseprice)
+
    var gross = parseInt($('#grossweight').val())
    var saleprice = parseInt($('#saleprice').val());
 
-
+   // 
    if (gross > 0)
       actual = gross - reduction0 * numofbori - reduction1 * numoftora;
 
-   var addlcost = selector + sorting + random + sadqa + numofbori * (bagprice0 + packing0 + loading0) + numoftora * (bagprice1 + packing1 + loading1)
-   costprice = actual * costperkg + addlcost;
+   //alert(actual)
+   var precost = actual * costperkg;
+   var currentcost = selector + sorting + random + sadqa + numofbori * (bagprice0 + packing0 + loading0) + numoftora * (bagprice1 + packing1 + loading1)
+   var costprice = precost + currentcost;
    var profit = saleprice - costprice;
 
    $('#lbl_grossweight').html(gross);
    $('#lbl_reduction').html(reduction0 * numofbori + reduction1 * numoftora);
    $('#lbl_actualweight').html(actual);
-   $('#lbl_addlcost').html(addlcost);
-   $('#lbl_costprice').html(costprice);
+   $('#lbl_precost').html(Math.round(precost));
+   $('#lbl_currentcost').html(currentcost);
+   $('#lbl_costprice').html(Math.round(costprice));
    $('#lbl_saleprice').html(saleprice);
    $('#lbl_profit').html(profit);
 }

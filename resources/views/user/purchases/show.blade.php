@@ -41,7 +41,7 @@ Swal.fire({
          </div>
          <div class="frow my-4 mid-left">
             <div class="mr-4 txt-b"><u>SALES</u></div>
-            <a href="{{url('sell/fromfield',$purchase)}}">
+            <a href="{{url('sale/from/field',$purchase)}}">
                <div class="frow circular-20 bg-teal text-light centered mr-2 hoverable">+</div>
             </a>
             New
@@ -55,8 +55,9 @@ Swal.fire({
             <div class="w-10">Gross</div>
             <div class="w-10">Actual</div>
             <div class="w-10">@kg</div>
-            <div class="w-10">Seller Price</div>
-            <div class="w-10">Addl Cost</div>
+            <div class="w-10">Seller</div>
+            <div class="w-10">Previous</div>
+            <div class="w-10">Current</div>
             <div class="w-10">Cost Price</div>
             <div class="w-10">Sale Price</div>
             <div class="w-10">Profit</div>
@@ -73,10 +74,11 @@ Swal.fire({
             <div class="w-10 txt-s">{{$sale->actual()}}</div>
             <div class="w-10 txt-s">{{$sale->purchase->priceperkg}}</div>
             <div class="w-10 txt-s">{{$sale->basicprice()}}</div>
-            <div class="w-10 txt-s">{{$sale->addlcost()}}</div>
-            <div class="w-10 txt-s">{{$sale->costprice()}}</div>
+            <div class="w-10 txt-s">{{round($sale->precost())}}</div>
+            <div class="w-10 txt-s">{{round($sale->currentcost())}}</div>
+            <div class="w-10 txt-s">{{round($sale->costprice())}}</div>
             <div class="w-10 txt-s">{{$sale->saleprice}}</div>
-            <div class="w-10 txt-s">{{$sale->profit()}}</div>
+            <div class="w-10 txt-s">{{round($sale->profit())}}</div>
             <div class="frow w-10 centered">
                <a href="{{route('sales.edit',$sale)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>
@@ -102,12 +104,11 @@ Swal.fire({
          <div class="frow stretched px-2 py-1 my-3 txt-s border-bottom" style="color:teal">
             <div class="w-10">ID</div>
             <div class="w-30">Store Name</div>
-            <div class="w-10">Stored Qty.</div>
-            <div class="w-10">~Weight</div>
-            <div class="w-10">~Value</div>
+            <div class="w-10">Stored</div>
             <div class="w-10">Exported</div>
             <div class="w-10">Wasted </div>
             <div class="w-10">Retained</div>
+            <div class="w-10">~Value</div>
             <div class="w-10 text-center"><i data-feather='settings' class="feather-xsmall"></i></div>
 
          </div>
@@ -116,14 +117,13 @@ Swal.fire({
          <div class="frow stretched px-2 my-2 tr">
             <div class="w-10 txt-s">{{$sr++}}</div>
             <div class="w-30 txt-s"><a href="#store{{$store->id}}" data-toggle="collapse" class="hover-orange">{{$store->name}}</a></div>
-            <div class="w-10 txt-s">{{$store->numofbori_stored($purchase->id)}}+{{$store->numoftora_stored($purchase->id)}}</div>
-            <div class="w-10 txt-s">~Weight</div>
-            <div class="w-10 txt-s">~Value</div>
-            <div class="w-10 txt-s">{{$store->numofbori_sold($purchase->id)}}+{{$store->numoftora_sold($purchase->id)}}</div>
-            <div class="w-10 txt-s">{{$store->numofbori_wasted($purchase->id)}}+{{$store->numoftora_wasted($purchase->id)}}</div>
-            <div class="w-10 txt-s">{{$store->numofbori_left($purchase->id)}}+{{$store->numoftora_left($purchase->id)}}</div>
+            <div class="w-10 txt-s">{{$store->stored($purchase->id)}}</div>
+            <div class="w-10 txt-s">{{$store->exported($purchase->id)}}</div>
+            <div class="w-10 txt-s">{{$store->wasted($purchase->id)}}</div>
+            <div class="w-10 txt-s">{{$store->retained($purchase->id)}}</div>
+            <div class="w-10 txt-s">{{round($store->approxvalue_retained($purchase->id),2)}}</div>
             <div class="frow w-10 centered">
-               <a href="{{url('sell/fromstore/'.$purchase->id.'/'.$store->id)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
+               <a href="{{url('sale/from/store/'.$purchase->id.'/'.$store->id)}}"><i data-feather='truck' class="feather-xsmall mx-1 txt-primary"></i></a>
                <a href="{{url('wastes/create/'.$store->id.'/'.$purchase->id)}}"><i data-feather='trash-2' class="feather-xsmall mx-1 txt-red"></i></a>
             </div>
          </div>
@@ -133,7 +133,7 @@ Swal.fire({
                <div class="w-10">ID</div>
                <div class="w-15">Date</div>
                <div class="w-15">Qty.</div>
-               <div class="w-50">Storage Cost</div>
+               <div class="w-50">~ Cost</div>
                <div class="w-10 text-center"><i data-feather='settings' class="feather-xsmall"></i></div>
 
             </div>
@@ -142,7 +142,7 @@ Swal.fire({
                <div class="w-10 txt-s">{{$storage->id}}</div>
                <div class="w-15 txt-s">{{$storage->dateon->format('d/m/y')}}</div>
                <div class="w-15 txt-s">{{$storage->qty()}}</div>
-               <div class="w-50 txt-s">{{$storage->storagecost()}}</div>
+               <div class="w-50 txt-s">{{$storage->approxcost()}}</div>
 
                <div class="frow w-10 centered">
                   <a href="{{route('storage.edit',$storage)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>

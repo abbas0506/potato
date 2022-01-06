@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-   Swal.fire({
-      icon: 'success',
-      title: "Successful",
-      showConfirmButton: false,
-      timer: 1500
-   });
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
 </script>
 @endif
 <!-- purchasing -->
@@ -36,12 +36,8 @@
       <div class="w-100 bg-light my-3">
          <div class="border-1 border-left border-success py-2 text-primary txt-m" style="background-color: #eee;">
             <div class="frow px-4 stretched">
-               <div>
-                  {{$deal->seller->name}} <span class="txt-s ml-4">Agreement => {{$deal->product->name}} : {{$deal->numofbori}} + {{$deal->numoftora}} @ Rs. {{$deal->priceperkg}} dated {{$deal->dateon->format('d/m/y')}}</span>
-               </div>
-               <div class="frow spaced txt-s mid-right">
-                  <span class="txt-b">New Waste</span>
-               </div>
+               <div class="">New Waste</div>
+               <div class="frow centered txt-s"><b>{{$deal->seller->name}} </b>[ Deal No. {{$deal->id}} dated {{$deal->dateon->format('d/m/y')}}, {{$deal->product->name}}@Rs.{{$deal->priceperkg}}]</div>
             </div>
          </div>
 
@@ -53,7 +49,7 @@
                   <input type="date" name='dateon' id='dateon' placeholder="Enter name">
                   <label for="Name">Date (mm-dd-yyyy)</label>
                </div>
-               <div class="txt-m txt-b txt-red ml-3"><span class="badge badge-warning rounded txt-s"> Max Wastable : {{$store->numofbori_left($purchase->id)}}+ {{$store->numoftora_left($purchase->id)}} </span></div>
+               <div class="txt-m txt-b txt-red ml-3"><span class="badge badge-warning rounded txt-s"> Max Wastable : {{$store->retained($purchase->id)}} </span></div>
             </div>
             <div class="frow stretched mt-4">
                <div class="fancyselect w-60">
@@ -63,11 +59,11 @@
                   <label for="Name">Cold Store Name</label>
                </div>
                <div class="fancyinput w-18">
-                  <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$store->numofbori_left($purchase->id)}}" required>
+                  <input type="number" class='text-center' name='numofbori' id='numofbori' value="{{$store->numofbori_retained($purchase->id)}}" required>
                   <label for="Name">Number of Bori</label>
                </div>
                <div class="fancyinput w-18">
-                  <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$store->numoftora_left($purchase->id)}}" required>
+                  <input type="number" class='text-center' name='numoftora' id='numoftora' value="{{$store->numoftora_retained($purchase->id)}}" required>
                   <label for="Name">Number of Tora</label>
                </div>
             </div>
@@ -91,6 +87,6 @@
 
 @section('script')
 <script lang="javascript">
-   document.getElementById('dateon').valueAsDate = new Date();
+document.getElementById('dateon').valueAsDate = new Date();
 </script>
 @endsection

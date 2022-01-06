@@ -35,22 +35,31 @@ class Storage extends Model
         return $this->belongsTo(Store::class, 'store_id');
     }
 
+    //EXPORT
     public function exports()
     {
         return Sale::where('purchase_id', $this->purchase_id)->where('store_id', $this->store_id);
     }
+    public function numofbori_exported()
+    {
+        return $this->exports()->sum('numofbori');
+    }
+    public function numoftora_exported()
+    {
+        return $this->exports()->sum('numoftora');
+    }
+
     public function exported()
     {
-        return $this->exports()->sum('numofbori') . "-" . $this->exports()->sum('numoftora');
+        return $this->numoftora_exported() . "-" . $this->numoftora_exported();
     }
+
+    //WASTE
     public function wastes()
     {
         return Waste::where('purchase_id', $this->purchase_id)->where('store_id', $this->store_id);
     }
-    public function wasted()
-    {
-        return $this->wastes()->sum('numofbori') . "-" . $this->wastes()->sum('numoftora');
-    }
+
     public function numofbori_wasted()
     {
         return $this->wastes()->sum('numofbori');
@@ -59,29 +68,46 @@ class Storage extends Model
     {
         return $this->wastes()->sum('numoftora');
     }
-
-    public function left()
+    public function wasted()
     {
-        $numofbori_left = $this->numofbori -  $this->numofbori_wasted();
-        $numoftora_left = $this->numoftora - $this->numoftora_wasted();
-        return $numofbori_left . "-" . $numoftora_left;
+        return $this->numofbori_wasted() . "-" . $this->numoftora_wasted();
+    }
+
+    //RETENSION
+    public function numofbori_retained()
+    {
+        return $this->numofbori - $this->numofbori_exported() - $this->numofbori_wasted();
+    }
+    public function numoftora_retained()
+    {
+        return $this->numoftora - $this->numoftora_exported() - $this->numoftora_wasted();
+    }
+
+    public function retained()
+    {
+        return $this->numofbori_retained() . "-" . $this->numoftora_retained();
     }
 
     public function cost()
     {
         return $this->belongsTo(Cost::class, 'cost_id');
     }
-    public function storagecost()
+
+    public function approxweight()
+    {
+        return 118 * $this->numofbori  + 57 * $this->numoftora;
+    }
+    public function approxcost()
     {
         $cost = $this->cost;
-        $costperbori = $cost->commission0 + $cost->bagprice0 + $cost->packing0 + $cost->loading0 + $cost->carriage0 + $cost->storage0;
-        $costpertora = $cost->commission1 + $cost->bagprice1 + $cost->packing1 + $cost->loading1 + $cost->carriage1 + $cost->storage1;
-        $addl = $cost->selector + $cost->sorting + $cost->sadqa + $cost->random;
-        return $this->numofbori * $costperbori + $this->numoftora * $costpertora + $addl;
+        $sellerprice = $this->approxweight() * $this->purchase->priceperkg;
+        $storagecost0 = $this->numofbori * ($cost->commission0 + $cost->bagprice0 + $cost->packing0 + $cost->loading0 + $cost->carriage0 + $cost->storage0);
+        $storagecost1 = $this->numoftora * ($cost->commission1 + $cost->bagprice1 + $cost->packing1 + $cost->loading1 + $cost->carriage1 + $cost->storage1);
+        return $sellerprice + $storagecost0 + $storagecost1 + $cost->selector + $cost->sorting + $cost->sadqa + $cost->random;
     }
-    public function storagecostperkg()
+
+    public function approxcostperkg()
     {
-        $weight = 100 * $this->numofbori + 50 * $this->numoftora;
-        return $this->storagecost / $weight;
+        return $this->approxcost() / $this->approxweight();
     }
 }
