@@ -85,8 +85,8 @@ Swal.fire({
             <div class="w-10 txt-s">{{$purchase->qty()}}</div>
             <div class="w-10 txt-s">{{$purchase->grossweight}}</div>
             <div class="w-10 txt-s">{{$purchase->actual()}}</div>
-            <div class="w-10 txt-s">{{$purchase->priceperkg}}</div>
-            <div class="w-10 txt-s">{{$purchase->basicprice()}}</div>
+            <div class="w-10 txt-s">{{round($purchase->priceperkg,5)}}</div>
+            <div class="w-10 txt-s">{{round($purchase->basicprice())}}</div>
             <div class="w-10 txt-s">{{$purchase->sold()}}</div>
             <div class="w-10 txt-s">{{$purchase->retained()}}</div>
             <div class="w-10 txt-s">{{$purchase->wasted()}}</div>

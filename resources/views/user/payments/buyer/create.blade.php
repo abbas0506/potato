@@ -5,7 +5,7 @@
    <div class="txt-l txt-b">Payments</div>
    <div class="frow"> <a href="{{url('user')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span>
       <a href="{{url('payments')}}" class="hover-orange"> Payment Options </a> <span class="mx-2">/</span>
-      <a href="{{route('payments.show',2)}}" class="hover-orange"> Buyers</a> <span class="mx-2">/</span>
+      <a href="{{route('buyerpayments.index')}}" class="hover-orange"> Buyers</a> <span class="mx-2">/</span>
       New
    </div>
 </div>
@@ -23,12 +23,12 @@
 <br />
 @elseif(session('success'))
 <script>
-   Swal.fire({
-      icon: 'success',
-      title: "Successful",
-      showConfirmButton: false,
-      timer: 1500
-   });
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
 </script>
 @endif
 <div class="frow centered">

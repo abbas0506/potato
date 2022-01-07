@@ -22,10 +22,10 @@ class CreateSalesTable extends Migration
 
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedFloat('grossweight');
+            $table->unsignedDouble('grossweight');
             $table->unsignedFloat('reduction0');
             $table->unsignedFloat('reduction1');
-            $table->unsignedFloat('saleprice');
+            $table->unsignedDouble('saleprice', 15, 5);
 
             $table->date('dateon');
 

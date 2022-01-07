@@ -20,8 +20,8 @@ class CreatePurchasesTable extends Migration
             $table->string('vehicleno', 20);
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
-            $table->unsignedFloat('grossweight');
-            $table->unsignedDouble('priceperkg', 15, 5);
+            $table->unsignedBigInteger('grossweight');
+            $table->unsignedDouble('priceperkg', 15, 8);
             $table->date('dateon');
 
             $table->foreign('deal_id')

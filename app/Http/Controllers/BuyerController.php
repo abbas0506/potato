@@ -25,9 +25,11 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $buyer = Buyer::find($id);
+        return view('user.payments.buyer.create', compact('buyer'));
     }
 
     /**

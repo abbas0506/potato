@@ -71,7 +71,7 @@ Swal.fire({
             <div class="w-20 txt-s">{{$deal->seller->name}}</div>
             <div class="w-15 txt-s">{{$deal->product->name}}</div>
             <div class="w-10 txt-s">{{$deal->qty()}}</div>
-            <div class="w-10 txt-s">{{$deal->priceperkg}}</div>
+            <div class="w-10 txt-s">{{round($deal->priceperkg,5)}}</div>
             <div class="w-10 txt-s">{{$deal->picked()}}</div>
 
             <div class="w-10 txt-s">{{$deal->sold()}}</div>
@@ -79,9 +79,9 @@ Swal.fire({
             <div class="w-10 txt-s">{{$deal->wasted()}}</div>
 
             <div class="w-10 txt-s">{{$deal->left()}}</div>
-            <div class="w-10 txt-s">{{$deal->bill()}}</div>
+            <div class="w-10 txt-s">{{round($deal->bill())}}</div>
             <div class="w-10 txt-s">{{$deal->paid()}}</div>
-            <div class="w-10 txt-s">{{$deal->bill()-$deal->paid()}}</div>
+            <div class="w-10 txt-s">{{round($deal->bill()-$deal->paid())}}</div>
             <div class="frow w-10 centered">
                <a href="{{route('deals.edit',$deal)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                <div>

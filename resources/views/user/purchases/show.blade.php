@@ -70,14 +70,14 @@ Swal.fire({
             <div class="w-10 txt-s">{{$sale->dateon->format('d/m/y')}}</div>
             <div class="w-20 txt-s">{{$sale->buyer->name}}</div>
             <div class="w-10 txt-s">{{$sale->qty()}}</div>
-            <div class="w-10 txt-s">{{$sale->grossweight}}</div>
-            <div class="w-10 txt-s">{{$sale->actual()}}</div>
-            <div class="w-10 txt-s">{{$sale->purchase->priceperkg}}</div>
-            <div class="w-10 txt-s">{{$sale->basicprice()}}</div>
+            <div class="w-10 txt-s">{{round($sale->grossweight)}}</div>
+            <div class="w-10 txt-s">{{round($sale->actual())}}</div>
+            <div class="w-10 txt-s">{{round($sale->purchase->priceperkg,5)}}</div>
+            <div class="w-10 txt-s">{{round($sale->basicprice())}}</div>
             <div class="w-10 txt-s">{{round($sale->precost())}}</div>
             <div class="w-10 txt-s">{{round($sale->currentcost())}}</div>
             <div class="w-10 txt-s">{{round($sale->costprice())}}</div>
-            <div class="w-10 txt-s">{{$sale->saleprice}}</div>
+            <div class="w-10 txt-s">{{round($sale->saleprice)}}</div>
             <div class="w-10 txt-s">{{round($sale->profit())}}</div>
             <div class="frow w-10 centered">
                <a href="{{route('sales.edit',$sale)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
