@@ -19,7 +19,7 @@
          <div class="frow centered border-top py-2 txt-white txt-m">Payments</div>
       </a>
    </div>
-   <div class="fcol w-15 ml-5 border">
+   <div class="fcol w-15 ml-5 border bg-info">
       <a href="{{route('reports.index')}}">
          <div class="fcol centered p-4">
             <div class="txt-l my-2"><i data-feather='printer' class="feather-larger"></i></i></div>

@@ -83,11 +83,6 @@ class Store extends Model
         return $this->numofbori_retained($id) . "-" . $this->numoftora_retained($id);
     }
 
-    // public function approxstorageweight($id)
-    // {
-    //     return 118 * $this->numofbori_stored($id)  + 57 * $this->numoftora_stored($id);
-    // }
-
     public function approxcostperkg($id)
     {
         //calculate total storage weight using normal wwights like 158 kg / bori, 57kg/tora
@@ -101,13 +96,6 @@ class Store extends Model
         if ($approx_weight == 0) return -1;
         else return $approx_cost / $approx_weight;
     }
-
-    // public function approxstoragevalue($id)
-    // {
-    //     $purchase = Purchase::find($id);
-    //     $approx_weight = $this->approxstorageweight($id);
-    //     return $approx_weight * ($this->storagecostperkg($id) + $purchase->priceperkg);
-    // }
 
     public function approxvalue_retained($id)
     {

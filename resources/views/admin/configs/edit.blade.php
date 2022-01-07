@@ -22,12 +22,12 @@
 <br />
 @elseif(session('success'))
 <script>
-   Swal.fire({
-      icon: 'success',
-      title: "Successful",
-      showConfirmButton: false,
-      timer: 1500
-   });
+Swal.fire({
+   icon: 'success',
+   title: "Successful",
+   showConfirmButton: false,
+   timer: 1500
+});
 </script>
 @endif
 
@@ -53,11 +53,11 @@
             <div class="frow stretched mt-3">
                <div class="fancyinput w-48">
                   <input type="text" name='bagprice0' placeholder="material cost per bori" value="{{$config->bagprice0}}" required>
-                  <label for="Name">Material Cost / Bori</label>
+                  <label for="Name">Bag Price / Bori</label>
                </div>
                <div class="fancyinput w-48">
                   <input type="text" name='bagprice1' placeholder="material cost per tora" value="{{$config->bagprice1}}" required>
-                  <label for="Name">Material Cost / Tora</label>
+                  <label for="Name">Bag Price / Tora</label>
                </div>
             </div>
             <div class="frow stretched mt-3">

@@ -22,11 +22,7 @@ class UserController extends Controller
         //
         if (session('user')) {
             if (session('user')->userid == 'admin') {
-                $products = Product::all();
-                $clients = Client::all();
-                $stores = Store::all();
-                $transporters = Transporter::all();
-                return view('admin.index', compact('products', 'clients', 'stores', 'transporters'));
+                return view('admin.index');
             }
         }
     }

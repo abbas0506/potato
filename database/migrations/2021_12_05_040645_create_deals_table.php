@@ -22,7 +22,7 @@ class CreateDealsTable extends Migration
             $table->unsignedInteger('numoftora');
             $table->unsignedFloat('reduction0');
             $table->unsignedFloat('reduction1');
-            $table->unsignedFloat('priceperkg');
+            $table->unsignedDouble('priceperkg', 15, 5);
             $table->date('dateon');
 
             $table->foreign('seller_id')

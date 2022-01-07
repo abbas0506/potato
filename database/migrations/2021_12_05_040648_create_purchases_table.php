@@ -21,7 +21,7 @@ class CreatePurchasesTable extends Migration
             $table->unsignedInteger('numofbori');
             $table->unsignedInteger('numoftora');
             $table->unsignedFloat('grossweight');
-            $table->unsignedFloat('priceperkg');
+            $table->unsignedDouble('priceperkg', 15, 5);
             $table->date('dateon');
 
             $table->foreign('deal_id')

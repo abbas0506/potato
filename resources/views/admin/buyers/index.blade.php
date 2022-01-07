@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('page-header')
 <div class="fcol bg-teal txt-white centered py-2 sticky-top">
-   <div class="txt-l txt-b">Clients</div>
-   <div class="frow"> <a href="{{url('admin')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span> Clients</div>
+   <div class="txt-l txt-b">Buyers</div>
+   <div class="frow"> <a href="{{url('admin')}}" class="hover-orange"> Home </a> <span class="mx-2">/</span> Buyers</div>
 
 </div>
 @endsection
@@ -11,13 +11,13 @@
    <div class="fcol w-60">
       <!-- <div class="fcol w-70 centered bg-light-grey"> -->
       <div class="w-100 bg-light px-4 pb-2 my-4 border-left border-2 border-success">
-         <div class="txt-b txt-orange">Create New Client</div>
-         <form action="{{route('clients.store')}}" method='post'>
+         <div class="txt-b txt-orange">Create New Buyer</div>
+         <form action="{{route('buyers.store')}}" method='post'>
             @csrf
             <div class="fcol stretched mt-3">
                <div class="frow stretched">
                   <div class="fancyinput w-48">
-                     <input type="text" name='name' placeholder="Enter client name" required>
+                     <input type="text" name='name' placeholder="Enter buyer name" required>
                      <label for="Name">Name</label>
                   </div>
                   <div class="fancyinput w-48">
@@ -44,26 +44,26 @@
          </div>
 
          <div class="frow px-2 py-1 my-3 border-bottom">
-            <div class="frow mid-left w-30"><span class='txt-b'> Client Name</div>
+            <div class="frow mid-left w-30"><span class='txt-b'> buyer Name</div>
             <div class="frow mid-left w-20"><span class='txt-b'> Phone</div>
             <div class="frow mid-left w-30"><span class='txt-b'> Address</div>
 
             <div class="fcol mid-right pr-3 w-20"><i data-feather='settings' class="feather-xsmall"></i></div>
          </div>
 
-         @foreach($clients as $client)
+         @foreach($buyers as $buyer)
          <div class="frow px-2 my-2 tr">
-            <div class="fcol mid-left w-30">{{$client->name}}</div>
-            <div class="fcol mid-left w-20">{{$client->phone}}</div>
-            <div class="fcol mid-left w-30">{{$client->address}}</div>
+            <div class="fcol mid-left w-30">{{$buyer->name}}</div>
+            <div class="fcol mid-left w-20">{{$buyer->phone}}</div>
+            <div class="fcol mid-left w-30">{{$buyer->address}}</div>
             <div class="fcol mid-right w-20">
                <div class="frow stretched">
-                  <a href="{{route('clients.edit',$client)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
+                  <a href="{{route('buyers.edit',$buyer)}}"><i data-feather='edit-2' class="feather-xsmall mx-1 txt-blue"></i></a>
                   <div>
-                     <form action="{{route('clients.destroy',$client)}}" method="POST" id='del_form{{$client->id}}'>
+                     <form action="{{route('buyers.destroy',$buyer)}}" method="POST" id='del_form{{$buyer->id}}'>
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$client->id}}')"><i data-feather='x' class="feather-xsmall mx-1 txt-red"></i></button>
+                        <button type="submit" class="bg-transparent p-0 border-0" onclick="delme('{{$buyer->id}}')"><i data-feather='x' class="feather-xsmall mx-1 txt-red"></i></button>
                      </form>
                   </div>
                </div>

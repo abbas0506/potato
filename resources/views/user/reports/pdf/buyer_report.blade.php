@@ -66,7 +66,7 @@
          <tr class="mt-2">
             <td class="txt-s">{{$sale->id}}</td>
             <td class="txt-s">{{$sale->dateon->format('d/m/y')}}</td>
-            <td class="txt-s">{{$sale->vehicleno}}</td>
+            <td class="txt-s">{{$sale->purchase->vehicleno}}</td>
             <td class="txt-s">{{$sale->numofbori}}</td>
             <td class="txt-s">{{$sale->numoftora}}</td>
             <td class="txt-s">{{$sale->grossweight}}</td>

@@ -103,6 +103,7 @@ class Storage extends Model
         $sellerprice = $this->approxweight() * $this->purchase->priceperkg;
         $storagecost0 = $this->numofbori * ($cost->commission0 + $cost->bagprice0 + $cost->packing0 + $cost->loading0 + $cost->carriage0 + $cost->storage0);
         $storagecost1 = $this->numoftora * ($cost->commission1 + $cost->bagprice1 + $cost->packing1 + $cost->loading1 + $cost->carriage1 + $cost->storage1);
+        //return $storagecost0 + $storagecost1 + $cost->selector + $cost->sorting + $cost->sadqa + $cost->random;
         return $sellerprice + $storagecost0 + $storagecost1 + $cost->selector + $cost->sorting + $cost->sadqa + $cost->random;
     }
 

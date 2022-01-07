@@ -77,12 +77,8 @@ class Sale extends Model
             return $this->actual() * $this->store->approxcostperkg();
         else
             return $this->basicprice();
-        //return $this->numofbori * $costperbori + $this->numoftora * $costpertora + $addl;
     }
-    // public function addlcost()
-    // {
-    //     return round($this->currentcost() + $this->precost());
-    // }
+
 
     public function costprice()
     {
