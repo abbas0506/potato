@@ -56,9 +56,9 @@
                <div class="w-10">{{$deal->qty()}}</div>
                <div class="w-10">{{$deal->picked()}}</div>
                <div class="w-10">{{$deal->left()}}</div>
-               <div class="w-10">{{$deal->bill()}}</div>
-               <div class="w-10">{{$deal->paid()}}</div>
-               <div class="w-10">{{$deal->bill()-$deal->paid()}}</div>
+               <div class="w-10">{{round($deal->bill())}}</div>
+               <div class="w-10">{{round($deal->paid())}}</div>
+               <div class="w-10">{{round($deal->bill()-$deal->paid())}}</div>
                <div class="frow w-10 centered">
                   <a href="{{url('print/seller/report/'.$deal->id)}}" target="_blank" class="hover-orange"><i data-feather='printer' class="feather-xsmall"></i></a>
                </div>
